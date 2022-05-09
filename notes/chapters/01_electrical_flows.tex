@@ -3,7 +3,7 @@
 
 \chapter{Electrical Flows}
 
-A classical graph problem is the flow of electrical currents through a network of resistors. Such a network $G = (\sV, \sE, \vx, \vr)$ can be described by a set of vertices $\sV$, set of wires (or edges) $\sE$, voltages $\vx \in \R^{|\sV|}$ at the vertices, and resistances $\vr \in \R_{>0}^{|\sE|}$ of wires. We are interested in finding the electrical flow $\vf \in \R^{|\sE|}$ through the network, assigning to each wire the current that is transported per unit time.
+A classical graph problem is the flow of electrical currents through a network of resistors. Such a network $G = (\sV, \sE, \vr)$ can be described by a set of vertices $\sV$, set of wires (or edges) $\sE$, and resistances $\vr \in \R_{>0}^{|\sE|}$ of wires. We are interested in finding the electrical flow $\vf \in \R^{|\sE|}$ through the network, assigning to each wire the current that is transported per unit time. Alternatively, we can think of voltages $\vx \in \R^{|\sV|}$ at the vertices, which Ohm's law relates to the electrical flow.
 
 By \emph{Ohm's law}\index{Ohm's law}, we have that for any wire $e \in \sE$, \begin{align}
     \vf(e) = \frac{\vx(e)}{\vr(e)}, \quad \vx(e) = \vf(e) \cdot \vr(e),
@@ -55,7 +55,7 @@ We can now also write the net flow constraint\index{net flow constraint}, \begin
 \end{align} We define $\mR \defeq \diag\{\vr(e)\}_{e \in \sE}$ and then have that Ohm's law\index{Ohm's law} can be expressed as, \begin{align}
     \trans{\mB}\vx = \mR\vf, \quad\text{or equivalently,}\quad \mR^{-1}\trans{\mB}\vx = \vf.
 \end{align} If the net flow constraint is satisfied, this yields, \begin{align}
-    \underbrace{\mB\mR^{-1}\trans{\mB}}_{\text{Laplacian}}\vx = \mB\vf = \vd.
+    \underbrace{\mB\mR^{-1}\trans{\mB}}_{\text{Laplacian}}\vx = \mB\vf = \vd. \label{eq:ohms_law_and_net_flow_constraint}
 \end{align}
 \begin{defn}[Laplacian matrix]
 The \emph{Laplacian matrix} of an oriented graph $G$, is defined as, \begin{align}
@@ -113,8 +113,28 @@ We have, \begin{align*}
 $\mL$ is positive semi-definite.
 \end{cor}
 
-\subsection{Framed as an Optimization Problem}
+\subsection{An Optimization Problem}
+
+We have seen that finding voltages $\vx$ or flows $\vf$ is equivalent, we can go from one to the other and back. So let us first focus on how we can find voltages $\vx$.
+
+In \cref{eq:ohms_law_and_net_flow_constraint}, we saw that voltages satisfy $\mL\vx = \vd$, obeying by Ohm's law and satisfying the net flow constraint. A standard approach to reframe the solution to such a system of linear equations as the result of an optimization problem, is to consider the cost function, \begin{align}
+    c(\vx) \defeq \frac{1}{2}\trans{\vx}\mL\vx - \trans{\vx}\vd.
+\end{align} Observe that $\grad c(\vx) = \mL\vx - \vd \overset{!}{=} 0$ iff $\mL\vx = \vd$. It can also be shown that $c$ is convex, hence, its critical point coincides with its minimizer.\footnote{We will develop tools to show this in the next part. The proof is given in \cref{lem:a1}.} We have therefore recast the problem of finding voltages to the convex optimization, \begin{align}
+    \s{\vx} \defeq \argmin_{\vx \in \R^{|\sV|}} c(\vx).
+\end{align}
 
 \subsection{Energy \& Duality}
+
+Let us now look at the same problem through a different lens. Transporting current through a network of resistors requires energy, which is dissipated as heat by the resistor. By \emph{Joule's law}\index{Joule's law}, sending a current $f$ across a resistor with potential drop $x$, spends $f \cdot x$ units of energy per unit time.\footnote{We will think about everything as if happening in one unit of time.} Using Ohm's law, we have, \begin{align}
+    f \cdot x = \frac{x^2}{r} = r \cdot f^2.
+\end{align} We can therefore write the electrical energy\index{energy} dissipated by routing a flow $\vf$ (or equivalently with voltages $\vx$) as, \begin{align}
+    \mathcal{E}(\vf) \defeq \sum_{e \in \sE} \vr(e) \vf(e)^2 = \trans{\vf}\mR\vf = \trans{\vx}\mL\vx \defeq \mathcal{E}(\vx). \margintag{using Ohm's law, $\vf = \mR^{-1}\mB\vx$}
+\end{align}
+
+Let us consider the \emph{electrical energy-minimizing flow}\index{electrical energy-minimizing flow}:\footnote{Note that we could instead (and equivalently) characterize the optimization problem using voltages.} \begin{align}
+    \s{\vf} \defeq &\argmin_{\substack{\vf \in \R^{|\sE|} \\ \mB\vf = \vd}} \mathcal{E}(\vf). \label{eq:electrical_energy_minimizing_flow}
+\end{align} It turns out that $\s{\vf}$ is precisely the electrical flow, that is, $\s{\vf}$ satisfies Ohm's law.\footnote{Proof in \cref{lem:a2}} This indicates that the two above optimization problems are intimately related: both yield the electrical flow (or equivalently, electrical voltages). In fact, it can be shown that $\mathcal{E}(\s{\vf}) = -c(\s{\vx}$, where we think about maximizing $-c(\vx)$ instead of minimizing $c(\vx)$.\footnote{Proof in \cref{lem:a3}}. More generally, $\mathcal{E}(\vf) \geq -c(\vx)$ for any flow $\vf$ routing $\vd$ and voltages $\vx$.\footnote{Proof in \cref{lem:a4}} So, for any $\vx$, the value of $-c(\vx)$ is a lower bound on the minimum energy $\mathcal{E}(\s{\vf})$.
+
+This is an example of a much broader phenomenon known as Lagrangian duality, where we have a minimization problem and a related maximization problem that gives lower bounds on the optimal value of the minimization problem.
 
 \subsection{Outlook: More Graph Optimization Problems}

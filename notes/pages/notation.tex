@@ -15,7 +15,7 @@ We follow these general rules: \begin{itemize}[noitemsep]
     % \item uppercase calligraphy for spaces (usually infinite sets) $\spA$
 \end{itemize}
 
-\emptyparagraph\begin{tabular}{p{2cm}l}
+\begin{longtable}{p{2.5cm}l}
    $\defeq$ & equality by definition \\
 %   $\approx$ & approximately equals \\
 %   $\propto$ & proportional to \\
@@ -28,10 +28,10 @@ We follow these general rules: \begin{itemize}[noitemsep]
    $f : \sA \to : \sB$ & function $f$ from elements of set $\sA$ to elements of set $\sB$ \\
    $\Ind{predicate}$ & indicator function ($\Ind{predicate} \defeq 1$ if the $predicate$ is true, else $0$) \\
    $\gets$ & assignment \\
-\end{tabular}
+\end{longtable}
 
-\section*{\smallcaps{Probability}}
-\emptyparagraph\begin{tabular}{p{2cm}l}
+\section*{\smallcaps{Probability}}\vspace{-0.5cm}
+\begin{longtable}{p{2.5cm}l}
    $\Pr{X = x}$ & probability of a random variable $X$ taking on the value $x$ \\
    $X \sim F$ & random variable $X$ follows the distribution $F$ \\
    $x \sim F$ & value $x$ is sampled according to distribution $F$ \\
@@ -42,10 +42,32 @@ We follow these general rules: \begin{itemize}[noitemsep]
 %   $\Var{X}$ & variance of random variable $X$ \\
 %   $\Cov{X,Y}$ & covariance of random variable $X$ and random variable $Y$ \\
 %   $\Delta^{\spA}$ & set of all probability distributions over the set $\spA$ \\
-\end{tabular}
+\end{longtable}
 
-\section*{\smallcaps{Graphs}}
-\emptyparagraph\begin{tabular}{p{2cm}l}
+\section*{\smallcaps{Graphs}}\vspace{-0.5cm}
+\begin{longtable}{p{2.5cm}l}
+   $\sV$ & set of vertices \\
+   $\sE$ & set of edges \\
    $u \sim v$ & vertices $u$ and $v$ are adjacent \\
-\end{tabular}
+   $\deg(v)$ & degree of vertex $v$ \\
+   $\vr \in \R^{|\sE|}$ & resistances \\
+   $\vw \in \R^{|\sE|}$ & weights, $\vw(e) = \nicefrac{1}{\vr(e)}$ \\
+   $\vw \in \R^{|\sV|}$ & weighted degrees, $\vw(v) = \sum_{\{u,v\} \in \sE} \vw(\{u,v\})$ \\
+   $\Tilde{\mA} \in \R^{|\sV|\times|\sV|}$ & adjacency matrix \\
+   $\mA \in \R^{|\sV|\times|\sV|}$ & weighted adjacency matrix \\
+   $\mB \in \R^{|\sV|\times|\sE|}$ & incidence matrix \\
+   $\mR \in \R^{|\sE|\times|\sE|}$ & diagonal matrix of resistances, $\diag\{\vr(e)\}_{e \in \sE}$ \\
+   $\mW \in \R^{|\sE|\times|\sE|}$ & diagonal matrix of weights, $\diag\{\vw(e)\}_{e \in \sE}$ \\
+   $\mD \in \R^{|\sV|\times|\sV|}$ & diagonal matrix of weighted degrees, $\diag\{\vw(v)\}_{v \in \sV}$ \\
+   $\mL \in \R^{|\sV|\times|\sV|}$ & Laplacian matrix, $\mB\mR^{-1}\trans{\mB} = \mB\mW\trans{\mB} = \mD - \mA$ \\
+\end{longtable}
+
+\section*{\smallcaps{Flows}}\vspace{-0.5cm}
+\begin{longtable}{p{2.5cm}l}
+   $\vx \in \R^{|\sV|}$ & voltages \\
+   $\vf \in \R^{|\sE|}$ & flow \\
+   $\vd \in \R^{|\sV|}$ & demands, modeling the net flow \\
+   $\mathcal{E}(\vf)$ & electrical energy in terms of flow, $\trans{\vf}\mR\vf$ \\
+   $\mathcal{E}(\vx)$ & electrical energy in terms of voltages, $\trans{\vx}\mL\vx$ \\
+\end{longtable}
 \end{fullwidth}
