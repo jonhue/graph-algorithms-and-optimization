@@ -15,4 +15,4 @@ jobs:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           files: |
             notes/main.tex
-            assignments/graded_homework_1.text
+            assignments/graded_homework_1.tex
