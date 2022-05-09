@@ -1,0 +1,22 @@
+% !TeX root = ../main.tex
+% Add the above to each chapter to make compiling the PDF easier in some editors.
+
+\makeatletter
+\renewcommand{\maketitlepage}{%
+    \cleardoublepage{%
+        \begin{fullwidth}%
+        \fontsize{12}{12}\selectfont\par\noindent{\@author \\ \noindent \small{based on Rasmus Kyng's lectures at ETH Zurich}}%
+        \vfill
+        \fontsize{40}{46}\selectfont\par\noindent{Graph Algorithms \\ \noindent and Optimization}%
+        % \fontsize{14}{16}\selectfont\par\noindent\@date
+        \vspace{11.5pc}%
+        \vfill
+        % \fontsize{14}{16}\selectfont\par\noindent\thanklesspublisher%
+        \fontsize{10}{12}\selectfont\par\noindent{\textbf{Contents.} Convex optimization.} \\[5pt]
+        \fontsize{10}{12}\selectfont\par\noindent{Contributions are welcome at \url{https://github.com/jonhue/graph-algorithms-and-optimization}.}
+        \end{fullwidth}%
+    }%
+    \thispagestyle{empty}%
+    \clearpage
+}
+\makeatother

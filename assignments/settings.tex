@@ -1,0 +1,47 @@
+%--------Packages--------
+\usepackage{makecell}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bbm}
+\usepackage{nicefrac}
+\usepackage{enumitem}
+\usepackage{cleveref}
+\usepackage[italic]{derivative}
+\usepackage{todonotes}
+
+\bibliographystyle{plain}
+
+%--------Label sections & subsections-------------
+\setcounter{secnumdepth}{2}
+% \renewcommand{\thesubsection}{\thesection.\Alph{subsection}}
+
+%--------Theorem Environments--------
+\newtheorem{thm}{Theorem}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{clm}[thm]{Claim}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{rmk}[thm]{Remark}
+
+%--------Margin Tags-------------
+\newcommand{\safefootnote}[1]{\footnotemark \margintag{\textsuperscript{\tiny\arabic{footnote}} #1}}
+\let\marginnote\relax
+\usepackage{marginnote}
+\newcommand{\margintag}[1]{
+    \checkoddpage
+    \ifoddpage
+      {\marginnote{\footnotesize #1}}
+    \else
+      {\reversemarginpar\marginnote{\footnotesize #1}}
+    \fi}
+
+%--------Allow page breaks in align-------------
+\allowdisplaybreaks
+
+%--------Enumerations-------------
+\setenumerate{label=(\arabic*),noitemsep,topsep=0pt,leftmargin=20pt}

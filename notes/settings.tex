@@ -1,0 +1,158 @@
+% !TeX root = main.tex
+% Add the above to each chapter to make compiling the PDF easier in some editors.
+
+\setcounter{secnumdepth}{1}
+\setcounter{tocdepth}{1}
+
+%--------Packages--------
+\usepackage{tikz}
+\usetikzlibrary{calc, arrows}
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{makecell}
+\usepackage{amsmath,amsfonts,amsthm,amssymb,mathrsfs,bbm,mathtools,nicefrac}
+\usepackage{enumitem}
+\usepackage{cleveref}
+\usepackage[italic]{derivative}
+\usepackage{xparse}
+\usepackage{upgreek}
+
+% %--------Literature--------
+\bibliographystyle{plainnat}
+% \usepackage{xargs}
+% \renewcommandx{\cite}[3][1={0pt},2={}]{\sidenote[][#1]{\fullcite[#2]{#3}}}
+
+%--------Graphics/Images--------
+\usepackage{graphicx}
+% \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+\graphicspath{{./figures/}}
+
+% %--------Index--------
+\usepackage{imakeidx}
+\makeindex[intoc]
+\indexsetup{headers={\indexname}{\indexname}}
+
+%--------Theorem Environments--------
+\newtheorem{thm}{Theorem}[chapter]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{lem}[thm]{Lemma}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{rmk}[thm]{Remark}
+
+\numberwithin{equation}{chapter}
+
+%--------Pseudocode--------
+\usepackage{xcolor,amsmath}
+\usepackage[linesnumbered,ruled,vlined,algochapter]{algorithm2e}
+\DontPrintSemicolon
+\makeatletter
+    \let\c@algocf\c@thm
+\makeatother
+\crefname{algocf}{alg.}{algs.}
+\Crefname{algocf}{Algorithm}{Algorithms}
+\SetAlgoSkip{bigskip}
+
+% Define pseudocode formatting
+\renewcommand{\KwSty}[1]{\textnormal{\textcolor{blue!90!black}{\ttfamily\bfseries #1}}\unskip}
+\renewcommand{\ArgSty}[1]{\textnormal{\ttfamily #1}\unskip}
+\SetKwComment{Comment}{\color{green!50!black}// }{}
+\renewcommand{\CommentSty}[1]{\textnormal{\ttfamily\color{green!50!black}#1}\unskip}
+\newcommand{\assign}{\leftarrow}
+\newcommand{\var}{\texttt}
+\newcommand{\FuncCall}[2]{\texttt{\bfseries #1(#2)}}
+\SetKwProg{Function}{function}{}{}
+\renewcommand{\ProgSty}[1]{\texttt{\bfseries #1}}
+
+% %--------Colors-------------
+% \definecolor{baby-blue}{cmyk}{0.86,0.33,0.0,0.16,1.0}
+\definecolor{blue}{RGB}{02,106,253}
+\definecolor{red}{RGB}{245,51,30}
+\definecolor{green}{RGB}{96,189,69}
+\def\b{\textcolor{blue}}
+\def\r{\textcolor{red}}
+
+%--------Colored Theorem-------------
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{theorems}
+\newtcbtheorem
+  [use counter*=thm,number within=chapter,crefname={example}{examples},Crefname={Example}{Examples}]%
+  {ex}
+  {\textbf{Example}}
+  {%
+%   boxrule=1pt,
+%   toprule=1pt,bottomrule=1pt,
+    before skip=10pt,after skip=10pt,
+    left=0.2cm,right=0.2cm,top=0.2cm,
+%   titlerule=0.5em,
+%   toptitle=0.1cm,
+%   bottomtitle=-0.1cm,
+    breakable,
+    sharp corners,
+    before upper=\setlength{\parskip}{8pt},
+    % colback=white,
+    % coltitle=black,
+    % colframe=blue!100,
+    fonttitle=\bfseries,
+  }% options
+  {ex}% prefix
+
+\newcommand{\safefootnote}[1]{\footnotemark \margintag{\textsuperscript{\tiny\arabic{footnote}} #1}}
+
+%--------Margin Tags-------------
+\let\marginnote\relax
+\usepackage{marginnote}
+\newcommand{\margintag}[1]{
+    \checkoddpage
+    \ifoddpage
+      {\marginnote{\footnotesize #1}}
+    \else
+      {\reversemarginpar\marginnote{\footnotesize #1}}
+    \fi}
+
+%--------Equation numbers in text-------------
+\makeatletter
+\NewDocumentCommand{\embeq}{m}{%
+  \leavevmode\hfill\refstepcounter{equation}\textup{\tagform@{\theequation}}\label{#1}%
+}
+\makeatother
+
+%--------Equation numbers in algorithms-------------
+\makeatletter
+\NewDocumentCommand{\algeq}{m}{%
+  \leavevmode\Comment*[r]{\refstepcounter{equation}\textup{\tagform@{\theequation}}\label{#1}}%
+}
+\makeatother
+
+\usepackage{etoolbox}
+\makeatletter
+% Remove right hand margin in algorithm
+\patchcmd{\@algocf@start}% <cmd>
+  {-1.5em}% <search>
+  {0pt}% <replace>
+  {}{}% <success><failure>
+\makeatother
+
+%--------Allow page breaks in align-------------
+\allowdisplaybreaks
+
+%--------Styling part-------------
+\usepackage{titlesec}
+\titleclass{\part}{top} % make part like a chapter
+\titleformat{\part}
+[display]
+{\centering\normalfont}
+{\vspace{3pt}\normalfont\smallcaps{\partname} \thepart}
+{0pt}
+{\vspace{1pc}\huge\normalfont\textit}
+%
+\titlespacing*{\part}{0pt}{0pt}{20pt}
+%
+
+%--------Inline equation number-------------
+\newcommand\inlineeqno{\text{\normalfont\stepcounter{equation}\ (\theequation)}}

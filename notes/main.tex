@@ -1,0 +1,43 @@
+\documentclass{tufte-book}
+
+\input{settings}
+\input{../commands}
+
+\title{Graph Algorithms and Optimization}
+\author{Jonas Hübotter}
+% \date{Spring 2022}
+% \publisher{}
+\input{pages/titlepage}
+
+\begin{document}
+    \frontmatter
+
+    \maketitle
+
+    \input{pages/acknowledgement}
+
+    \tableofcontents
+
+    \mainmatter
+
+    \part{Preliminaries}
+	\input{chapters/01_electrical_flows}
+	\input{chapters/02_linear_algebra}
+
+    \part{Convex Optimization}
+
+    \part{Spectral Graph Theory}
+
+    \part{Combinatorial Graph Algorithms}
+
+    \backmatter
+
+    \input{pages/notation}
+
+    \nocite{*}
+    \bibliography{sources}
+
+    \begin{fullwidth}
+    \printindex
+    \end{fullwidth}
+\end{document}

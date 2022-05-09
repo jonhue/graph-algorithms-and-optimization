@@ -1,0 +1,51 @@
+% !TeX root = ../main.tex
+% Add the above to each chapter to make compiling the PDF easier in some editors.
+
+\chapter{Summary of Notation}
+
+\begin{fullwidth}
+We follow these general rules: \begin{itemize}[noitemsep]
+    \item uppercase italic for constants $N$
+    \item lowercase italic for indices $i$ and scalar variables $x$
+    \item lowercase italic bold for vectors $\vx$
+    \item uppercase italic bold for matrices $\mM$
+    \item uppercase italic for random variables $X$
+    \item uppercase bold for random vectors $\rX$
+    \item uppercase italic for sets $\sA$
+    % \item uppercase calligraphy for spaces (usually infinite sets) $\spA$
+\end{itemize}
+
+\emptyparagraph\begin{tabular}{p{2cm}l}
+   $\defeq$ & equality by definition \\
+%   $\approx$ & approximately equals \\
+%   $\propto$ & proportional to \\
+   $\Nat$ & set of natural numbers $\{1, 2, \dots\}$ \\
+   $\Nat_0$ & set of natural numbers, including $0$, $\Nat \cup \{0\}$ \\
+   $\R$ & set of real numbers \\
+   $[m]$ & set of natural numbers from $1$ to $m$, $\{1, 2, \dots, m-1, m\}$ \\
+%   $i:j$ & subset of natural numbers between $i$ and $j$, $\{i, i+1, \dots, j-1, j\}$ \\
+   $(a,b]$ & real interval between $a$ and $b$ including $b$ but not including $a$ \\
+   $f : \sA \to : \sB$ & function $f$ from elements of set $\sA$ to elements of set $\sB$ \\
+   $\Ind{predicate}$ & indicator function ($\Ind{predicate} \defeq 1$ if the $predicate$ is true, else $0$) \\
+   $\gets$ & assignment \\
+\end{tabular}
+
+\section*{\smallcaps{Probability}}
+\emptyparagraph\begin{tabular}{p{2cm}l}
+   $\Pr{X = x}$ & probability of a random variable $X$ taking on the value $x$ \\
+   $X \sim F$ & random variable $X$ follows the distribution $F$ \\
+   $x \sim F$ & value $x$ is sampled according to distribution $F$ \\
+%   $X \perp Y$ & random variable $X$ is independent of random variable $Y$ \\
+%   $X \perp Y \mid Z$ & \makecell[tl]{random variable $X$ is conditionally independent of random variable $Y$ \\ given random variable $Z$} \\
+   $\E{X}$ & expected value of random variable $X$ \\
+%   $\E[x \sim X]{f(x)}$ & expected value of the random variable $f(X)$, $\E{f(X)}$ \\
+%   $\Var{X}$ & variance of random variable $X$ \\
+%   $\Cov{X,Y}$ & covariance of random variable $X$ and random variable $Y$ \\
+%   $\Delta^{\spA}$ & set of all probability distributions over the set $\spA$ \\
+\end{tabular}
+
+\section*{\smallcaps{Graphs}}
+\emptyparagraph\begin{tabular}{p{2cm}l}
+   $u \sim v$ & vertices $u$ and $v$ are adjacent \\
+\end{tabular}
+\end{fullwidth}

@@ -1,0 +1,901 @@
+\documentclass{tufte-handout}
+
+\input{settings}
+\input{../commands}
+
+\title[Graded Homework 1]{Advanced Graph Algorithms and Optimization \\ Graded Homework 1}
+\author{Jonas Hübotter}
+\date{April 24th, 2022}
+
+\begin{document}
+\maketitle
+
+\section{Strongly Convex Functions}
+Let $f : \R^n \to \R$ be a $\mu$-strongly convex and $\beta$-smooth\footnote{I say \emph{$\beta$-smooth} to mean \emph{$\beta$-gradient Lipschitz} as I am more used to this wording.} function that is twice continuously differentiable\footnote{We use the notion of Frechét differentiability.} and whose first and second order derivatives are integrable.
+
+\subsection{Part A}\label{part:1A}
+\begin{lem}
+Let $h : \R^n \to \R$ be a convex function that is continuously differentiable. Then, \begin{align}
+    \trans{(\grad h(\vx) - \grad h(\vy))}(\vx - \vy) \geq 0.
+\end{align}
+\end{lem}
+\begin{proof}
+We have, \begin{align*}
+    &\trans{(\grad h(\vx) - \grad h(\vy))}(\vx - \vy) \\
+    &= \trans{\grad h(\vx)}\vx - \trans{\grad h(\vx)}\vy - \trans{\grad h(\vy)}\vx + \trans{\grad h(\vy)}\vy \\
+    &= - \trans{\grad h(\vx)}(\vy - \vx) - \trans{\grad h(\vy)}(\vx - \vy).
+\end{align*} Thus, it suffices to show, \begin{align*}
+    \trans{\grad h(\vx)}(\vy - \vx) + \trans{\grad h(\vy)}(\vx - \vy) \leq 0.
+\end{align*} By the first-order characterization of convexity, we have,\footnote{theorem 2.3.7} \begin{align*}
+    h(\vy) &\geq h(\vx) + \trans{\grad h(\vx)}(\vy - \vx) \quad \text{and} \\
+    h(\vx) &\geq h(\vy) + \trans{\grad h(\vy)}(\vx - \vy).
+\end{align*} Rearranging terms, we obtain, \begin{align*}
+    \trans{\grad h(\vx)}(\vy - \vx) + \trans{\grad h(\vy)}(\vx - \vy) \leq h(\vy) - h(\vx) + h(\vx) - h(\vy) = 0.
+\end{align*}
+\end{proof}
+
+\subsection{Part B}
+We first prove the following lemma.\footnote{This is analogous to lemma 3.5 in \citep{bubeck2015convex}, however, they use a different strategy in their proof.}
+\begin{lem}\label{lem:part:1B}
+Let $h : \R^n \to \R$ be a convex function that is continuously differentiable and $\beta$-smooth. Then, \begin{align}
+    h(\vy) \geq h(\vx) + \trans{\grad h(\vx)}(\vy - \vx) + \frac{1}{2 \beta}\norm{\grad h(\vy) - \grad h(\vx)}_2^2. \label{eq:part:1B:1}
+\end{align}
+\end{lem}
+\begin{proof} Let $\phi_\vx(\vz) \defeq h(\vz) - \trans{\grad h(\vx)}\vz$. Note $\grad \phi_\vx(\vz) = \grad h(\vz) - \grad h(\vx)$. We have that $\phi_\vx$ is convex,\footnote{We show the first-order characterization of convexity.} \begin{align*}
+    &\phi_\vx(\vz_1) + \trans{\grad \phi_\vx(\vz_1)}(\vz_2 - \vz_1) \\
+    &= h(\vz_1) - \trans{\grad h(\vx)}\vz_1 + \trans{\grad h(\vz_1)}(\vz_2 - \vz_1) + \trans{\grad h(\vx)}(\vz_1 - \vz_2) \\
+    &\leq h(\vz_2) - \trans{\grad h(\vx)}\vz_2 \margintag{using the first-order characterization of convexity for $h$} \\
+    &= \phi_\vx(\vz_2).
+\end{align*} We also have that $\phi_\vx$ is $\beta$-smooth, \begin{align*}
+    \norm{\grad \phi_\vx(\vz_1) - \grad \phi_\vx(\vz_2)}_2 &= \norm{\grad h(\vz_1) - \grad h(\vx) - \grad h(\vz_2) + \grad h(\vx)}_2 \\
+    &= \norm{\grad h(\vz_1) - \grad h(\vz_2)}_2 \\
+    &\leq \beta \norm{\vz_1 - \vz_2}_2. \margintag{using that $h$ is $\beta$-smooth}
+\end{align*} Thus,\footnote{proposition 3.3.3} \begin{align*}
+    \phi_\vx(\vz) \leq \phi_\vx(\vy) + \trans{\grad \phi_\vx(\vy)}(\vz - \vy) + \frac{\beta}{2} \norm{\vz - \vy}_2^2
+\end{align*} and therefore, \begin{align*}
+    \min_{\vz \in \R^n} \phi_\vx(\vz) \leq \min_{\vz \in \R^n} \phi_\vx(\vy) + \trans{\grad \phi_\vx(\vy)}(\vz - \vy) + \frac{\beta}{2} \norm{\vz - \vy}_2^2.
+\end{align*} We have $\min_{\vz \in \R^n} \phi_\vx(\vz) = \phi_\vx(\vx)$ as $\grad \phi_\vx(\vx) = 0$ and $\phi_\vx$ is convex. In the lecture,\footnote{section 3.3.2} we have seen in an analogous argument that the right-hand side is minimized for $\vz = \vy - \nicefrac{1}{\beta} \grad \phi_\vx(\vy)$. The inequality simplifies to, \begin{align*}
+    h(\vx) - \trans{\grad h(\vx)} \vx &= \min_{\vz \in \R^n} \phi_\vx(\vz) \\
+    &\leq \min_{\vz \in \R^n} \phi_\vx(\vy) + \trans{\grad \phi_\vx(\vy)}(\vz - \vy) + \frac{\beta}{2} \norm{\vz - \vy}_2^2 \\
+    &= h(\vy) - \trans{\grad h(\vx)}\vy - \frac{1}{2 \beta}\norm{\grad \phi_\vx(\vy)}_2^2.
+\end{align*} By reordering the terms, we obtain, \begin{align*}
+    h(\vy) &\geq h(\vx) + \trans{\grad h(\vx)}(\vy - \vx) + \frac{1}{2 \beta}\norm{\grad \phi_\vx(\vy)}_2^2 \\
+    &= h(\vx) + \trans{\grad h(\vx)}(\vy - \vx) + \frac{1}{2 \beta}\norm{\grad h(\vy) - \grad h(\vx)}_2^2,
+\end{align*} as desired.
+\end{proof}
+
+\begin{lem}
+Let $h : \R^n \to \R$ be a convex function that is continuously differentiable and $\beta$-smooth. Then, \begin{align}
+    \trans{(\grad h(\vx) - \grad h(\vy))}(\vx - \vy) \geq \frac{1}{\beta} \norm{\grad h(\vx) - \grad h(\vy)}_2^2. \label{eq:part:1B}
+\end{align}
+\end{lem}
+\begin{proof} Recall from \cref{part:1A} that \begin{align*}
+    \trans{(\grad h(\vx) - \grad h(\vy))}(\vx - \vy) = - \trans{\grad h(\vx)}(\vy - \vx) - \trans{\grad h(\vy)}(\vx - \vy).
+\end{align*} Using \cref{eq:part:1B:1}, we obtain, \begin{align*}
+    &- \trans{\grad h(\vx)}(\vy - \vx) - \trans{\grad h(\vy)}(\vx - \vy) \\
+    &\geq \begin{multlined}[t]
+        h(\vx) - h(\vy) + \frac{1}{2 \beta}\norm{\grad h(\vy) - \grad h(\vx)}_2^2 \\ + h(\vy) - h(\vx) + \frac{1}{2 \beta}\norm{\grad h(\vy) - \grad h(\vx)}_2^2
+    \end{multlined} \\
+    &= \frac{1}{\beta}\norm{\grad h(\vy) - \grad h(\vx)}_2^2. \qedhere
+\end{align*}
+\end{proof}
+
+\subsection{Part C}
+\begin{lem}\label{lem:part:1C}
+Let $f : \R^n \to \R$ be a twice continuously differentiable, $\mu$-strongly convex, $\beta$-smooth function. Then, \begin{enumerate}
+    \item $h(\vx) \defeq f(\vx) - \nicefrac{\mu}{2} \norm{\vx}_2^2$ is a convex and, if $\beta \neq \mu$, $(\beta-\mu)$-smooth function; and
+    \item $\begin{aligned}[t]
+            &\trans{(\grad f(\vx) - \grad f(\vy))}(\vx - \vy) \\
+        &\geq \frac{\mu \beta}{\beta + \mu} \norm{\vx - \vy}_2^2 + \frac{1}{\beta + \mu} \norm{\grad f(\vx) - \grad f(\vy)}_2^2.
+        \end{aligned}$
+\end{enumerate}
+\end{lem}
+\begin{proof}[Proof of (1)] Let us compute the Hessian $\mH_h$ of $h$. \begin{align*}
+    \mH_h(\vx)(i,j) &= \pdv{}{\vx(i),\vx(j)} h(\vx) \\
+    &= \pdv{}{\vx(i),\vx(j)} \parentheses*{f(\vx) - \frac{\mu}{2} \norm{\vx}_2^2} \\
+    &= \mH_f(\vx)(i,j) - \frac{\mu}{2} \underbrace{\pdv{}{\vx(i),\vx(j)} \norm{\vx}_2^2}_{=2} \\
+    &= \mH_f(\vx)(i,j) - \mu.
+\end{align*} Thus, $\mH_h(\vx) = \mH_f(\vx) - \mu \mI$ for all $\vx \in \R^n$. In particular, if $\{\lambda_i\}_i$ are the eigenvalues of $\mH_f$, then $\{\lambda_i - \mu\}_i$ are the eigenvalues of $\mH_h$.\footnote{Let $\mA \in \R^{n \times n}$ and $c \in \R$. Then, for any eigenvalue $\lambda \in \R$ of $\mA$ and corresponding eigenvector $\vx \in \R^n$, \begin{align*}
+    (\mA + c \mI)\vx &= \mA\vx + c\mI\vx \\
+    &= \lambda\vx + c\vx = (\lambda + c)\vx.
+\end{align*} Hence, $\lambda + c$ is the eigenvalue of $\mA + c\mI$ corresponding to the eigenvector $\vx$.}
+
+To show that $h$ is convex, it suffices to show that $\mH_h$ is positive semi-definite and therefore that $\lmin(\mH_h(\vx)) \geq 0$ for all $\vx \in \R^n$.\footnote{using theorem 3.2.9 and theorem 3.1.2} Using that $f$ is $\mu$-strongly convex, we have for all $\vx \in \R^n$, \begin{align*}
+    \lmin(\mH_h(\vx)) = \underbrace{\lmin(\mH_f(\vx))}_{\geq \mu} - \mu \geq \mu - \mu = 0.
+\end{align*}
+
+To show that $h$ is $(\beta - \mu)$-smooth, it suffices to show that \par\noindent $\lmax(\mH_h(\vx)) \leq \beta - \mu$ for all $\vx \in \R^n$.\footnote{using proposition 3.3.2} Using that $f$ is $\beta$-smooth, we have for all $\vx \in \R^n$, \begin{align*}
+    \lmax(\mH_h(\vx)) = \underbrace{\lmax(\mH_f(\vx))}_{\leq \beta} - \mu \leq \beta - \mu. &\qedhere
+\end{align*}
+\end{proof}
+\begin{proof}[Proof of (2)] We consider two cases. First, suppose $\beta = \mu$. We have, \begin{align*}
+    f(\vy) &\geq f(\vx) + \trans{\grad f(\vx)}(\vy - \vx) + \frac{\beta}{2}\norm{\vx - \vy}_2^2 \margintag{using exercise 19 (A) from the first problem set, where $f$ is $\beta$-strongly convex} \\
+    f(\vy) &\geq f(\vx) + \trans{\grad f(\vx)}(\vy - \vx) + \frac{1}{2\beta}\norm{\grad f(\vy) - \grad f(\vx)}_2^2. \margintag{as we have shown for $\beta$-smooth $f$ in \cref{eq:part:1B:1}}
+\end{align*} We obtain, \begin{align*}
+    &\trans{(\grad f(\vx) - \grad f(\vy))}(\vx - \vy) \\
+    &= - \trans{\grad f(\vx)}(\vy - \vx) - \trans{\grad f(\vy)}(\vx - \vy) \\
+    &\geq f(\vx) - f(\vy) + \frac{\beta}{2}\norm{\vx - \vy}_2^2 + f(\vy) - f(\vx) + \frac{1}{2\beta}\norm{\grad f(\vy) - \grad f(\vx)}_2^2 \\
+    &= \frac{\beta}{2}\norm{\vx - \vy}_2^2 + \frac{1}{2\beta}\norm{\grad f(\vy) - \grad f(\vx)}_2^2,
+\end{align*} which is what we wanted to show.
+
+Now, suppose $\beta \neq \mu$. Let $h(\vx) \defeq f(\vx) - \nicefrac{\mu}{2} \norm{\vx}_2^2$ be defined as in (1). Using our results from (1), $h$ is convex and $(\beta - \mu)$-smooth. By \cref{eq:part:1B}, we have \begin{align*}
+    \trans{(\grad h(\vx) - \grad h(\vy))}(\vx - \vy) \geq \frac{1}{\beta - \mu} \norm{\grad h(\vx) - \grad h(\vy)}_2^2.
+\end{align*} Note that $\grad h(\vx) = \grad f(\vx) - \mu \vx$. This gives us, \begin{align}
+    &\trans{(\grad f(\vx) - \grad f(\vy))}(\vx - \vy) \nonumber\\
+    &= \trans{(\grad h(\vx) - \grad h(\vy))}(\vx - \vy) + \underbrace{\trans{(\mu\vx - \mu\vy)}(\vx - \vy)}_{= \mu \norm{\vx - \vy}_2^2} \nonumber\\
+    &\geq \frac{1}{\beta - \mu} \norm{\grad h(\vx) - \grad h(\vy)}_2^2 + \mu \norm{\vx - \vy}_2^2 \nonumber\\
+    &= \frac{1}{\beta - \mu} \norm{\grad f(\vx) - \grad f(\vy) + \mu(\vy - \vx)}_2^2 + \mu \norm{\vx - \vy}_2^2. \label{eq:part:1C:2:1}
+\end{align} Expanding the squared norm, yields, \begin{align*}
+    &\norm{\grad f(\vx) - \grad f(\vy) + \mu(\vy - \vx)}_2^2 \\
+    &= \norm{\grad f(\vx) - \grad f(\vy)}_2^2 + 2\mu\trans{(\grad f(\vx) - \grad f(\vy))}(\vy - \vx) + \mu^2 \norm{\vx - \vy}_2^2 \\
+    &\geq \norm{\grad f(\vx) - \grad f(\vy)}_2^2 + \frac{2\mu}{\beta}\norm{\grad f(\vx) - \grad f(\vy)}_2^2 + \mu^2 \norm{\vx - \vy}_2^2 \margintag{using \cref{eq:part:1B} noting that $f$ is $\beta$-smooth} \\
+    &= \parentheses*{1 + \frac{2\mu}{\beta}}\norm{\grad f(\vx) - \grad f(\vy)}_2^2 + \mu^2 \norm{\vx - \vy}_2^2.
+\end{align*} Substituting back into \cref{eq:part:1C:2:1}, \begin{align*}
+    &\frac{1}{\beta - \mu} \norm{\grad f(\vx) - \grad f(\vy) + \mu(\vy - \vx)}_2^2 + \mu \norm{\vx - \vy}_2^2 \\
+    &\geq \frac{1}{\beta - \mu}\parentheses*{1 + \frac{2\mu}{\beta}}\norm{\grad f(\vx) - \grad f(\vy)}_2^2 + \mu\parentheses*{1 + \frac{\mu}{\beta - \mu}}\norm{\vx - \vy}_2^2
+\end{align*} It remains to show, \begin{enumerate}
+    \item $\frac{1}{\beta - \mu}\parentheses*{1 + \frac{2\mu}{\beta}} \geq \frac{1}{\beta + \mu}$ and
+    \item $\mu\parentheses*{1 + \frac{\mu}{\beta - \mu}} \geq \frac{\mu\beta}{\beta + \mu}$.
+\end{enumerate} It is not hard to check that both inequalities are satisfied for $\beta > 0$ and $\mu \in (0, \beta)$. Hence, to complete our proof, we will argue that $\mu \leq \beta$. Suppose for a contradiction that $\mu > \beta$. Recall that for any $\vx \in \R^n$, $\lmin(\mH_f(\vx)) \geq \mu$ and $\lmax(\mH_f(\vx)) \leq \beta$ as $f$ is $\mu$-strongly convex and $\beta$-smooth. But this yields, \begin{align*}
+    \lmin(\mH_f(\vx)) \geq \mu > \beta \geq \lmax(\mH_f(\vx)). &\qedhere
+\end{align*}
+\end{proof}
+
+\subsection{Part D}
+\begin{lem}\label{lem:part:1D}
+Let $f$ be defined as in the beginning of this section. When using a version of gradient descent with $\vx_{i+1} \defeq \vx_i - \alpha \grad f(\vx_i)$ for some $\alpha \in \R$, then \begin{align}
+    \norm{\vx_{i+1} - \s{\vx}}_2^2 \leq \parentheses*{1-\frac{2\alpha\mu\beta}{\mu + \beta}}\norm{\vx_i - \s{\vx}}_2^2 + \alpha\parentheses*{\alpha - \frac{2}{\mu + \beta}}\norm{\grad f(\vx_i)}_2^2, \label{eq:part:1D}
+\end{align} where $\s{\vx} \in \argmin_{\vx \in \R^n} f(\vx)$.
+\end{lem}
+\begin{proof} We have, \begin{align*}
+    \norm{\vx_{i+1} - \s{\vx}}_2^2 &= \norm{\vx_i - \s{\vx} - \alpha \grad f(\vx_i)}_2^2 \\
+    &= \norm{\vx_i - \s{\vx}}_2^2 - 2\alpha\trans{\grad f(\vx_i)}(\vx_i - \s{\vx}) + \alpha^2\norm{\grad f(\vx_i)}_2^2.
+\end{align*} It suffices to show, \begin{align*}
+    2\alpha\trans{\grad f(\vx_i)}(\vx_i - \s{\vx}) \geq \frac{2\alpha}{\mu + \beta}\norm{\grad f(\vx_i)}_2^2 + \frac{2\alpha\mu\beta}{\mu + \beta}\norm{\vx_i - \s{\vx}}_2^2.
+\end{align*} Dividing by $2\alpha$, observe that this is precisely what we have proven in part (2) of \cref{lem:part:1C} where $\vx \defeq \vx_i$ and $\vy \defeq \s{\vx}$.\footnote{Note that $\grad f(\s{\vx}) = 0$.}
+\end{proof}
+
+\subsection{Part E}
+\begin{lem}
+In the setting of \cref{lem:part:1D}, we have for $\alpha \defeq \nicefrac{1}{\beta}$, \begin{align}
+    \norm{\vx_k - \s{\vx}}_2^2 \leq \exp\parentheses*{-\frac{\mu}{\beta}k}\norm{\vx_0 - \s{\vx}}_2^2. \label{eq:part:1E}
+\end{align}
+\end{lem}
+\begin{proof} Unraveling the recurrence from \cref{eq:part:1D}, we get, \begin{align*}
+    \norm{\vx_k - \s{\vx}}_2^2 &\leq \parentheses*{1-\frac{2\alpha\mu\beta}{\mu + \beta}}^k \norm{\vx_0 - \s{\vx}}_2^2 + \alpha\parentheses*{\alpha - \frac{2}{\mu + \beta}}\norm{\grad f(\vx_i)}_2^2.
+\intertext{Plugging in $\alpha \defeq \nicefrac{1}{\beta}$, yields,}
+    &= \parentheses*{1-\frac{2\mu}{\mu + \beta}}^k \norm{\vx_0 - \s{\vx}}_2^2 + \frac{1}{\beta}\parentheses*{\frac{1}{\beta} - \frac{2}{\mu + \beta}}\norm{\grad f(\vx_i)}_2^2.
+\end{align*} Using $\mu \leq \beta$, we have, \begin{align*}
+    \frac{2\mu}{\mu + \beta} \geq \frac{\mu}{\beta} \quad \text{and} \quad \frac{2}{\mu + \beta} \geq \frac{1}{\beta}.
+\end{align*} We obtain, \begin{align*}
+    \norm{\vx_k - \s{\vx}}_2^2 \leq \parentheses*{1-\frac{\mu}{\beta}}^k \norm{\vx_0 - \s{\vx}}_2^2 \leq \exp\parentheses*{-\frac{\mu}{\beta}k} \norm{\vx_0 - \s{\vx}}_2^2. &\qedhere \margintag{using that $1+x \leq \exp(x)$ for all $x \in \R$}
+\end{align*}
+\end{proof}
+
+\subsection{Part F}
+We will first show a result for the version of gradient descent we have seen in parts D and E. We will then improve on this result using acceleration. The proof of this statement is not required for our improved version.
+\begin{thm}\label{thm:part:1F:1}
+Let $f : \R^n \to \R$ be a $\mu$-strongly convex and $\beta$-smooth function that is twice continuously differentiable. Then, gradient descent with $\vx_{i+1} \defeq \vx_i - \nicefrac{1}{\beta} \grad f(\vx_i)$ yields an approximate solution $\vx_k$ such that for any $\epsilon > 0$, \begin{align*}
+    f(\vx_k) - f(\s{\vx}) \leq \epsilon
+\end{align*} where $\s{\vx} \in \argmin_{\vx \in \R^n} f(\vx)$ and the gradient of $f$ is computed at at most $\kappa \log(\nicefrac{\beta \norm{\vx_0 - \s{\vx}}_2^2}{2\epsilon})$ points.\footnote{$\kappa \defeq \nicefrac{\beta}{\mu}$ is the \emph{condition number} of $f$.}
+\end{thm}
+\begin{proof} First, note that during each iteration of the given scheme, the gradient of $f$ is evaluated at exactly one point. It therefore suffices to bound the number of iterations until we get an $\epsilon$-optimal solution.
+
+As $f$ is $\beta$-smooth, we have, \begin{align*}
+    f(\vx_k) \leq f(\s{\vx}) + \trans{\grad f(\s{\vx})}(\vx_k - \s{\vx}) + \frac{\beta}{2}\norm{\vx_k - \s{\vx}}_2^2.
+\end{align*} Noting that $\grad f(\s{\vx}) = 0$ and rearranging the terms, we obtain, \begin{align*}
+    f(\vx_k) - f(\s{\vx}) &\leq \frac{\beta}{2}\norm{\vx_k - \s{\vx}}_2^2.
+\intertext{Using \cref{eq:part:1E}, we get,}
+    &\leq \frac{\beta}{2}\exp\parentheses*{-\frac{k}{\kappa}}\norm{\vx_0 - \s{\vx}}_2^2 \overset{!}{\leq} \epsilon.
+\end{align*} Solving the inequality for $k$, yields, \begin{align*}
+    k \geq \kappa \log\parentheses*{\frac{\beta \norm{\vx_0 - \s{\vx}}_2^2}{2\epsilon}}
+\end{align*} as desired.
+\end{proof}
+
+We now show that we can improve the previous result using acceleration to only require order $\sqrt{\kappa}$ rather than order of $\kappa$ iterations to converge to an $\epsilon$-optimal solution.
+
+\begin{thm}\label{thm:part:1F:2}
+Let $f : \R^n \to \R$ be a $\mu$-strongly convex and $\beta$-smooth function that is twice continuously differentiable. Let $\vx_0 \in \R$ be any initial guess. Then, the iterative scheme, \begin{align}
+    \vy_0 &\defeq \vx_0 \\
+    \vy_{i+1} &\defeq \vx_i - \frac{1}{\beta}\grad f(\vx_i) \\
+    \vx_{i+1} &\defeq (1+\theta)\vy_{i+1} - \theta\vy_i \quad \text{for $\theta \defeq \frac{\sqrt{\kappa}-1}{\sqrt{\kappa}+1}$},
+\end{align} yields an approximate solution $\vy_k$ such that for any $\epsilon > 0$, \begin{align*}
+    f(\vy_k) - f(\s{\vx}) \leq \epsilon
+\end{align*} where $\s{\vx} \in \argmin_{\vx \in \R^n} f(\vx)$ and the gradient of $f$ is computed at at most $\sqrt{\kappa} \log(\nicefrac{\beta \norm{\vx_0 - \s{\vx}}_2^2}{\epsilon})$ points.\footnote{The proof of this theorem is inspired by the lecture on accelerated gradient descent and section 3.7.1 of \citep{bubeck2015convex}.}
+\end{thm}
+
+Note that the sequence $\{\vy_i\}_i$ is similar to the gradient descent scheme that we have examined previously. We choose $x_i$ as a convex combination of the previous and current best guess. Our approach will be to (1) upper bound $f(\vy_i)$ by a function $\phi_i : \R^n \to \R$, of which we (2) show that $\phi_i(\vx)$ converges to $f(\vx)$ quickly.
+
+We define $\phi_i$ iteratively, \begin{align}
+    \phi_0(\vx) &\defeq f(\vx_0) + \frac{\mu}{2}\norm{\vx - \vx_0}_2^2 \label{eq:part:1F:phi_base} \\
+    \phi_{i+1}(\vx) &\defeq (1-\gamma)\phi_i(\vx) + \gamma\parentheses*{f(\vx_i) + \trans{\grad f(\vx_i)}(\vx - \vx_i) + \frac{\mu}{2}\norm{\vx - \vx_i}_2^2}, \label{eq:part:1F:phi_ind}
+\end{align} as the convex combination of itself and a second-order Taylor approximation of $f$ at $\vx_i$ where we write $\gamma \defeq \nicefrac{1}{\sqrt{\kappa}} = \sqrt{\nicefrac{\mu}{\beta}}$ to simplify notation. It is easy to see that $\phi_i$ is convex.\footnote{We will later show that $\phi_i$ is $\mu$-strongly convex.} Our analysis rests on the following two claims, which we will prove later.
+
+\begin{clm}[Upper bound]\label{clm:part:1F:1}
+$f(\vy_i) \leq \min_{\vx \in \R^n} \phi_i(\vx)$.
+\end{clm}
+\begin{clm}[Fast convergence]\label{clm:part:1F:2}
+$\phi_i(\vx) \leq f(\vx) + (1-\gamma)^i(\phi_0(\vx) - f(\vx))$.
+\end{clm}
+
+\begin{proof}[Proof of \cref{thm:part:1F:2}] By \cref{clm:part:1F:1}, $f(\vy_i) \leq \phi_i(\s{\vx})$ during all iterations $i$. Therefore, \begin{align*}
+    f(\vy_k) - f(\s{\vx}) &\leq \phi_k(\s{\vx}) - f(\s{\vx}) \\
+    &\leq (1-\gamma)^k(\phi_0(\s{\vx}) - f(\s{\vx})) \margintag{using \cref{clm:part:1F:2}} \\
+    &= (1-\gamma)^k(f(\vx_0) - f(\s{\vx}) + \frac{\mu}{2}\norm{\vx_0 - \s{\vx}}_2^2). \margintag{using the definition of $\phi_0$, \cref{eq:part:1F:phi_base}} \\
+    &\leq (1-\gamma)^k\frac{\mu + \beta}{2}\norm{\vx_0 - \s{\vx}}_2^2 \margintag{using $f(\vx) - f(\s{\vx}) \leq \frac{\beta}{2}\norm{\vx - \s{\vx}}_2^2$ as $f$ is $\beta$-smooth, see the proof of \cref{thm:part:1F:1}} \\
+    &\leq (1-\gamma)^k\beta\norm{\vx_0 - \s{\vx}}_2^2 \margintag{using $\mu \leq \beta$} \\
+    &\leq \exp\parentheses*{-\frac{k}{\sqrt{\kappa}}}\beta\norm{\vx_0 - \s{\vx}}_2^2 \overset{!}{\leq} \epsilon \margintag{using that $1+x \leq \exp(x)$ for all $x \in \R$}
+\end{align*} Solving the inequality for $k$, yields, \begin{align*}
+    k \geq \sqrt{\kappa} \log\parentheses*{\frac{\beta\norm{\vx_0 - \s{\vx}}_2^2}{\epsilon}}
+\end{align*} as desired.
+\end{proof}
+
+It remains to prove the two claims.
+\begin{proof}[Proof of \cref{clm:part:1F:2}] We prove the claim by induction on $i$. In the base case, $i=0$, we immediately have, \begin{align*}
+    f(\vx) + (1-\gamma)^0(\phi_0(\vx) - f(\vx)) = \phi_0(\vx).
+\end{align*}
+
+Let us now consider any fixed $i \in \Nat_0$ and suppose that the statement holds for $i$. We have, \begin{align*}
+    \phi_{i+1}(\vx) &= (1-\gamma)\phi_i(\vx) + \gamma\parentheses*{f(\vx_i) + \trans{\grad f(\vx_i)}(\vx - \vx_i) + \frac{\mu}{2}\norm{\vx - \vx_i}_2^2} \margintag{using the definition of $\phi_{i+1}$, \cref{eq:part:1F:phi_ind}} \\
+    &\leq \begin{multlined}[t]
+        (1-\gamma)^{i+1}(\phi_0(\vx) - f(\vx)) + (1-\gamma)f(\vx) \\ + \gamma\parentheses*{f(\vx_i) + \trans{\grad f(\vx_i)}(\vx - \vx_i) + \frac{\mu}{2}\norm{\vx - \vx_i}_2^2}.
+    \end{multlined} \margintag{using the induction hypothesis}
+\end{align*} Finally, observe that \begin{align*}
+    f(\vx) \geq f(\vx_i) + \trans{\grad f(\vx_i)}(\vx - \vx_i) + \frac{\mu}{2}\norm{\vx - \vx_i}_2^2
+\end{align*} as $f$ is $\mu$-strongly convex. Noting that $(1-\gamma)f(\vx) + \gamma f(\vx) = f(\vx)$, completes the proof.
+\end{proof}
+
+To prove the final claim, we define $\vv_i \defeq \argmin_{\vx \in \R^n} \phi_i(\vx)$ and $\s{\phi_i} \defeq \min_{\vx \in \R^n} \phi_i(\vx)$.
+
+\begin{clm}\label{clm:part:1F:3}
+$\s{\phi_{i+1}} \geq \begin{multlined}[t](1-\gamma)\s{\phi_i} + (1-\gamma)\trans{\grad f(\vx_i)}(\vx_i - \vy_i) + \gamma f(\vx_i) \\ - \frac{1}{2\beta}\norm{\grad f(\vx_i)}_2^2.\end{multlined}$
+\end{clm}
+
+\begin{proof}[Proof of \cref{clm:part:1F:1}] We prove the claim by induction on $i$. In the base case, $i = 0$, we have, \begin{align*}
+    f(\vy_0) = f(\vx_0) \leq \min_{\vx \in \R^n} f(\vx_0) + \underbrace{\frac{\mu}{2}\norm{\vx - \vx_0}_2^2}_{\geq 0} = \min_{\vx \in \R^n} \phi_0(\vx),
+\end{align*} using that $\vy_0 = \vx_0$.
+
+Let us now consider any fixed $i \in \Nat_0$ and suppose that the statement holds for $i$. By the $\beta$-smoothness of $f$, we have, \begin{align*}
+    f(\vy_{i+1}) \leq f(\vx_i) + \trans{\grad f(\vx_i)}(\vy_{i+1} - \vx_i) + \frac{\beta}{2}\norm{\vy_{i+1} - \vx_i}_2^2.
+\end{align*} By the definition of $\vy_{i+1}$, we have $\vy_{i+1} - \vx_i = - \nicefrac{\grad f(\vx_i)}{\beta}$ and the inequality simplifies to, \begin{align*}
+    f(\vy_{i+1}) &\leq f(\vx_i) - \frac{1}{2\beta}\norm{\grad f(\vx_i)}_2^2 \\
+    &= (1-\gamma)f(\vy_i) - (1-\gamma)f(\vy_i) + f(\vx_i) - \frac{1}{2\beta}\norm{\grad f(\vx_i)}_2^2 \\
+    &\leq (1-\gamma)\s{\phi_i} - (1-\gamma)f(\vy_i) + f(\vx_i) - \frac{1}{2\beta}\norm{\grad f(\vx_i)}_2^2 \margintag{using the induction hypothesis} \\
+    &= (1-\gamma)\s{\phi_i} + (1-\gamma)(f(\vx_i) - f(\vy_i)) + \gamma f(\vx_i) - \frac{1}{2\beta}\norm{\grad f(\vx_i)}_2^2
+\end{align*} Using the first-order characterization of convexity, we have, \begin{align*}
+    f(\vx_i) - f(\vy_i) \leq \trans{\grad f(\vx_i)}(\vx_i - \vy_i).
+\end{align*} Combining the previous two inequalities, yields, \begin{align*}
+    f(\vy_{i+1}) \leq \begin{multlined}[t]
+        (1-\gamma)\s{\phi_i} + (1-\gamma)\trans{\grad f(\vx_i)}(\vx_i - \vy_i) + \gamma f(\vx_i) \\ - \frac{1}{2\beta}\norm{\grad f(\vx_i)}_2^2.
+    \end{multlined}
+\end{align*} $f(\vy_{i+1}) \leq \s{\phi_{i+1}}$ follows by \cref{clm:part:1F:3}.
+\end{proof}
+
+\begin{clm}\label{clm:part:1F:4}
+We use the following simple observations for our proof of \cref{clm:part:1F:3}.
+\begin{enumerate}
+    \item $\phi_i(\vx) = \s{\phi_i} + \frac{\mu}{2}\norm{\vx - \vv_i}_2^2$.
+    \item $\vv_{i+1} = (1-\gamma)\vv_i + \gamma\parentheses*{\vx_i - \frac{1}{\mu}\grad f(\vx_i)}$.
+    \item $\vv_i - \vx_i = \frac{\vx_i - \vy_i}{\gamma}$.
+\end{enumerate}
+\end{clm}
+
+\begin{proof}[Proof of \cref{clm:part:1F:3}] We have, \begin{align*}
+    \s{\phi_{i+1}} + \frac{\mu}{2}\norm{\vx_i - \vv_{i+1}}_2^2 &= \phi_{i+1}(\vx_i) \margintag{using \cref{clm:part:1F:4}(1)} \\
+    &= (1-\gamma)\phi_i(\vx_i) + \gamma f(\vx_i) \margintag{using the definition of $\phi_{i+1}$, \cref{eq:part:1F:phi_ind}} \\
+    &= (1-\gamma)\s{\phi_i} + (1-\gamma)\frac{\mu}{2}\norm{\vx_i-\vv_i}_2^2 + \gamma f(\vx_i) \margintag{using \cref{clm:part:1F:4}(1)}.
+\end{align*} By rearranging the terms, we get, \begin{align*}
+    \s{\phi_{i+1}} = (1-\gamma)\s{\phi_i} + (1-\gamma)\frac{\mu}{2}\norm{\vx_i-\vv_i}_2^2 + \gamma f(\vx_i) - \frac{\mu}{2}\norm{\vx_i - \vv_{i+1}}_2^2.
+\end{align*} Using \cref{clm:part:1F:4}(2), we have, \begin{align*}
+    \norm{\vx_i - \vv_{i+1}}_2^2 &= \norm{(1-\gamma)(\vx_i - \vv_i) + \frac{\gamma}{\mu}\grad f(\vx_i)}_2^2 \\
+    &= \begin{multlined}[t]
+        (1-\gamma)^2\norm{\vx_i - \vv_i}_2^2 - 2(1-\gamma)\frac{\gamma}{\mu}\trans{\grad f(\vx_i)}(\vv_i - \vx_i) \\ + \frac{\gamma^2}{\mu^2}\norm{\grad f(\vx_i)}_2^2.
+    \end{multlined}
+\end{align*} Combining the two equalities, we obtain, \begin{align*}
+    \s{\phi_{i+1}} &= \begin{multlined}[t]
+        (1-\gamma)\s{\phi_i} + \underbrace{\gamma(1-\gamma)\frac{\mu}{2}\norm{\vx_i-\vv_i}_2^2}_{\geq 0} \\ + \gamma f(\vx_i) + \gamma(1-\gamma)\trans{\grad f(\vx_i)}(\vv_i - \vx_i) - \frac{1}{2\beta}\norm{\grad f(\vx_i)}_2^2
+    \end{multlined} \\
+    &\geq (1-\gamma)\s{\phi_i} + \gamma f(\vx_i) + (1-\gamma)\trans{\grad f(\vx_i)}(\vx_i - \vy_i) - \frac{1}{2\beta}\norm{\grad f(\vx_i)}_2^2, \margintag{using \cref{clm:part:1F:4}(3)}
+\end{align*} as desired.
+\end{proof}
+
+We finish by giving formal proofs of the statements in \cref{clm:part:1F:4} even though they are similar to proofs we have seen in class and the weekly problem sets.
+\begin{proof}[Proof of \cref{clm:part:1F:4}(1)] We first show by induction on $i$ that $\mH_{\phi_i}(\vx) = \mu\mI$ for all $\vx \in \R^n$ and $i \geq 0$. By a simple calculation, we have, \begin{align*}
+    \grad \phi_0(\vx) = \mu(\vx - \vx_0) \quad \text{and} \quad \mH_{\phi_0}(\vx) = \mu\mI.
+\end{align*} Let us consider any fixed $i \in \Nat_0$ and suppose that the statement holds for $i$. Following from the definition of $\phi_{i+1}$, we have, \begin{align*}
+    \grad \phi_{i+1}(\vx) &= (1-\gamma)\grad \phi_i(\vx) + \gamma\parentheses*{\grad f(\vx_i) + \mu(\vx - \vx_i)} \quad\text{and} \\
+    \mH_{\phi_{i+1}}(\vx) &= (1-\gamma)\mH_{\phi_i}(\vx) + \gamma\mu\mI.
+\end{align*} Using the induction hypothesis, we conclude, \begin{align*}
+    \mH_{\phi_{i+1}}(\vx) = (1-\gamma)\mu\mI + \gamma\mu\mI = \mu\mI.
+\end{align*} In particular, this shows that $\phi_i$ is $\mu$-strongly convex.
+
+Note that the highest-order term in $\phi_i$ must therefore be of order two. It is easy to see that any quadratic function that satisfies $\mH_{\phi_{i+1}}(\vx) = \mu\mI$ and $\s{\phi_i} = \min_{\vx \in \R^n} \phi_i(\vx)$, can be written as\footnote{Consider an arbitrary quadratic function $g(\vx) = \trans{\vx}\mA\vx + \trans{\vx}\vb + c$ with minimum $m$ and $\mH_g(\vx) = \mA + \trans{\mA} = \mu\mI$. Thus, $A = \nicefrac{\mu}{2}\mI$. Now, consider the function \begin{align*}
+    h(\vx) &= \frac{\mu}{2}\norm{\vx - \vz}_2^2 + m \\
+    &= \frac{\mu}{2}\norm{\vx}_2^2 - \mu\trans{\vx}\vz + \frac{\mu}{2}\norm{\vz}_2^2 + m.
+\end{align*} To get $h \equiv g$, we simply need to set $\vz = -\nicefrac{\vb}{\mu}$. As $\vz$ is the minimizer of both $h$ and $g$, $c = \nicefrac{\mu}{2}\norm{\vz}_2^2 - m$ is uniquely determined using that the minimum of $h$ and $g$ is $m$.} \begin{align*}
+    \phi_i(\vx) = \frac{\mu}{2}\norm{\vx - \vz}_2^2 + \s{\phi_i}
+\end{align*} for some $\vz \in \R^n$. We immediately see that $\phi_i$ is minimized by $\vz$, and hence, $\vz = \vv_i$.
+\end{proof}
+
+\begin{proof}[Proof of \cref{clm:part:1F:4}(2)] Recall, \begin{align*}
+    \grad \phi_{i+1}(\vx) &= (1-\gamma)\grad \phi_i(\vx) + \gamma\parentheses*{\grad f(\vx_i) + \mu(\vx - \vx_i)}.
+\intertext{Using \cref{clm:part:1F:4}(1), we get,}
+    &= (1-\gamma)\grad\parentheses*{\frac{\mu}{2}\norm{\vx - \vv_i}_2^2 + \s{\phi_i}} + \gamma\parentheses*{\grad f(\vx_i) + \mu(\vx - \vx_i)} \\
+    &= (1-\gamma)\mu\parentheses*{\vx - \vv_i} + \gamma\parentheses*{\grad f(\vx_i) + \mu(\vx - \vx_i)} \\
+    &= \mu\vx - \mu(1-\gamma)\vv_i - \mu\gamma\vx_i + \gamma\grad f(\vx_i) \overset{!}{=} 0.
+\end{align*} Solving the equation for $\vx$, yields, \begin{align*}
+    \vx = (1-\gamma)\vv_i + \gamma\vx_i - \frac{\gamma}{\mu}\grad f(\vx_i).
+\end{align*} As $\phi_{i+1}$ is convex, $\vx$ minimizes $\phi_{i+1}$, and hence, $\vv_{i+1} = \vx$.\footnote{As $\phi_{i+1}$ is $\mu$-strongly convex, it is strictly convex, and therefore $\vx$ is its unique minimizer.}
+\end{proof}
+
+\begin{proof}[Proof of \cref{clm:part:1F:4}(3)] We prove the statement by induction on $i$. For $i=0$, note that the minimizer $\vv_0$ of $\phi_0$ is $\vx$ and hence, \begin{align*}
+    \vv_0 - \vx_0 = 0 = \vx_0 - \vy_0. \margintag{using that $\vx_0 = \vy_0$}
+\end{align*} Let us consider any fixed $i \in \Nat_0$ and suppose that the statement holds for $i$. We have, \begin{align*}
+    \vv_{i+1} - \vx_{i+1} &= (1-\gamma)\vv_i + \gamma\vx_i - \frac{1}{\gamma\beta}\grad f(\vx_i) - \vx_{i+1} \margintag{using \cref{clm:part:1F:4}(2) and the identity $\nicefrac{\gamma}{\mu} = \nicefrac{1}{\gamma\beta}$} \\
+    &= \frac{1}{\gamma}\vx_i - \parentheses*{\frac{1}{\gamma} - 1}\vy_i - \frac{1}{\gamma\beta}\grad f(\vx_i) - \vx_{i+1} \margintag{using the induction hypothesis} \\
+    &= \frac{1}{\gamma}\vy_{i+1} - \parentheses*{\frac{1}{\gamma} - 1}\vy_i - \vx_{i+1} \margintag{using the definition of $\vy_{i+1}$, $\vx_i = \vy_{i+1} + \nicefrac{1}{\beta}\grad f(\vx_i)$} \\
+    &\overset{!}{=} \frac{\vx_{i+1} - \vy_{i+1}}{\gamma}.
+\end{align*} Solving the equation for $\vx_{i+1}$, we obtain, \begin{align*}
+    \vx_{i+1} = (1+\theta)\vy_{i+1} - \theta\vy_i \quad \text{for $\theta = \frac{1-\gamma}{\gamma+1} = \frac{\sqrt{\kappa}-1}{\sqrt{\kappa}+1}$},
+\end{align*} which coincides precisely with our choice of $\vx_{i+1}$.
+\end{proof}
+
+\section{A different kind of smoothness}
+\begin{defn}
+A \emph{norm} on $\R^n$ is a function $\norm{\cdot} : \R^n \to \R$ such that \begin{enumerate}
+    \item for every $a \in \R$ and $\vx \in \R^n$, $\norm{a \vx} = \abs{a} \norm{\vx}$;
+    \item for every $\vx, \vy \in \R^n$, $\norm{\vx+\vy} \leq \norm{\vx}+\norm{\vy}$; and
+    \item for every $\vx \in \R^n$, $\norm{\vx} = 0$ implies $\vx = \vZero$.
+\end{enumerate}
+\end{defn}
+\begin{defn}
+Given the norm $\norm{\cdot}$ on $\R^n$ its \emph{dual norm} $\norm{\cdot}_*$ is defined as, \begin{align}
+    \norm{\vx}_* \defeq \sup\{\trans{\vz}\vx \mid \vz \in \R^n, \norm{\vz}=1\}.
+\end{align}
+\end{defn}
+
+\subsection{Part A}
+\begin{lem}\label{lem:part:2A}
+\leavevmode\begin{enumerate}
+    \item The supremum in the definition of the dual norm is obtained.
+    \item $\norm{\cdot}_*$ is a norm on $\R^n$.
+    \item $\trans{\vx}\vy \leq \norm{\vx} \norm{\vy}_*$.
+    \item $\parentheses*{\norm{\vx}_*}_* \leq \norm{\vx}$.\footnote{The other direction holds too, but is not shown here.}
+\end{enumerate}
+\end{lem}
+\begin{proof}[Proof of (1)] Let $\sB \defeq \{\vz \in \R^n \mid \norm{\vz}=1\} \subseteq \R^n$ be the unit ball and consider the linear functional, \begin{align*}
+    f_\vx : \sB \to \R, \vz \mapsto \trans{\vz}\vx.
+\end{align*} We want to show that $\im f_\vx$ has a supremum. By the completeness axiom, it is sufficient to show that $\im f_\vx$ is nonempty and bounded (as $\im f_\vx \subseteq \R$).
+
+Note that $\im f_\vx \neq \emptyset$ follows from the simple observation that $\sB \neq \emptyset$.\footnote{We have that $\sB$ is nonempty, as we have for any $\vx \in \R^n \setminus \{\vZero\}$ that the unit vector $\nicefrac{\vx}{\norm{\vx}} \in \sB$.}
+
+To show that $\im f_\vx$ is bounded, recall that the unit ball $\sB$ is bounded. Thus, it suffices to show that $f_\vx$ is a bounded operator. For any $\vz \in \R^n$, we have, \begin{align*}
+    \abs{f_\vx(\vz)} = \abs{\trans{\vz}\vx} &\leq \norm{\vz}_2 \norm{\vx}_2,
+\intertext{using the Cauchy-Schwartz inequality. Now, recall that all norms on $\R^n$ are equivalent.\safefootnote{In particular, there exists $C \in \R$ such that for all $\vx \in \R^n$, $\norm{\vx}_2 \leq C\norm{\vx}$.} Using this fact, we obtain,}
+    &\leq \underbrace{C \norm{\vx}_2}_{\text{const.}} \norm{\vz},
+\end{align*} proving that $f_\vx$ is a bounded operator and $\im f_\vx$ is bounded.
+\end{proof}
+
+\begin{proof}[Proof of (2)] We check the three properties of a norm. We fix arbitrary $a \in \R$ and $\vx, \vy \in \R^n$. \begin{enumerate}
+    \item $\begin{aligned}[t]\norm{a \vx}_* = \sup_{\norm{\vz}=1} a\trans{\vz}\vx = \sup_{\norm{\vz}=1} \abs{a}\trans{\vz}\vx = \abs{a} \sup_{\norm{\vz}=1} \trans{\vz}\vx = \abs{a} \norm{\vx}_*.\end{aligned}$ \margintag{using that $\sup \trans{\vz}\vx = \sup \trans{\vz}(-\vx)$ as $\norm{\vz}=1$ implies $\norm{-\vz}=1$}
+    \item $\begin{aligned}[t]\norm{\vx + \vy}_* &= \sup_{\norm{\vz}=1} \trans{\vz}(\vx+\vy) = \sup_{\norm{\vz}=1} \trans{\vz}\vx + \trans{\vz}\vy \\
+    &\leq \sup_{\norm{\vz}=1} \trans{\vz}\vx + \sup_{\norm{\vz}=1} \trans{\vz}\vy = \norm{\vx}_* + \norm{\vy}_*.\margintag{using that $\sup a + b \leq \sup a + \sup b$}\end{aligned}$
+    \item We prove the contrapositive of positive definiteness. Suppose $\vx \neq \vZero$. Then, using the unit vector $\vz \defeq \nicefrac{\vx}{\norm{\vx}}$,\par $\norm{\vx}_* = \sup_{\norm{\vz}=1} \trans{\vz}\vx \geq \nicefrac{\norm{\vx}_2^2}{\norm{\vx}} > 0$. \qedhere
+\end{enumerate}
+\end{proof}
+
+\begin{proof}[Proof of (3)] Taking the unit vector $\vz \defeq \nicefrac{\vx}{\norm{\vx}}$, we get, \begin{align*}
+    \norm{\vy}_* = \sup_{\norm{\vz}=1} \trans{\vz}\vy \geq \frac{\trans{\vx}\vy}{\norm{\vx}}.
+\end{align*} Rearranging the terms, yields the desired result.
+\end{proof}
+
+\begin{proof}[Proof of (4)] First, note that the dual norm can be characterized equivalently as, \begin{align}
+    \norm{\vx}_* = \sup_{\norm{\vz}=1} \trans{\vz}\vx = \sup_{\vy \neq \vZero} \frac{\trans{\vy}\vx}{\norm{\vy}},
+\end{align} by taking the unit vector $\vz \defeq \nicefrac{\vy}{\norm{\vy}}$. Using this characterization, we obtain, \begin{align*}
+    \parentheses*{\norm{\vx}_*}_* &= \sup_{\vz\neq\vZero} \frac{\trans{\vz}\vx}{\norm{\vz}_*} \\
+    &= \sup_{\vz\neq\vZero} \frac{\trans{\vz}\vx}{\sup_{\vy\neq\vZero} \frac{\trans{\vy}\vz}{\norm{\vy}}} \\
+    &= \sup_{\vz\neq\vZero} \trans{\vz}\vx \inf_{\vy\neq\vZero} \frac{\norm{\vy}}{\trans{\vy}\vz} \\
+    &= \sup_{\vz\neq\vZero} \inf_{\vy\neq\vZero} \norm{\vy}\frac{\trans{\vz}\vx}{\trans{\vy}\vz} \\
+    &\leq \inf_{\vy\neq\vZero} \norm{\vy} \sup_{\vz\neq\vZero} \frac{\trans{\vz}\vx}{\trans{\vy}\vz}. \margintag{using the max-min inequality}
+\intertext{Observe that when $\vx$ and $\vy$ are not linearly dependent, their fraction can be made arbitrarily large, and hence, in this case the supremum is $\infty$. If, on the other hand $\vy = \alpha\vx$ for some $\alpha \in \R^n$, then the fraction evaluates to $\nicefrac{1}{\alpha}$. This observation yields,}
+    &= \alpha\norm{\vx} \cdot \frac{1}{\alpha} = \norm{\vx},
+\end{align*} where we used absolute homogeneity.
+\end{proof}
+
+\subsection{Part B}
+\begin{defn}
+\leavevmode\begin{enumerate}
+    \item Given any positive definite matrix $\mM$, the \emph{Mahalanobis norm} is defined as $\norm{\vx}_\mM \defeq \sqrt{\trans{\vx}\mM\vx}$.
+    \item The \emph{uniform norm} is defined as $\norm{\vx}_\infty \defeq \max_i \abs{\vx(i)}$.
+    \item The \emph{Manhattan norm} is defined as $\norm{\vx}_1 \defeq \sum_i \abs{\vx(i)}$.
+\end{enumerate}
+\end{defn}
+
+\begin{lem}
+\leavevmode\begin{enumerate}
+    \item $\parentheses*{\norm{\cdot}_\mM}_* = \norm{\cdot}_{\mM^{-1}}$.
+    \item $\parentheses*{\norm{\cdot}_\infty}_* = \norm{\cdot}_1$.
+\end{enumerate}
+\end{lem}
+
+\begin{proof}[Proof of (1)] As $\mM$ is positive definite, it can be factorized uniquely\footnote{by the Cholesky decomposition} into $\mM = \mL\trans{\mL}$ where $\mL$ is lower triangular with positive entries on the diagonal. We write $\mM^{\nicefrac{1}{2}} \defeq \mL$. Also note that as $\mM$ is positive definite, it is symmetric. We have for any $\vx \in \R^n$, \begin{align*}
+    \parentheses*{\norm{\vx}_\mM}_* &= \sup_{\norm{\vz}_\mM=1} \trans{\vz}\vx.
+\intertext{We substitute $\vy \defeq \mM^{\nicefrac{1}{2}}\vz$,\safefootnote{We have $\vz = \mM^{-\nicefrac{1}{2}}\vy$ and \begin{align*}
+    \norm{\vz}_\mM &= \sqrt{\trans{\vz}\mM\vz} \\
+    &= \sqrt{\trans{\parentheses*{\mM^{-\nicefrac{1}{2}}\vy}}\mM\mM^{-\nicefrac{1}{2}}\vy} \\
+    &= \sqrt{\trans{\vy}\vy} = \norm{\vy}_2.
+\end{align*}}}
+    &= \sup_{\norm{\vy}_2=1} \trans{\vx} \mM^{-\nicefrac{1}{2}} \vy \\
+    &= \sup_{\norm{\vy}_2=1} \trans{\parentheses*{\mM^{-\nicefrac{1}{2}} \vx}} \vy \\
+    &\leq \sup_{\norm{\vy}_2=1} \norm{\mM^{-\nicefrac{1}{2}} \vx}_2 \underbrace{\norm{\vy}_2}_{=1} = \norm{\mM^{-\nicefrac{1}{2}} \vx}_2 \margintag{using the Cauchy-Schwartz inequality} \\
+    &= \sqrt{\trans{\parentheses*{\mM^{-\nicefrac{1}{2}} \vx}}\mM^{-\nicefrac{1}{2}} \vx} = \sqrt{\trans{\vx}\mM^{-1}\vx} = \norm{\vx}_{\mM^{-1}}.
+\end{align*} Moreover, for $\vy \defeq \nicefrac{\mM^{-\nicefrac{1}{2}}\vx}{\norm{\mM^{-\nicefrac{1}{2}}\vx}_2}$, we have,\footnote{Note that $\vy$ is normalized to unit length, i.e., $\norm{\vy}_2 = 1$.} \begin{align*}
+    \parentheses*{\norm{\vx}_\mM}_* &\geq \frac{\norm{\mM^{-\nicefrac{1}{2}}\vx}_2^2}{\norm{\mM^{-\nicefrac{1}{2}}\vx}_2} \\
+    &= \norm{\mM^{-\nicefrac{1}{2}}\vx}_2 = \norm{\vx}_{\mM^{-1}}.
+\end{align*} Hence, $\parentheses*{\norm{\vx}_\mM}_* = \norm{\vx}_{\mM^{-1}}$.
+\end{proof}
+\begin{cor}
+In particular, the euclidean norm $\norm{\cdot}_2$ is self-dual.
+\end{cor}
+\begin{proof}
+$\parentheses*{\norm{\cdot}_2}_* = \parentheses*{\norm{\cdot}_\mI}_* = \norm{\cdot}_{\mI} =  \norm{\cdot}_2$.
+\end{proof}
+
+\begin{proof}[Proof of (2)] We have, \begin{align*}
+    \parentheses*{\norm{\cdot}_\infty}_* &= \sup_{\norm{\vz}_\infty=1} \trans{\vz}\vx \\
+    &= \sup_{\max_i \abs{\vz(i)} = 1} \trans{\vz}\vx.
+\end{align*} Clearly, \begin{align*}
+    \vz(i) \defeq \begin{cases}
+        1 & \vx(i) \geq 0 \\
+        -1 & \vx(i) < 0
+    \end{cases}
+\end{align*} is a least upper bound for $\trans{\vz}\vx$. To see this, suppose for a contradiction that there exists a $\vy \in \R^n$ such that $\trans{\vy}\vx > \trans{\vz}\vx$. But then, we must have for at least one coordinate $i$ that $\abs{\vy(i)} > 1$, contradicting $\norm{\vy}_\infty = 1$. We obtain, \begin{align*}
+    \parentheses*{\norm{\cdot}_\infty}_* &= \trans{\vz}\vx = \sum_i \abs{\vx(i)} = \norm{\vx}_1. \qedhere
+\end{align*}
+\end{proof}
+
+\subsection{Part C}
+\begin{defn}
+Given a norm $\norm{\cdot} : \R^n \to \R$, the \emph{dual vector map} is a function $\dvm{\cdot} : \R^n \to \R^n$ such that $\trans{\vx}\dvm{\vx} = \norm{\vx}$ and $\norm{\dvm{\vx}}_* = 1$.
+\end{defn}
+
+We will often work with the dual vector map with respect to the dual norm of a given norm $\norm{\cdot}$. We denote this dual vector map by $\dvm{\cdot}_*$. Using the aforementioned properties, we have, \begin{enumerate}
+    \item $\trans{\vx}\dvm{\vx}_* = \norm{\vx}_*$ and
+    \item $\parentheses*{\norm{\dvm{\vx}_*}_*}_* = \norm{\dvm{\vx}_*} = 1$. \margintag{using that $\parentheses*{\norm{\cdot}_*}_* = \norm{\cdot}$}
+\end{enumerate}
+
+\begin{lem}
+\leavevmode\begin{enumerate}
+    \item The dual vector map for $\norm{\cdot}_\mM$ is $\dvm{\vx} \defeq \nicefrac{\mM\vx}{\sqrt{\trans{\vx}\mM\vx}}$ and unique.
+    \item A (non-unique) dual vector map for $\norm{\cdot}_1$ is given by, \begin{align}
+        \dvm{\vx}(i) \defeq \begin{cases}
+            1 & \vx(i) \geq 0 \\
+            -1 & \vx(i) < 0.
+        \end{cases} \label{eq:part:2c:1}
+    \end{align}
+    \item A (non-unique) dual vector map for $\norm{\cdot}_\infty$ is given by, \begin{align}
+        \dvm{\vx}(i) \defeq \begin{cases}
+            1 & \text{$i=j$ and $\vx(i) \geq 0$} \\
+            -1 & \text{$i=j$ and $\vx(i) < 0$} \\
+            0 & \text{otherwise},
+        \end{cases}
+    \end{align} where $j \in \argmax_j \abs{\vx(j)}$ is arbitrary but fixed.
+\end{enumerate}
+\end{lem}
+
+\noindent Note that in our analysis of the dual vector map, we exclude the case $\vx = \vZero$, as any unit vector can be chosen as the dual vector to $\vZero$.\footnote{This would immediately imply that there are infinitely many dual vector maps.}
+
+\begin{proof}[Proof of (1)] We have, \begin{align*}
+    \trans{\vx}\dvm{\vx} &= \frac{\trans{\vx}\mM\vx}{\sqrt{\trans{\vx}\mM\vx}} = \sqrt{\trans{\vx}\mM\vx} = \norm{\vx}_\mM \quad \text{and} \\
+    \norm{\dvm{\vx}}_{\mM^{-1}} &= \frac{\norm{\mM\vx}_{\mM^{-1}}}{\sqrt{\trans{\vx}\mM\vx}} = \frac{\sqrt{\trans{(\mM\vx)}\mM^{-1}\mM\vx}}{\sqrt{\trans{\vx}\mM\vx}} = \frac{\sqrt{\trans{\vx}\mM\vx}}{\sqrt{\trans{\vx}\mM\vx}} = 1. \margintag{as $\mM$ is positive definite, it is also symmetric}
+\end{align*} It remains to show that this choice of $\dvm{\vx}$ is unique. Consider the special case where $\mM \defeq \mI$.\footnote{As we have seen, $\norm{\cdot}_\mI = \norm{\cdot}_2$.} As $\norm{\cdot}_2$ is self-dual, we need that \begin{align*}
+    \norm{\dvm{\vx}}_2 = \trans{\dvm{\vx}}\dvm{\vx} \overset{!}{=} 1,
+\end{align*} implying that $\dvm{\vx}$ must have unit length. Then, to satisfy $\trans{\vx}\dvm{\vx} \overset{!}{=} \norm{\vx}_2$, we must have $\dvm{\vx} = \nicefrac{\vx}{\norm{\vx}_2}$, which corresponds uniquely to our choice of the dual vector map for $\norm{\cdot}_\mI$.
+\end{proof}
+
+\begin{proof}[Proof of (2)] We have, \begin{align*}
+    \trans{\vx}\dvm{\vx} &= \sum_i \vx(i) \cdot \dvm{\vx}(i) = \sum_i \abs{\vx(i)} = \norm{\vx}_1 \quad \text{and} \\
+    \norm{\dvm{\vx}}_\infty &= \max_i \abs{\dvm{\vx}(i)} = 1.
+\end{align*} Clearly, our choice of $\dvm{\cdot}$ is not unique, as if $\vx$ contains zeros, the coordinates of the dual vector map may be either positive or negative.
+\end{proof}
+
+\begin{proof}[Proof of (3)] Observe that, by definition, $\dvm{\vx}$ has only one non-zero coordinate. This coordinate corresponds precisely to the coordinate of $\vx$ with the largest absolute value. We therefore have, \begin{align*}
+    \trans{\vx}\dvm{\vx} &= \max_i \abs{\vx(i)} = \norm{\vx}_\infty \quad \text{and} \\
+    \norm{\dvm{\vx}}_1 &= 1.
+\end{align*} Again, our choice of $\dvm{\vx}$ is not unique, as when $\vx$ has multiple coordinates with maximal absolute value, any one of them can be selected by the dual vector map.
+\end{proof}
+
+\subsection{Part D}
+\begin{defn}
+A differentiable function $f : \R^n \to \R$ is \emph{$\beta$-smooth with respect to a norm $\norm{\cdot}$} if for all $\vx,\vy \in \R^n$, \begin{align}
+    \norm{\grad f(\vx) - \grad f(\vy)}_* \leq \beta \norm{\vx - \vy}. \label{eq:part:2D:1}
+\end{align}
+\end{defn}
+
+\begin{lem}\label{lem:part:2d}
+Let $f : \R^n \to \R$ be differentiable and $\beta$-smooth with respect to the norm $\norm{\cdot}$. Then, \begin{align}
+    f(\vy) \leq f(\vx) + \trans{\grad f(\vx)}(\vy - \vx) + \frac{\beta}{2}\norm{\vy-\vx}^2.
+\end{align}
+\end{lem}
+\begin{proof} We fix any $\vx, \vy \in \R^n$. We define $g(\theta) \defeq f(\vx_\theta)$ where we let $\vx_\theta \defeq \vx + \theta(\vy - \vx)$. Note that $g(1) - g(0) = f(\vy) - f(\vx)$. We have, \begin{align*}
+    f(\vy) &= f(\vx) + g(1) - g(0) \\
+    &= f(\vx) + \int_0^1 \odv{g(\theta)}{\theta} \,d\theta \margintag{by the fundamental theorem of calculus} \\
+    &= f(\vx) + \int_0^1 \trans{\grad f(\vx_\theta)}(\vy - \vx) \,d\theta \margintag{by the chain rule} \\
+    &= \begin{multlined}[t]
+        f(\vx) + \int_0^1 \trans{\grad f(\vx)}(\vy - \vx) \,d\theta \\ + \int_0^1 \trans{(\grad f(\vx_\theta) - \grad f(\vx))}(\vy - \vx) \,d\theta
+    \end{multlined} \\
+    &= f(\vx) + \trans{\grad f(\vx)}(\vy - \vx) + \int_0^1 \trans{(\grad f(\vx_\theta) - \grad f(\vx))}(\vy - \vx) \,d\theta
+\end{align*} For the integrand, we obtain, \begin{align*}
+    \trans{(\grad f(\vx_\theta) - \grad f(\vx))}(\vy - \vx) &\leq \norm{\grad f(\vx_\theta) - \grad f(\vx)}_* \norm{\vy - \vx} \margintag{using $\trans{\vx}\vy \leq \norm{\vx}\norm{\vy}_*$} \\
+    &\leq \beta \norm{\vx_\theta - \vx} \norm{\vy - \vx} \margintag{using that $f$ is $\beta$-smooth, \cref{eq:part:2D:1}} \\
+    &= \theta \beta \norm{\vy-\vx}^2.
+\end{align*} We get, \begin{align*}
+    f(\vy) &\leq f(\vx) + \trans{\grad f(\vx)}(\vy - \vx) + \int_0^1 \theta \beta \norm{\vy - \vx}^2 \,d\theta \\
+    &= f(\vx) + \trans{\grad f(\vx)}(\vy - \vx) + \frac{\beta}{2} \norm{\vy - \vx}^2. \qedhere
+\end{align*}
+\end{proof}
+
+\subsection{Part E}
+\begin{thm}\label{thm:part:1F:1}
+Let $f : \R^n \to \R$ be continuously differentiable, convex, and $\beta$-smooth with respect to the norm $\norm{\cdot}$. Then, gradient descent with \begin{align}
+    \vx_{i+1} \defeq \vx_i - \frac{1}{\beta} \norm{\grad f(\vx_i)}_* \dvm{\grad f(\vx_i)}_*
+\end{align} yields an approximate solution $\vx_k$ such that for any $\epsilon > 0$, \begin{align*}
+    f(\vx_k) - f(\s{\vx}) \leq \epsilon
+\end{align*} where $\s{\vx} \in \argmin_{\vx \in \R^n} f(\vx)$, $\grad f$ and $\dvm{\cdot}_*$ are evaluated at most $\LandauO{\nicefrac{\beta R^2}{\epsilon}}$ times and at most $\LandauO{n \nicefrac{\beta R^2}{\epsilon}}$ additional arithmetic operations are used. Here, \begin{align}
+    R \defeq \max_{\substack{\vx \in \R^n \\ f(\vx) \leq f(\vx_0)}} \norm{\vx - \s{\vx}}.
+\end{align}
+\end{thm}
+\begin{proof} We will show that $k = \LandauO{\nicefrac{\beta R^2}{\epsilon}}$ is sufficient. Clearly, by the choice of the update rule, each iteration computes the gradient and dual vector only once. As we work with vectors in $n$ dimensions, the addition and scalar multiplications take $\LandauO{n}$ time per iteration.
+
+By $\beta$-smoothness of $f$, we have, \begin{align}
+    f(\vx_{i+1}) &\leq f(\vx_i) + \trans{\grad f(\vx_i)}(\vx_{i+1} - \vx) + \frac{\beta}{2}\norm{\vx_{i+1} - \vx} \nonumber\\
+    &= \begin{multlined}[t]
+        f(\vx_i) - \frac{1}{\beta} \norm{\grad f(\vx_i)}_* \underbrace{\trans{\grad f(\vx_i)}\dvm{\grad f(\vx_i)}_*}_{= \norm{\grad f(\vx_i)}_*} \\ + \frac{1}{2\beta} \norm{\grad f(\vx_i)}_*^2 \underbrace{\norm{\dvm{\grad f(\vx_i)}_*}^2}_{=1}
+    \end{multlined} \nonumber\\
+    &= f(\vx_i) - \frac{1}{2\beta} \norm{\grad f(\vx_i)}_*^2. \label{eq:part:2E:1}
+\end{align} The remainder of the proof is analogous to the proof of gradient descent in $\norm{\cdot}_2$ we have seen in the lecture and the exercises. We define $\gap_i \defeq f(\vx_i) - f(\s{\vx})$. We have, \begin{align}
+    \gap_i = f(\vx_i) - f(\s{\vx}) &\leq \trans{\grad f(\vx_i)}(\vx_i - \s{\vx}) \margintag{using the first-order characterization of convexity, $f(\s{\vx}) \geq f(\vx_i) + \trans{\grad f(\vx_i)}(\s{\vx} - \vx_i)$} \nonumber\\
+    &\leq \norm{\grad f(\vx_i)}_* \norm{\vx_i - \s{\vx}} \nonumber\\
+    &\leq R \norm{\grad f(\vx_i)}_*, \label{eq:part:2e:2}
+\end{align} where we note that for all $i$, $f(\vx_i) \leq f(\vx_0)$. We obtain, \begin{align}
+    \gap_{i+1} - \gap_i = f(\vx_{i+1} - \vx_i) &\leq - \frac{1}{2\beta} \norm{\grad f(\vx_i)}_*^2 \leq -\frac{1}{2\beta} \parentheses*{\frac{\gap_i}{R}}^2. \margintag{using \cref{eq:part:2E:1} and then rearranging \cref{eq:part:2e:2}} \label{eq:part:2e:3}
+\end{align}
+
+\begin{clm}\label{clm:part:2E:1}
+$f(\vx_k) - f(\s{\vx}) \leq \frac{2\beta R^2}{k+1}$.
+\end{clm}
+
+\noindent Using this claim, solving \begin{align*}
+    f(\vx_k) - f(\s{\vx}) \leq \frac{2\beta R^2}{k+1} \overset{!}{\leq} \epsilon
+\end{align*} for $k$, yields $k = \LandauOmega{\nicefrac{\beta R^2}{\epsilon}}$. Thus, choosing $k = \LandauO{\nicefrac{\beta R^2}{\epsilon}}$ is sufficient.
+\end{proof}
+
+\begin{proof}[Proof of \cref{clm:part:2E:1}] We prove $\nicefrac{1}{\gap_i} \geq \nicefrac{i+1}{2\beta R^2}$ analogously to the proof of exercise 15 on the first problem set by an induction on $\nicefrac{1}{\gap_i}$.\footnote{We assume that $\gap_i > 0$ for all $i$, as otherwise our algorithm has already converged to the optimal solution.} In the base case, \begin{align*}
+    \gap_0 = f(\vx_0 - f(\s{\vx}) &\leq \trans{\grad f(\s{\vx})}(\vx_0 - \s{\vx}) + \frac{\beta}{2}\norm{\vx_0 - \s{\vx}}^2 \margintag{using that $f$ is $\beta$-smooth and $\grad f(\s{\vx}) = 0$} \\
+    &= \frac{\beta}{2}\norm{\vx_0 - \s{\vx}}^2 \leq 2\beta R^2,
+\end{align*} from which we obtain $\nicefrac{1}{\gap_0} \geq \nicefrac{1}{2\beta R^2}$. Let us now consider an arbitrary but fixed $i \in \Nat_0$ and suppose the statement holds for $i$. Dividing \cref{eq:part:2e:3} by $\gap_i \cdot \gap_{i+1}$, yields, \begin{align*}
+    \frac{1}{\gap_i} - \frac{1}{\gap_{i+1}} \leq - \frac{1}{2\beta R^2} \cdot \frac{\gap_i}{\gap_{i+1}} \leq - \frac{1}{2\beta R^2} \margintag{using $\gap_i \geq \gap_{i+1}$}
+\end{align*} Rearranging and using the induction hypothesis, yields, \begin{align*}
+    \frac{1}{\gap_{i+1}} \geq \frac{1}{2\beta R^2} + \frac{1}{\gap_i} \geq \frac{i+2}{2\beta R^2}. &\qedhere
+\end{align*}
+\end{proof}
+
+\subsection{Part F}
+\begin{lem}\label{lem:part:2f}
+Let $f : \R^n \to \R$ be differentiable and convex such that for all $\vx, \vy \in \R^n$, \begin{align*}
+    f(\vy) \leq f(\vx) + \trans{\grad f(\vx)}(\vy - \vx) + \frac{\beta}{2}\norm{\vy - \vx}^2.
+\end{align*} Then, $f$ is $\beta$-smooth with respect to the norm $\norm{\cdot}$, i.e., \begin{align*}
+    \norm{\grad f(\vx) - \grad f(\vy)}_* \leq \beta \norm{\vx - \vy}.
+\end{align*}
+\end{lem}
+\begin{proof} We adopt a similar approach to our proof of \cref{lem:part:1B}. Let $\phi_\vx(\vz) \defeq f(\vz) - \parentheses*{f(\vx) + \trans{\grad f(\vx)(\vz - \vx)}}$. Note that this yields, $\grad \phi_\vx(\vz) = \grad f(\vz) - \grad f(\vx)$. We have that $\phi_\vx$ is convex, \begin{align*}
+    &\phi_\vx(\vz_1) + \trans{\grad \phi_\vx(\vz_1)}(\vz_2 - \vz_1) \\
+    &= \begin{multlined}[t]
+        f(\vz_1) - f(\vx) - \trans{\grad f(\vx)}(\vz_1 - \vx) \\ + \trans{\grad f(\vz_1)}(\vz_2 - \vz_1) - \trans{\grad f(\vx)}(\vz_2 - \vz_1)
+    \end{multlined} \\
+    &\leq f(\vz_2) - f(\vx) - \trans{\grad f(\vx)}(\vz_2 - \vx) \margintag{using the first-order characterization of convexity for $f$} \\
+    &= \phi_\vx(\vz).
+\end{align*} Using the $\beta$-smoothness of $f$, we have for any $\vy \in \R^n$, \begin{align*}
+    \phi_\vx(\vz) &= f(\vx) - \parentheses*{f(\vx) + \trans{\grad f(\vx)(\vz - \vx)}} \\
+    &\leq \begin{multlined}[t]
+        f(\vy) + \trans{\grad f(\vy)}(\vz - \vy) + \frac{\beta}{2}\norm{\vz - \vy}^2 \\ - \parentheses*{f(\vx) + \trans{\grad f(\vx)(\vz - \vx)}}.
+    \end{multlined}
+\intertext{Rearranging to group terms that depend on $\vz$, we obtain,}
+    &= \begin{multlined}[t]
+        f(\vy) - \parentheses*{f(\vx) + \trans{\grad f(\vx)}(\vy - \vx)} \\ + \trans{(\grad f(\vy) - \grad f(\vx))}(\vz - \vy) + \frac{\beta}{2} \norm{\vz - \vy}^2.
+    \end{multlined}
+\end{align*} As $\grad \phi_\vx(\vx) = 0$ and $\phi_\vx$ is convex, $\min_{\vz \in \R^n} \phi_\vx(\vz) = \phi_\vx(\vx) = 0$. Taking the minimum of both sides of the previous inequality, we get, \begin{align*}
+    0 &= \min_{\vz\in\R^n} \phi_\vx(\vz) \\
+    &\leq \begin{multlined}[t]
+        f(\vy) - \parentheses*{f(\vx) + \trans{\grad f(\vx)}(\vy - \vx)} \\ + \min_{\vz\in\R^n} \trans{(\grad f(\vy) - \grad f(\vx))}(\vz - \vy) + \frac{\beta}{2} \norm{\vz - \vy}^2
+    \end{multlined} \\
+    &= \begin{multlined}[t]
+        f(\vy) - \parentheses*{f(\vx) + \trans{\grad f(\vx)}(\vy - \vx)} \\ + \min_{\vdelta\in\R^n} \trans{(\grad f(\vy) - \grad f(\vx))}\vdelta + \frac{\beta}{2} \norm{\vdelta}^2.
+    \end{multlined}
+\end{align*}
+
+\begin{clm}\label{clm:part:2f:1}
+For any $\vz\in\R^n$, we have $\min_{\vdelta\in\R^n} \trans{\vz}\vdelta + \frac{\beta}{2}\norm{\vdelta}^2 = -\frac{1}{2\beta}\norm{\vz}_*^2$.
+\end{clm}
+
+\noindent Using this claim, rearranging the terms of the previous inequality gives, \begin{align}
+    f(\vy) \geq f(\vx) + \trans{\grad f(\vx)}(\vy - \vx) + \frac{1}{2\beta}\norm{\grad f(\vx) - \grad f(\vy)}_*^2. \label{eq:part:2f:1}
+\end{align} Now, recall from \cref{part:1A} that \begin{align*}
+    \trans{(\grad f(\vx) - \grad f(\vy))}(\vx - \vy) = -\trans{\grad f(\vx)}(\vy-\vx) - \trans{\grad f(\vy)}(\vx-\vy).
+\end{align*} Using \cref{eq:part:2f:1}, we obtain, \begin{align*}
+    &\norm{\grad f(\vx) - \grad f(\vy)}_* \norm{\vx - \vy} \\
+    &\geq \trans{(\grad f(\vx) - \grad f(\vy))}(\vx - \vy) \margintag{using $\trans{\vx}\vy \leq \norm{\vx}\norm{\vy}_*$} \\
+    &= -\trans{\grad f(\vx)}(\vy-\vx) - \trans{\grad f(\vy)}(\vx-\vy) \\
+    &\geq \begin{multlined}[t]
+        f(\vx) - f(\vy) + \frac{1}{2\beta}\norm{\grad f(\vx) - \grad f(\vy)}_*^2 \\ + f(\vy) - f(\vx) + \frac{1}{2\beta}\norm{\grad f(\vx) - \grad f(\vy)}_*^2
+    \end{multlined} \\
+    &= \frac{1}{\beta}\norm{\grad f(\vx) - \grad f(\vy)}_*^2.
+\end{align*} Rearranging gives the desired inequality.
+\end{proof}
+
+\begin{proof}[Proof of \cref{clm:part:2f:1}] We will prove both directions separately. To see that $\min_{\vdelta\in\R^n} \trans{\vz}\vdelta + \frac{\beta}{2}\norm{\vdelta}^2 \leq -\frac{1}{2\beta}\norm{\vz}_*^2$, we choose $\vdelta \defeq - \frac{1}{\beta} \norm{\vz}_* \dvm{\vz}_*$, and obtain,\footnote{This is similar to our choice of the update rule of gradient descent from the previous section.} \begin{align*}
+    \trans{\vz}\vdelta + \frac{\beta}{2}\norm{\vdelta}^2 &= - \frac{1}{\beta} \norm{\vz}_* \underbrace{\trans{\vz}\dvm{\vz}_*}_{=\norm{\vz}_*} + \frac{1}{2\beta} \norm{\vz}_*^2 \underbrace{\norm{\dvm{\vz}_*}^2}_{=1} \\
+    &= -\frac{1}{2\beta} \norm{\vz}_*^2.
+\end{align*} To see that $\min_{\vdelta\in\R^n} \trans{\vz}\vdelta + \frac{\beta}{2}\norm{\vdelta}^2 \geq -\frac{1}{2\beta}\norm{\vz}_*^2$, we bound, \begin{align*}
+    \trans{\vz}\vdelta + \frac{\beta}{2}\norm{\vdelta}^2 &= -\trans{(-\vz)}\vdelta + \frac{\beta}{2}\norm{\vdelta}^2 \\
+    &\geq -\norm{\vz}_* \norm{\vdelta} + \frac{\beta}{2}\norm{\vdelta}^2 \margintag{using $\trans{\vx}\vy \leq \norm{\vx}\norm{\vy}_*$} \\
+    &\geq \min_{\Delta\in\R} \underbrace{-\norm{\vz}_* \Delta + \frac{\beta}{2}\Delta^2}_{\eqdef \Phi_\vz(\Delta)}. \margintag{choosing $\Delta \defeq \norm{\vdelta}$ and minimizing}
+\end{align*} Clearly, $\Phi_\vz$ is a quadratic with positive curvature, and hence, convex. We have that \begin{align*}
+    \odv{\Phi_\vz(\Delta)}{\Delta} = -\norm{\vz}_* + \beta\Delta \overset{!}{=} 0,
+\end{align*} is solved for $\Delta = \nicefrac{1}{\beta} \norm{\vz}_*$, which therefore is a minimizer of $\Phi_\vz$. Substituting for this minimizer in our previous inequality, we obtain, \begin{align*}
+    \trans{\vz}\vdelta + \frac{\beta}{2}\norm{\vdelta}^2 &\geq -\frac{1}{2\beta} \norm{\vz}_*^2. \qedhere
+\end{align*}
+\end{proof}
+
+\subsection{Part G}
+\begin{lem}\label{lem:part:2g}
+Let $f : \R^n \to \R$ be a twice continuously differentiable function such that for all $\vx, \vy \in \R^n$, \begin{align}
+    0 \leq \trans{\vy}\mH_f(\vx) \vy \leq \beta \norm{\vy}^2.
+\end{align} Then, $f$ is convex and $\beta$-smooth with respect to the norm $\norm{\cdot}$.
+\end{lem}
+\begin{proof} To show that $f$ is convex, it suffices that $\mH_f$ is positive semi-definite.\footnote{using theorem 3.2.9} This corresponds precisely to the condition that for all $\vx, \vy \in \R^n$, $\trans{\vy}\mH_f(\vx) \vy \geq 0$. Thus, it only remains to show that $f$ is also $\beta$-smooth.
+
+Similarly to our proof of \cref{lem:part:2d}, we employ the fundamental theorem of calculus. We fix arbitrary $\vx, \vy \in \R^n$ and let $g(\theta) \defeq f(\vx_\theta)$ for $\vx_\theta \defeq \vx + \theta(\vy - \vx)$. Analogously to the mentioned proof, we have, \begin{align*}
+    f(\vy) &= f(\vx) + g(1) - g(0) \\
+    &= f(\vx) + \int_0^1 \odv{g(\theta)}{\theta} \,d\theta \margintag{by the fundamental theorem of calculus} \\
+    &= f(\vx) + \int_0^1 \trans{\grad f(\vx_\theta)}(\vy - \vx) \,d\theta \margintag{by the chain rule} \\
+    &= \begin{multlined}[t]
+        f(\vx) + \int_0^1 \trans{\grad f(\vx)}(\vy - \vx) \,d\theta \\ + \int_0^1 \trans{(\grad f(\vx_\theta) - \grad f(\vx))}(\vy - \vx) \,d\theta
+    \end{multlined} \\
+    &= f(\vx) + \trans{\grad f(\vx)}(\vy - \vx) + \int_0^1 \trans{(\grad f(\vx_\theta) - \grad f(\vx))}(\vy - \vx) \,d\theta.
+\end{align*} Now, let us shift our attention to bounding the integrand. We define $h(\tau) \defeq \trans{\grad f(\vx_\tau)}(\vy - \vx)$ where we let $\vx_\tau \defeq \vx + \tau(\vx_\theta - \vx)$. Note that \begin{align*}
+    \trans{(\grad f(\vx_\theta) - \grad f(\vx))}(\vy - \vx) = h(1) - h(0).
+\end{align*} By the chain rule, \begin{align*}
+    \odv{h(\tau)}{\tau} &= \trans{(\vx_\theta - \vx)} \mH_f(\vx_\tau) (\vy - \vx) \\
+    &= \theta\trans{(\vy-\vx)} \mH_f(\vx_\tau) (\vy - \vx).
+\end{align*} We obtain the bound, \begin{align*}
+    h(1) - h(0) &= \int_0^1 \odv{h(\tau)}{\tau} \,d\tau \margintag{by the fundamental theorem of calculus} \\
+    &= \int_0^1 \theta \underbrace{\trans{(\vy-\vx)} \mH_f(\vx_\tau) (\vy - \vx)}_{\leq \beta \norm{\vy - \vx}^2} \,d\tau \margintag{using the assumption} \\
+    &\leq \int_0^1 \theta\beta\norm{\vy-\vx}^2 \,d\tau \\
+    &= \theta\beta\norm{\vy-\vx}^2.
+\end{align*} Substituting this bound for the integrand, we obtain, \begin{align*}
+    f(\vy) &\leq f(\vx) + \trans{\grad f(\vx)}(\vy - \vx) + \int_0^1 \theta\beta\norm{\vy-\vx}^2 \,d\theta \\
+    &= f(\vx) + \trans{\grad f(\vx)}(\vy - \vx) + \frac{\beta}{2}\norm{\vy-\vx}^2.
+\end{align*} Using \cref{lem:part:2f}, we conclude that $f$ is indeed $\beta$-smooth.
+\end{proof}
+
+\subsection{Part H}
+We will consider the function, \begin{align}
+    m : \R^n \to R,\quad \vx \mapsto \frac{1}{\lambda}\log\parentheses*{\sum_i \exp(\lambda \vx(i))},
+\end{align} for some $\lambda > 0$. We will see that $m$ is a well-behaved approximation to a slight variation of the uniform norm.
+
+\begin{lem}\label{lem:part:2H}
+\leavevmode\begin{enumerate}
+    \item $\max_i \vx(i) \leq m(\vx) \leq \frac{\log n}{\lambda} + \max_i \vx(i)$.
+    \item $m$ is convex and $\lambda$-smooth with respect to $\norm{\cdot}_\infty$.
+\end{enumerate}
+\end{lem}
+\begin{proof}[Proof of (1)] Fix any $\vx \in \R^n$. We have, \begin{align*}
+    m(\vx) &= \frac{1}{\lambda}\log\parentheses*{\sum_i \exp(\lambda \vx(i))} \\
+    &\leq \frac{1}{\lambda}\log\parentheses*{n \exp(\lambda \max_i \vx(i))} \\
+    &= \frac{1}{\lambda}\parentheses*{\log n + \lambda \max_i \vx(i)} \\
+    &= \frac{\log n}{\lambda} + \max_i \vx(i).
+\end{align*} For the other direction, \begin{align*}
+    m(\vx) &= \frac{1}{\lambda}\log\parentheses*{\sum_i \exp(\lambda \vx(i))} \\
+    &\geq \frac{1}{\lambda}\log\parentheses*{\exp(\lambda \max_i \vx(i))} \\
+    &= \max_i \vx(i). \qedhere
+\end{align*}
+\end{proof}
+\begin{proof}[Proof of (2)] First, we show that $m$ is convex. To begin with, recall Hölder's inequality, \begin{align}
+    \sum_i |\vx(i) \vy(i)| \leq \parentheses*{\sum_i |\vx(i)|^p}^\frac{1}{p} \parentheses*{\sum_i |\vy(i)|^q}^\frac{1}{q},
+\end{align} for any $\vx,\vy \in \R^n$ and $\frac{1}{p} + \frac{1}{q} = 1$. Fix any $\theta \in [0,1]$. Then, \begin{align*}
+    m(\theta\vx + (1-\theta)\vy) &= \frac{1}{\lambda}\log\parentheses*{\sum_i e^{\lambda(\theta\vx + (1-\theta)\vy)}} \\
+    &= \frac{1}{\lambda}\log\parentheses*{\sum_i e^{\theta\lambda\vx} e^{(1-\theta)\lambda\vy(i)}} \\
+    &\leq \frac{1}{\lambda}\log\parentheses*{\parentheses*{\sum_i e^{\lambda\vx(i)}}^\theta \parentheses*{\sum_i e^{\lambda\vy(i)}}^{1-\theta}} \margintag{using Hölder's inequality with $\nicefrac{1}{p} \defeq \theta$ and $\nicefrac{1}{q} = 1-\theta$} \\
+    &= \theta \frac{1}{\lambda}\log\parentheses*{\sum_i e^{\lambda \vx(i)}} + (1-\theta) \frac{1}{\lambda}\log\parentheses*{\sum_i e^{\lambda \vy(i)}} \\
+    &= \theta m(\vx) + (1-\theta) m(\vy).
+\end{align*}
+
+To prove smoothness of $m$, we first compute its Hessian and then apply \cref{lem:part:2g}. For the Hessian of $m$, we have for any fixed $\vx \in \R^n$, \begin{align*}
+    \mH_m(\vx)(i,j) &= \pdv{}{\vx(i),\vx(j)} m(\vx) \\
+    &= \pdv{}{\vx(i)} \parentheses*{\frac{1}{\lambda} \pdv{}{\vx(j)} \log\parentheses*{\sum_k e^{\lambda \vx(k)}}}.
+\end{align*} We compute, \begin{align*}
+    \pdv{}{\vx(j)} \log\parentheses*{\sum_k e^{\lambda \vx(k)}} &= \frac{\pdv{}{\vx(j)} \sum_k e^{\lambda \vx(k)}}{\sum_k e^{\lambda \vx(k)}} = \frac{\lambda e^{\lambda \vx(j)}}{\sum_k e^{\lambda \vx(k)}}. \margintag{using the chain rule in each step}
+\end{align*} We write $\Phi \defeq \sum_k e^{\lambda \vx(k)}$ and $\Phi_{-i} \defeq \Phi - e^{\lambda \vx(i)}$. Then, \begin{align*}
+    \mH_m(\vx)(i,j) &= \pdv{}{\vx(i)} \frac{e^{\lambda \vx(j)}}{\Phi} \\
+    &= \frac{\parentheses*{\pdv{}{\vx(i)} e^{\lambda \vx(j)}} \cdot \Phi - e^{\lambda \vx(j)} \cdot \pdv{}{\vx(i)} \Phi}{\Phi^2} \margintag{using the quotient rule} \\
+    &= \frac{1}{\Phi^2} \begin{cases}
+        \lambda e^{\lambda \vx(i)} \Phi - \lambda e^{2\lambda \vx(i)} & i=j \\
+        - \lambda e^{\lambda(\vx(i) + \vx(j))} & i \neq j
+    \end{cases} \\
+    &= \frac{1}{\Phi^2} \begin{cases}
+        \lambda e^{\lambda \vx(i)} \Phi_{-i} & i=j \\
+        - \lambda e^{\lambda(\vx(i) + \vx(j))} & i \neq j.
+    \end{cases}
+\end{align*} Fixing any $\vy \in \R^n$, we have, \begin{align*}
+    \trans{\vy}\mH_m(\vx)\vy &= \sum_{i,j} \mH_m(\vx)(i,j)\cdot\vy(i)\cdot\vy(j) \\
+    &\leq \lambda \sum_i \vy(i)^2 e^{\lambda \vx(i)} \cdot \frac{\Phi_{-i}}{\Phi^2} \margintag{using that the off-diagonal entries of the Hessian are negative} \\
+    &\leq \lambda\norm{\vy}_\infty^2 \frac{1}{\Phi} \underbrace{\sum_i e^{\lambda \vx(i)}}_{=\Phi} \margintag{using $\frac{\Phi_{-1}}{\Phi} < 1$ and $\vy(i) \leq \norm{\vy}_\infty$} \\
+    &= \lambda\norm{\vy}_\infty^2. \qedhere
+\end{align*}
+\end{proof}
+
+\subsection{Part I}
+We consider the flow problem on a weighted and undirected graph $G = (V, E, \vc)$ with incidence matrix $\mB$ and $\mU \defeq \diag_{e \in E} \vc(e)$ for capacities $\vc \in \R_{\geq 0}^{|E|}$: \begin{align*}
+    \min_{\substack{\vf\in\R^{|E|} \\ \trans{\mB}\vf = \vb}} \norm{\mU^{-1}\vf}_\infty
+\end{align*} for demands $\vb \in \R^{|V|}$. The flow problem can be characterized equivalently as, \begin{align*}
+    \min_{\substack{\vd\in\R^{|E|} \\ \trans{\mB}\vd = \vZero}} \norm{\mU^{-1}(\Tilde{\vf}_0 + \vd)}_\infty
+\end{align*} for any feasible flow $\Tilde{\vf}_0$, i.e., $\trans{\mB}\Tilde{\vf}_0 = \vb$. We can also characterize the problem as, \begin{align*}
+    \min_{\vx\in\R^{|E|}} \norm{\vf_0 + \mP\vx}_\infty
+\end{align*} where $\hat{\mP} \in \R^{|E|\times|E|}$ is a projection matrix such that for all $\vx \in \R^{|E|}$ we have $\trans{\mB}\hat{\mP}\vx = \vZero$ and for every circulation\footnote{A \emph{circulation} is a vector $\vd \in \R^{|E|}$ such that $\trans{\mB}\vd = \vZero$.} $\vd$ there exists an $\vx \in \R^{|E|}$ so that $\hat{\mP}\vx = \vd$. We let $\mP \defeq \mU^{-1} \hat{\mP} \mU$ and $\vf_0 \defeq (\mI - \mP)\mU^{-1}\Tilde{\vf}_0$. We write, \begin{align*}
+    OPT \defeq \min_{\vx\in\R^{|E|}} \norm{\vf_0 + \mP\vx}_\infty.
+\end{align*}
+
+Because the uniform norm is not smooth, we will use a smooth approximation similar to the function $m$ we have seen in the previous section to approximately solve the optimization problem using gradient descent. As a smooth approximation, we use, \begin{align*}
+    s : \R^n \to R,\quad \vx \mapsto \frac{1}{\lambda}\log\parentheses*{\frac{\sum_{e \in E} \exp(\lambda \vx(e)) + \exp(-\lambda \vx(e))}{2|E|}},
+\end{align*} for some $\lambda > 0$, which is convex, $\LandauO{\lambda}$-smooth with respect to $\norm{\cdot}_\infty$, and satisfies, \begin{align}
+    \norm{\vx}_\infty \leq s(\vx) \leq 2\frac{\log |E|}{\lambda} + \norm{\vx}_\infty.
+\end{align} We will therefore optimize the function $g(\vx) \defeq s(\vf_0 + \mP\vx)$. Note that, as $g$ is the composition of two convex functions, it is also convex.
+
+\begin{lem}
+$g$ is $\LandauO{\lambda \norm{\mP}_\iti^2}$-smooth with respect to $\norm{\cdot}_\infty$.\footnote[][-2\baselineskip]{Here, $\norm{\mA}_{\alpha\to\beta} \defeq \max_{\norm{\vx}_\alpha = 1} \norm{\mA\vx}_\beta$ is the \emph{operator norm} of $\mA$ induced by norms $\norm{\cdot}_\alpha$ on the input space and $\norm{\cdot}_\beta$ on the output space. We have, \begin{align}
+    \norm{\mA\vx}_\beta \leq \norm{\mA}_{\alpha\to\beta} \norm{\vx}_\alpha. \label{eq:part:2i:1}
+\end{align}}
+\end{lem}
+\begin{proof} By $\LandauO{\lambda}$-smoothness of $s$, we have for any $\vx,\vy \in \R^n$, \begin{align*}
+    s(\vy) \leq s(\vx) + \trans{\grad s(\vx)}(\vy - \vx) + \frac{\LandauO{\lambda}}{2}\norm{\vy - \vx}_\infty^2.
+\end{align*} Let us now fix any $\vx', \vy' \in \R^n$. We substitute $\vx \defeq \vf_0 + \mP\vx'$ and $\vy \defeq \vf_0 + \mP\vy'$. Note that by the chain rule, $\grad g(\vx') = \trans{\mP} \grad s(\vf_0 + \mP\vx')$.\footnote{The chain rule says that for a function $g(\vx) \defeq s(h(\vx))$, \begin{align*}
+    D g(\vx) = Df(h(\vx)) Dh(\vx).
+\end{align*} Moreover, $\grad g(\vx) = \trans{(Dg(\vx))}$. In this case, $h(\vx) = \vf_0 + \mP\vx$, so $Dh(\vx) = \mP$.} We obtain, \begin{align*}
+    g(\vy') &= s(\vf_0 + \mP\vy') \\
+    &\leq s(\vf_0 + \mP\vx') + \trans{\grad s(\vf_0 + \mP\vx')}\mP(\vy' - \vx') + \frac{\LandauO{\lambda}}{2}\norm{\mP(\vy' - \vx')}_\infty^2 \\
+    &= g(\vx') + \trans{(\underbrace{\trans{\mP}\grad s(\vf_0 + \mP\vx')}_{=\grad g(\vx')})}(\vy' - \vx') + \frac{\LandauO{\lambda}}{2}\norm{\mP(\vy' - \vx')}_\infty^2 \\
+    &\leq g(\vx') + \trans{\grad g(\vx')}(\vy' - \vx') + \frac{\LandauO{\lambda}}{2}\norm{\mP}_\iti^2\norm{\vy' - \vx'}_\infty^2. \margintag{using \cref{eq:part:2i:1}}
+\end{align*} Applying \cref{lem:part:2f}, completes the proof.
+\end{proof}
+% \begin{proof} Let $h(\vx) \defeq \vf_0 + \mP\vx$ and note that $g(\vx) = s(h(\vx))$. By the chain rule\footnote{The chain rule says that \begin{align*}
+%     Dg(\vx) = D s(h(\vx)) \cdot D h(\vx),
+% \end{align*} where $\grad g(\vx) = \trans{D g(\vx)}$. Thus, \begin{align*}
+%     \grad g(\vx) = \grad h(\vx) \cdot \grad s(h(\vx)).
+% \end{align*}}, we have, \begin{align*}
+%     \grad g(\vx) &= \grad h(\vx) \grad s(h(\vx)) = \trans{\mP} (\grad s)(h(\vx)) \quad \text{and} \\
+%     \mH_g(\vx) &= \grad^2 g(\vx) \\
+%     &= \grad (\trans{\mP} (\grad s)(h(\vx))) \\
+%     &= (\grad (\grad s)(h(\vx))) \mP \margintag{chain rule on the linear map $(\trans{\mP}\cdot)$} \\
+%     &= \trans{\mP} \underbrace{(\grad^2 s)(h(\vx))}_{\mH_s(h(\vx))} \mP. \margintag{chain rule on $(\grad s)(h(\vx))$}
+% \end{align*} Therefore, for any $\vx,\vy \in \R^n$, \begin{align*}
+%     \trans{\vy}\mH_g(\vx)\vy &= \underbrace{\trans{\vy}\trans{\mP}}_{=\trans{(\mP\vy)}} \mH_s(h(\vx)) \mP \vy \\
+%     &\leq \LandauO{\lambda}\norm{\mP\vy}_\infty^2 \\
+%     &\leq \LandauO{\lambda} \norm{\mP}_\iti^2 \norm{\vy}_\infty^2,
+% \end{align*} using that $s$ is $\LandauO{\lambda}$-smooth with respect to $\norm{\cdot}_\infty$ and \cref{eq:part:2i:1}.\footnote{Here we use that $\beta$-smoothness with respect to a norm $\norm{\cdot}$ of a convex and twice differentiable function $f$ implies that $\trans{\vy}\mH_f(\vx)\vy \leq \beta \norm{\vy}^2$.} Applying \cref{lem:part:2g}, finishes the proof.
+% \end{proof}
+
+We denote by $\sX^\star$ the set of vectors $\vx^\star$ that are minimizers of $g$, i.e., for which we have $g(\vx^\star) = \min_{\vx\in\R^n} g(\vx)$.
+
+\begin{lem}\label{lem:part:2i:2}
+For any $\epsilon > 0$ and $\hat{\vx} \in \R^n$ such that $g(\hat{\vx}) \leq g(\vx^\star) + \frac{\epsilon}{2}OPT$, we have, \begin{align*}
+    \norm{\vf_0 + \mP\hat{\vx}}_\infty \leq (1+\epsilon)OPT
+\end{align*} for some $\lambda = \LandauTheta{\nicefrac{\log |E|}{\epsilon OPT}}$.
+\end{lem}
+\begin{proof} We know, \begin{align*}
+    \norm{\vf_0 + \mP\hat{\vx}}_\infty \leq s(\vf_0 + \mP\hat{\vx}) = g(\hat{\vx}) \leq g(\vx^\star) + \frac{\epsilon}{2}OPT.
+\end{align*} Thus, it suffices to show, $g(\vx^\star) \leq (1 + \nicefrac{\epsilon}{2})OPT$. We have, \begin{align*}
+    g(\vx^\star) &= \min_{\vx\in\R^n} g(\vx) \\
+    &= \min_{\vx\in\R^n} s(\vf_0 + \mP\vx) \\
+    &\leq 2\frac{\log |E|}{\lambda} + \min_{\vx\in\R^n} \norm{\vf_0 + \mP\vx}_\infty \\
+    &= 2\frac{\log |E|}{\lambda} + OPT \\
+    &\overset{!}{\leq} \parentheses*{1 + \frac{\epsilon}{2}}OPT.
+\end{align*} Solving for $\lambda$, we obtain, \begin{align*}
+    \lambda \geq \frac{4 \log |E|}{\epsilon OPT}.
+\end{align*} Hence, choosing $\lambda = \LandauTheta{\nicefrac{\log |E|}{\epsilon OPT}}$ is sufficient.
+\end{proof}
+
+\subsection{Part J}
+It can be shown that, \begin{align}
+    R \defeq \max_{\substack{\vx \in \R^n \\ g(\vx) \leq g(\vx_0)}} \norm{\vx - \s{\vx}}_\infty = \max_{\substack{\vx \in \R^n \\ g(\vx) \leq g(\vx_0)}} \min_{\vx^\star \in \sX^\star} \norm{\vx - \vx^\star}_\infty.
+\end{align}
+
+\begin{lem}
+\leavevmode\begin{enumerate}
+    \item $\norm{\vf_0}_\infty \leq (1 + \norm{\mP}_\iti)OPT$.
+    \item For any $\vy$ such that $g(\vy) \leq g(\vZero)$, we have, \begin{align*}
+        g(\vy) \leq (1 + \norm{\mP}_\iti)OPT + 2 \frac{\log |E|}{\lambda}.
+    \end{align*}
+    \item $R = \LandauO{(1 + \norm{\mP}_\iti)OPT + \nicefrac{\log |E|}{\lambda}}$ when $\vx_0 \defeq \vZero$.
+\end{enumerate}
+\end{lem}
+\begin{proof}[Proof of (1)]  Consider an optimal circulation $\s{\vd} \in \R^{|E|}$. As the discussed optimization problems are all equivalent, we have, \begin{align*}
+    \norm{\mU^{-1}(\vf_0 + \s{\vd})}_\infty = OPT.
+\end{align*} We have, \begin{align*}
+    \norm{\vf_0}_\infty &= \norm{(\mI-\mP)\mU^{-1}\Tilde{\vf}_0}_\infty \\
+    &= \norm{\mU^{-1}\Tilde{\vf}_0 + \mU^{-1}\hat{\mP}\s{\vd} - \mP\mU^{-1}\Tilde{\vf}_0 - \mU^{-1}\hat{\mP}\s{\vd}}_\infty \\
+    &\leq \norm{\mU^{-1}\Tilde{\vf}_0 + \mU^{-1}\hat{\mP}\s{\vd}}_\infty + \norm{\mP\mU^{-1}\Tilde{\vf}_0 + \mU^{-1}\hat{\mP}\s{\vd}}_\infty \margintag{using the triangle inequality} \\
+    &= \norm{\mU^{-1}(\Tilde{\vf}_0 + \hat{\mP}\s{\vd})}_\infty + \norm{\mP\mU^{-1}(\Tilde{\vf}_0 + \s{\vd})}_\infty. \margintag{using $\hat{\mP} = \mU\mP\mU^{-1}$}
+\intertext{Recall that $\s{\vd}$ was the result of the projection $\hat{\mP}\s{\vx}$ for some $\s{\vx}$. Therefore, due to the idempotency of projections, $\hat{\mP}\s{\vd} = \hat{\mP}^2\s{\vx} = \hat{\mP}\s{\vx} = \s{\vd}$, and we obtain,}
+    &= \norm{\mU^{-1}(\Tilde{\vf}_0 + \s{\vd})}_\infty + \norm{\mP\mU^{-1}(\Tilde{\vf}_0 + \s{\vd})}_\infty \margintag{using $\hat{\mP} = \mU\mP\mU^{-1}$} \\
+    &\leq \norm{\mU^{-1}(\Tilde{\vf}_0 + \s{\vd})}_\infty + \norm{\mP}_\iti \norm{\mU^{-1}(\Tilde{\vf}_0 + \s{\vd})}_\infty \margintag{using \cref{eq:part:2i:1}} \\
+    &= (1 + \norm{\mP}_\iti) \norm{\mU^{-1}(\Tilde{\vf}_0 + \s{\vd})}_\infty \\
+    &= (1 + \norm{\mP}_\iti)OPT. \qedhere
+\end{align*}
+\end{proof}
+\begin{proof}[Proof of (2)] We have, \begin{align*}
+    g(\vy) \leq g(\vZero) = s(\vf_0) &\leq 2 \frac{\log |E|}{\lambda} + \norm{\vf_0}_\infty \\
+    &\leq 2 \frac{\log |E|}{\lambda} + (1 + \norm{\mP}_\iti)OPT. \qedhere
+\end{align*}
+\end{proof}
+\begin{proof}[Proof of (3)] We have, \begin{align*}
+    R &= \max_{\substack{\vx \in \R^n \\ g(\vx) \leq g(\vZero)}} \min_{\vx^\star \in \sX^\star} \norm{\vx - \vx^\star}_\infty.
+\intertext{Observe that given any $\vx^\star \in \sX^\star$, we have for $\vy \defeq \mP\vx^\star + \vx - \mP\vx$ that $\mP\vy = \mP\vx^\star$ and therefore $\vy \in \sX^\star$. This gives a feasible solution for the minimum,}
+    &\leq \max_{\substack{\vx \in \R^n \\ g(\vx) \leq g(\vZero)}} \norm{\vx - \vy}_\infty \\
+    &= \max_{\substack{\vx \in \R^n \\ g(\vx) \leq g(\vZero)}} \norm{\mP\vx - \mP\vx^\star}_\infty \\
+    &= \max_{\substack{\vx \in \R^n \\ g(\vx) \leq g(\vZero)}} \norm{\vf_0 + \mP\vx - \vf_0 - \mP\vx^\star}_\infty \\
+    &\leq \max_{\substack{\vx \in \R^n \\ g(\vx) \leq g(\vZero)}} \norm{\vf_0 + \mP\vx}_\infty + \norm{\vf_0 + \mP\vx^\star}_\infty \margintag{using the triangle inequality} \\
+    &\leq \max_{\substack{\vx \in \R^n \\ g(\vx) \leq g(\vZero)}} g(\vx) + \underbrace{g(\vx^\star)}_{\leq g(\vx)} \\
+    &\leq 2 \max_{\substack{\vx \in \R^n \\ g(\vx) \leq g(\vZero)}} g(\vx) \\
+    &\leq 2 (1 + \norm{\mP}_\iti)OPT + 4 \frac{\log |E|}{\lambda}. \qedhere
+\end{align*}
+\end{proof}
+
+\subsection{Part K}
+We choose $\hat{\mP} \defeq \mI - \mU\mB\mL^+\trans{\mB}$ with the Laplacian $\mL \defeq \trans{\mB}\mU\mB$.\footnote{Note that the definition of the incidence matrix used here is the transpose of the incidence matrix as defined in the lecture notes.} Then, \begin{align*}
+    \norm{\mU^{-1}\hat{\mP}\mU}_\iti = \norm{\mP}_\iti \leq 1 + 8\frac{\log |E|}{\Phi^2},
+\end{align*} where $\Phi$ is the expansion of the graph.
+
+\begin{thm}
+Gradient descent with respect to $g$ and $\norm{\cdot}_\infty$ yields a $(1+\epsilon)$ approximate solution to $OPT$ in time $\TildeLandauO{\nicefrac{|E|}{\epsilon^2 \Phi^8}}$ under the assumption that solving a Laplacian linear system exactly is as expensive as finding a $\nicefrac{1}{|V|^{100}}$-approximate solution.
+\end{thm}
+\begin{proof} First, recall that $g$ is continuously differentiable, convex, and $\LandauO{\lambda \norm{\mP}_\iti^2}$-smooth with respect to $\norm{\cdot}_\infty$. Using our analysis from \cref{thm:part:1F:1}, gradient descent with respect to $g$ and $\norm{\cdot}_\infty$ will evaluate $\grad g$ and $\dvm{\cdot}_*$ at most $\LandauO{\nicefrac{\beta R^2}{\epsilon OPT}}$ times and use at most $\LandauO{|E| \nicefrac{\beta R^2}{\epsilon OPT}}$ additional arithmetic operations to find an $\hat{\vx}$ such that $g(\hat{\vx}) - g(\s{\vx}) \leq \frac{\epsilon}{2}OPT$. By \cref{lem:part:2i:2}, we know that this yields a $(1+\epsilon)$ approximation of $OPT$ for some $\lambda = \LandauTheta{\nicefrac{\log |E|}{\epsilon OPT}}$.
+
+We have for $\beta$, \begin{align*}
+    \beta = \LandauO{\lambda \norm{\mP}_\iti^2} &= \LandauO{\frac{\log |E|}{\epsilon OPT}\parentheses*{1 + 8\frac{\log |E|}{\Phi^2}}^2} \\
+    &= \LandauO{\frac{\log |E|}{\epsilon OPT} \cdot \frac{\log^2 |E|}{\Phi^4}} \\
+    &= \LandauO{\frac{\log^3 |E|}{\epsilon OPT \Phi^4}}
+\end{align*} and for $R$, \begin{align*}
+    R &= \LandauO{(1 + \norm{\mP}_\iti)OPT + \frac{\log |E|}{\lambda}} \\
+    &= \LandauO{\parentheses*{2 + 8\frac{\log |E|}{\Phi^2} + \epsilon}OPT} \\
+    &= \LandauO{\frac{\log |E|}{\Phi^2} OPT}.
+\end{align*} Combining these bounds, we get, \begin{align*}
+    \LandauO{\frac{\beta R^2}{\epsilon OPT}} = \LandauO{\frac{\log^5 |E|}{\epsilon^2 \Phi^8}} = \TildeLandauO{\frac{1}{\epsilon^2 \Phi^8}}.
+\end{align*}
+
+It therefore remains to show that each iteration of gradient descent takes $\TildeLandauO{|E|}$ time.
+
+For a matrix $\mA$, let $T(\mA)$ be the maximum time to compute $\mA \vx$ and $\trans{\mA}\vx$ for any vector $\vx$. We use the following claim:
+
+\begin{clm}\label{clm:part:2k}
+$T(\mP) = \TildeLandauO{|E|}$.
+\end{clm}
+
+By the chain rule, we have $\grad g(\vx) = \trans{\mP} \grad s(\vf_0 + \mP\vx)$. Thus, $\grad g$ can be computed in time $T(\mP)$ plus the time to compute $\grad s$. It is not hard to show that $\grad s$ can be computed in time $\LandauO{|E|}$.\footnote{The argument is similar to our computation of the first-order derivative of the function $m$ in the proof of \cref{lem:part:2H}(2).} Finally, observe that $\dvm{\cdot}_*$ corresponds to the dual vector map of the Manhattan norm, which we stated in \cref{eq:part:2c:1}. Clearly, this mapping can be computed in $\LandauO{|E|}$ time. Therefore, each iteration of gradient descent can be computed in $\TildeLandauO{|E|}$ time.
+\end{proof}
+
+\begin{proof}[Proof of \cref{clm:part:2k}]
+We have, \begin{align*}
+    \mP &= \mU^{-1}\hat{\mP}\mU = \mI - \mB\mL^+\trans{\mB}\mU \quad \text{and} \\
+    \trans{\mP} &= \mI - \trans{\mU}\trans{\mB}\mL^+\mB. \margintag{using $\trans{(\mL^+)} = \mL^+$}
+\end{align*} Trivially, $\mI\vx$, $\mU\vx$, and $\trans{\mU}\vx$ can be computed in $\LandauO{|E|}$ time. As by definition of the incidence matrix $\mB$, $\mathrm{nnz}(\mB) = \LandauO{|E|}$, $\mB\vx$ and $\trans{\mB}\vx$ can also be computed in $\LandauO{|E|}$ time.
+
+It follows from the definition of the incidence matrix that $\vOne \in \ker{\mB}$ and $\vOne \in \ker{\trans{\mB}}$. Therefore, we have for any $\vy \in \R^{|V|}$ that $\mB\vy \perp \vOne$ and for any $\vx \in \R^{|E|}$ that $\trans{\mB}\vx \perp \vOne$.\footnote{$\trans{(\mB\vy)}\vOne = \trans{\vy}\trans{\mB}\vOne = \trans{\vy}\vZero = \vZero$; the other case is symmetric} Therefore, $\trans{\mB}\mU\vx \perp \vOne$ and $\mB\vy \perp \vOne$ for any $\vx$ and $\vy$.\footnote{$\trans{\mB}\mU\vx$ and $\mB\vy$ can be interpreted as demand vectors.}
+
+Using the result of Kyng and Sachdeva,\footnote{Corollary 10.2.5 in the lecture notes} we can find an \par\noindent$\epsilon$-approximate solution $\Tilde{\vz}$ to $\mL\vz = \vd$ in time $\LandauO{|E| \log^3 |V| \log(\nicefrac{1}{\epsilon})}$, where $\vd \perp \vOne$. Using our assumption that finding $\Tilde{\vz}$ for $\epsilon = \nicefrac{1}{|V|^{100}}$ is as expensive as finding $\vz$ exactly, we conclude that $\mL^+\trans{\mB}\mU\vx$ and $\mL^+\mB\vy$ can be computed in \begin{align*}
+    \LandauO{|E| \log^3 |V| \log |V|^{100}} = \LandauO{|E| \log^4 |V|} = \TildeLandauO{|E|}
+\end{align*} time.
+\end{proof}
+
+\bibliography{assignments/sources}
+\end{document}
