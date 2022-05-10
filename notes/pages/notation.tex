@@ -17,17 +17,28 @@ We follow these general rules: \begin{itemize}[noitemsep]
 
 \begin{longtable}{p{2.5cm}l}
    $\defeq$ & equality by definition \\
+   iff & if and only if \\
 %   $\approx$ & approximately equals \\
 %   $\propto$ & proportional to \\
    $\Nat$ & set of natural numbers $\{1, 2, \dots\}$ \\
    $\Nat_0$ & set of natural numbers, including $0$, $\Nat \cup \{0\}$ \\
    $\R$ & set of real numbers \\
+   $\C$ & set of complex numbers \\
    $[m]$ & set of natural numbers from $1$ to $m$, $\{1, 2, \dots, m-1, m\}$ \\
 %   $i:j$ & subset of natural numbers between $i$ and $j$, $\{i, i+1, \dots, j-1, j\}$ \\
    $(a,b]$ & real interval between $a$ and $b$ including $b$ but not including $a$ \\
    $f : \sA \to : \sB$ & function $f$ from elements of set $\sA$ to elements of set $\sB$ \\
    $\Ind{predicate}$ & indicator function ($\Ind{predicate} \defeq 1$ if the $predicate$ is true, else $0$) \\
    $\gets$ & assignment \\
+\end{longtable}
+
+\section*{\smallcaps{Linear Algebra}}\vspace{-0.5cm}
+\begin{longtable}{p{2.5cm}l}
+   $\trans{\mA}$ & transpose of matrix $\mA$ \\
+   $\diag\{a_i\}_{i\in\sI}$ & diagonal matrix with elements $a_i$, indexed according to the set $\sI$ \\
+   $\vspan\{\vx_1, \dots, \vx_n\}$ & smallest subspace containing $\vx_1, \dots, \vx_n$ \\
+   $\dim(\sW)$ & number of vectors in a basis of a subspace $\sW$ \\
+   $\norm{\mA}_{\alpha\to\beta}$ & matrix norm of $\mA$ induced by norms $\norm{\cdot}_\alpha$ and $\norm{\cdot}_\beta$ \\
 \end{longtable}
 
 \section*{\smallcaps{Probability}}\vspace{-0.5cm}
@@ -42,6 +53,18 @@ We follow these general rules: \begin{itemize}[noitemsep]
 %   $\Var{X}$ & variance of random variable $X$ \\
 %   $\Cov{X,Y}$ & covariance of random variable $X$ and random variable $Y$ \\
 %   $\Delta^{\spA}$ & set of all probability distributions over the set $\spA$ \\
+\end{longtable}
+
+\section*{\smallcaps{Analysis}}\vspace{-0.5cm}
+\begin{longtable}{p{2.5cm}l}
+   $\mathrm{epi}(f)$ & epigraph of a function $f$, $\{(\vx,y) \mid f(\vx) \leq y\} \subseteq \R^{n+1}$ \\
+   $\sS_\alpha(f)$ & $\alpha$-sub-level set of a function $f$, $\{\vx \in \sS \mid f(\vx) \leq \alpha\}$ \\
+   $\sL_\alpha(f)$ & $\alpha$-level set of a function $f$, $\{\vx \in \sS \mid f(\vx) = \alpha\}$ \\
+   $\grad f(\vx)$ & gradient of a function $f$ at a point $\vx$, $\trans{\begin{bmatrix}
+        \pdv{f(\vx)}{\vx(1)} & \cdots & \pdv{f(\vx)}{\vx(n)}
+    \end{bmatrix}}$ \\
+   $[\vx,\vy]$ & set of convex combinations of $\vx$ and $\vy$, $\{\theta\vx + (1-\theta)\vy \mid \theta\in[0,1]\}$ \\
+   $D f(\vx)[\vd]$ & directional derivative of $f$ at $\vx$ in direction $\vd$, $\lim_{\lambda \to 0} \frac{f(\vx + \lambda\vd) - f(\vx)}{\lambda}$ \\
 \end{longtable}
 
 \section*{\smallcaps{Graphs}}\vspace{-0.5cm}

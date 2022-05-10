@@ -3,6 +3,8 @@
 
 \chapter{Proofs of \Cref{part1}}
 
+\section{Electrical Flows}
+
 \begin{lem}\label{lem:a1}
 $c(\vx) \defeq \frac{1}{2}\trans{\vx}\mL\vx - \trans{\vx}\vd$ is convex.
 \end{lem}
@@ -25,4 +27,24 @@ For the electrical flow $\s{\vf}$ and electrical voltages $\s{\vx}$,\par\noinden
 For any flow $\vf$ routing $\vd$ and voltages $\vx$, $\mathcal{E}(\vf) \geq -c(\vx)$.
 \end{lem}
 \begin{proof} TBD
+\end{proof}
+
+\section{Linear Algebra}
+
+\begin{thm}\label{thm:a5}
+If a square matrix $\mA \in \R^{n \times n}$ is symmetric, then $\mA$ has $n$ real eigenvalues $\lambda_1, \dots, \lambda_n$ and eigenvectors $\vv_1, \dots, \vv_n \in \R^n$ such that $\mA\vv_i = \lambda_i\vv_i$ and the $\vv_i$ are orthogonal.
+\end{thm}
+\begin{proof} Because the characteristic polynomial of $\mA$ is of degree $n$, it has $n$ complex roots, which are the eigenvalues $\lambda_1, \dots, \lambda_n$ of $\mA$. We will first prove that the $\lambda_i$ are real. Then, we will prove that the corresponding eigenvectors $\vv_i$ are orthogonal.
+
+\begin{enumerate}
+    \item Let $\lambda$ be any eigenvalue of $\mA$. We denote by $\Bar{\lambda}$ the complex conjugate of $\lambda$. Clearly, if $\lambda = \Bar{\lambda}$, then $\lambda \in \R$. By the definition of the eigenvalue $\lambda$ with associated eigenvector $\vv$, we have, \begin{align*}
+        \lambda\trans{\Bar{\vv}}\vv = \trans{\Bar{\vv}}\mA\vv.
+    \end{align*} Taking the complex conjugate and transpose of both sides gives, \begin{align*}
+        \Bar{\lambda}\trans{\Bar{\vv}}\vv = \trans{\Bar{\vv}}\trans{\Bar{\mA}}\vv = \trans{\Bar{\vv}}\mA\vv = \lambda\trans{\Bar{\vv}}\vv. \margintag{using that $\mA$ is real and symmetric, $\trans{\Bar{\mA}} = \mA$}
+    \end{align*} We have $\lambda = \Bar{\lambda}$ as desired.
+    
+    \item It remains to show that for eigenvalues $\lambda_i, \lambda_j$ with associated eigenvectors $\vv_i, \vv_j$ and $i \neq j$, we have $\trans{\vv_i}\vv_j = 0$. By the definition of an eigenvalue, we have, \begin{align*}
+        \lambda_i\trans{\vv_j}\vv_i = \trans{\vv_j}\mA\vv_i &= \trans{(\trans{\vv_i}\trans{\mA}\vv_j)} \\ &= \trans{(\trans{\vv_i}\mA\vv_j)} = \lambda_j \trans{(\trans{\vv_i}\vv_j)} = \lambda_j\trans{\vv_j}\vv_i. \margintag{using that $\mA$ is symmetric}
+    \end{align*} We get that $\trans{\vv_j}\vv_i = 0$ if $\lambda_i \neq \lambda_j$. \qedhere
+\end{enumerate}
 \end{proof}

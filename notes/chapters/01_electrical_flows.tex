@@ -22,7 +22,7 @@ By \emph{Ohm's law}\index{Ohm's law}, we have that for any wire $e \in \sE$, \be
 
 To keep track of the direction of flow on each edge, we assign an arbitrary direction to each edge (we ``orient'' $G$) and only consider non-negative flows, $\vf \in \R_{\geq 0}^{|\sE|}$. Clearly, for any previously feasible flow, we can assign directions in such a way that the flow remains feasible.
 
-\subsection{The Laplacian Matrix}
+\section{The Laplacian Matrix}
 
 \begin{defn}[Adjacency matrix]\index{adjacency matrix}
 The \emph{adjacency matrix} of a graph $G$, $\Tilde{\mA} \in \R^{|\sV|\times|\sV|}$, is defined as,\footnote{By $\mA$ we will later denote the weighted adjacency matrix.} \begin{align}
@@ -91,6 +91,13 @@ $\mL = \mD - \mA$.
 The proof is identical to the proof of \cref{lem:incidence_matrix_product}, only that every entry is now weighted, due to the additional factor $\mW$.
 \end{proof}
 
+\begin{cor}
+$\mL$ is symmetric.
+\end{cor}
+\begin{proof}
+This directly follows from the fact that $\mD$ and $\mA$ are symmetric.\footnote{Diagonal matrices like $\mD$ are trivially symmetric.}
+\end{proof}
+
 \begin{lem}
 For any $\vx \in \R^{|\sV|}$, we have, \begin{align}
     \trans{\vx}\mL\vx = \sum_{\{u,v\}\in\sE} \vw(\{u, v\})[\vx(u) - \vx(v)]^2 \geq 0.
@@ -110,10 +117,10 @@ We have, \begin{align*}
 \end{align*}
 \end{proof}
 \begin{cor}
-$\mL$ is positive semi-definite.
+$\mL$ is positive semi-definite.\footnote{By the previous lemma, $\mL$ satisfies the definition of positive semi-definiteness, which we will introduce in the following section.}
 \end{cor}
 
-\subsection{An Optimization Problem}
+\section{An Optimization Problem}
 
 We have seen that finding voltages $\vx$ or flows $\vf$ is equivalent, we can go from one to the other and back. So let us first focus on how we can find voltages $\vx$.
 
@@ -123,7 +130,7 @@ In \cref{eq:ohms_law_and_net_flow_constraint}, we saw that voltages satisfy $\mL
     \s{\vx} \defeq \argmin_{\vx \in \R^{|\sV|}} c(\vx).
 \end{align}
 
-\subsection{Energy \& Duality}
+\section{Energy \& Duality}
 
 Let us now look at the same problem through a different lens. Transporting current through a network of resistors requires energy, which is dissipated as heat by the resistor. By \emph{Joule's law}\index{Joule's law}, sending a current $f$ across a resistor with potential drop $x$, spends $f \cdot x$ units of energy per unit time.\footnote{We will think about everything as if happening in one unit of time.} Using Ohm's law, we have, \begin{align}
     f \cdot x = \frac{x^2}{r} = r \cdot f^2.
@@ -133,6 +140,6 @@ Let us now look at the same problem through a different lens. Transporting curre
 
 Let us consider the \emph{electrical energy-minimizing flow}\index{electrical energy-minimizing flow}:\footnote{Note that we could instead (and equivalently) characterize the optimization problem using voltages.} \begin{align}
     \s{\vf} \defeq &\argmin_{\substack{\vf \in \R^{|\sE|} \\ \mB\vf = \vd}} \mathcal{E}(\vf). \label{eq:electrical_energy_minimizing_flow}
-\end{align} It turns out that $\s{\vf}$ is precisely the electrical flow, that is, $\s{\vf}$ satisfies Ohm's law.\footnote{Proof in \cref{lem:a2}} This indicates that the two above optimization problems are intimately related: both yield the electrical flow (or equivalently, electrical voltages). In fact, it can be shown that $\mathcal{E}(\s{\vf}) = -c(\s{\vx}$, where we think about maximizing $-c(\vx)$ instead of minimizing $c(\vx)$.\footnote{Proof in \cref{lem:a3}}. More generally, $\mathcal{E}(\vf) \geq -c(\vx)$ for any flow $\vf$ routing $\vd$ and voltages $\vx$.\footnote{Proof in \cref{lem:a4}} So, for any $\vx$, the value of $-c(\vx)$ is a lower bound on the minimum energy $\mathcal{E}(\s{\vf})$.
+\end{align} It turns out that $\s{\vf}$ is precisely the electrical flow, that is, $\s{\vf}$ satisfies Ohm's law.\footnote{Proof in \cref{lem:a2}.} This indicates that the two above optimization problems are intimately related: both yield the electrical flow (or equivalently, electrical voltages). In fact, it can be shown that $\mathcal{E}(\s{\vf}) = -c(\s{\vx}$, where we think about maximizing $-c(\vx)$ instead of minimizing $c(\vx)$.\footnote{Proof in \cref{lem:a3}.}. More generally, $\mathcal{E}(\vf) \geq -c(\vx)$ for any flow $\vf$ routing $\vd$ and voltages $\vx$.\footnote{Proof in \cref{lem:a4}.} So, for any $\vx$, the value of $-c(\vx)$ is a lower bound on the minimum energy $\mathcal{E}(\s{\vf})$.
 
 This is an example of a much broader phenomenon known as Lagrangian duality, where we have a minimization problem and a related maximization problem that gives lower bounds on the optimal value of the minimization problem.

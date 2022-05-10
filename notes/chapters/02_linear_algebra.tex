@@ -2,3 +2,92 @@
 % Add the above to each chapter to make compiling the PDF easier in some editors.
 
 \chapter{Linear Algebra}
+
+If a square matrix $\mA \in \R^{n \times n}$ is symmetric\footnote{$\mA$ is symmetric iff $\mA = \trans{\mA}$.}, then $\mA$ has $n$ real \emph{eigenvalues} $\lambda_1, \dots, \lambda_n$ and \emph{eigenvectors} $\vv_1, \dots, \vv_n \in \R^n$ such that $\mA\vv_i = \lambda_i\vv_i$ and the $\vv_i$ are orthogonal\footnote{that is, $\trans{\vv_i}\vv_j = 0$ for $i \neq j$}.\footnote{We prove this in \cref{thm:a5}.}
+
+\begin{defn}[Positive (semi-)definiteness]\index{positive definite matrix}\index{positive semi-definite matrix}\index{indefinite matrix}
+Let $\mA \in \R^{n \times n}$ be a symmetric matrix. We say $\mA$ is \begin{enumerate}
+    \item \emph{positive definite} iff $\trans{\vx}\mA\vx > 0$ for any $\vx \in \R^n \setminus \{\vZero\}$;
+    \item \emph{positive semi-definite} iff $\trans{\vx}\mA\vx \geq 0$ for any $\vx \in \R^n$;
+    \item if neither $\mA$ nor $-\mA$ is positive semi-definite, $\mA$ is \emph{indefinite}.
+\end{enumerate}
+\end{defn}
+\begin{thm}\label{thm:psd_eigenvalues}
+Let $\mA \in \R^{n \times n}$ be a symmetric matrix. Then, \begin{enumerate}
+    \item $\mA$ is positive definite iff all eigenvalues are positive; and
+    \item $\mA$ is positive semi-definite iff all eigenvalues are non-negative.
+\end{enumerate}
+\end{thm}\noindent This theorem is a corollary of the Courant-Fischer theorem, which we will work towards now.
+
+\begin{thm}[Spectral theorem for symmetric matrices]\index{spectral theorem for symmetric matrices} For all symmetric matrices $\mA \in \R^{n \times n}$ there exist \begin{align}
+    \mV = \begin{bmatrix}
+    \vv_1 & \cdots & \vv_n
+    \end{bmatrix} \in \R^{n \times n}, \quad \text{and} \quad \mLambda = \diag\{\lambda_i\}_{i \in [n]} \in \R^{n \times n},
+\end{align} where $\lambda_i$ and $\vv_i$ are the eigenvalues and corresponding (normalized) eigenvectors of $\mA$, such that \begin{enumerate}
+    \item $\mA = \mV\mLambda\trans{\mV} = \sum_{i=1}^n \lambda_i \vv_i \trans{\vv_i}$; and
+    \item $\trans{\mV}\mV = \mI$, i.e., the columns of $\mV$ form an orthonormal basis of $\R^n$.
+\end{enumerate}
+\end{thm}
+
+\begin{thm}[Courant-Fischer min-max theorem]\index{Courant-Fischer min-max theorem} For symmetric matrices $\mA \in \R^{n \times n}$ with eigenvalues $\lambda_1 \leq \dots \leq \lambda_n$, \begin{align}
+    \lambda_i &= \min_{\substack{\text{subspace $\sW \subseteq \R^n$} \\ \dim(\sW) = i}} \max_{\substack{\vx \in \sW \\ \vx \neq \vZero}} \frac{\trans{\vx}\mA\vx}{\trans{\vx}\vx} \label{eq:courant_fischer_1} \\
+    &= \max_{\substack{\text{subspace $\sW \subseteq \R^n$} \\ \dim(\sW) = n - i + 1}} \min_{\substack{\vx \in \sW \\ \vx \neq \vZero}} \frac{\trans{\vx}\mA\vx}{\trans{\vx}\vx}.
+\end{align}
+\end{thm}
+\begin{proof}
+We show \cref{eq:courant_fischer_1}. The proof of the other equation proceeds analogously. \begin{itemize}
+    \item ``$\geq$'': We choose $\sW = \vspan\{\vv_1, \dots, \vv_i\}$ We can write $\vx$ in the basis of eigenvectors, \begin{align*}
+        \vx = \sum_{j=1}^i \vc(j) \vv_j
+    \end{align*} for some $\vc \in \R^i$. We have, \begin{align*}
+        \trans{\vx}\vx = \norm{\vx}_2^2 = \sum_{j=1}^i \sum_{k=1}^i \vc(j) \vc(k) \trans{\vv_j}\vv_k = \sum_{j=1}^i \vc(j)^2, \margintag{using that $\trans{\vv_j}\vv_k = 0$ if $j \neq k$ and $\trans{\vv_j}\vv_k = 1$ otherwise}
+    \end{align*} and, \begin{align*}
+        \trans{\vx}\mA\vx = \trans{\vx}\mV\mLambda\trans{\mV}\vx &= \trans{(\trans{\mV}\vx)}\mLambda(\underbrace{\trans{\mV}\vx}_{\vc}) \\ &= \trans{\vc}\mLambda\vc = \sum_{j=1}^i \lambda_j \vc(j)^2 \leq \lambda_i \sum_{j=1}^i \vc(j)^2.
+    \end{align*} Altogether, \begin{align*}
+        \frac{\trans{\vx}\mA\vx}{\trans{\vx}\vx} \leq \lambda_i.
+    \end{align*}
+    
+    \item ``$\leq$'': Consider any subspace $\sW \subseteq \R^n$ with $\dim(\sW) = i$ and fix the subspace $\sT \defeq \vspan\{\vv_i, \dots, \vv_n\}$ with $\dim(\sT) = n - i + 1$. We have that $\dim(\sW \cap \sT) = \dim(\sW) + \dim(\sT) - \dim(\sW \cup \sT)$ and $\dim(\sW \cup \sT) \leq \dim(\R^n) = n$, so, $\dim(\sW \cap \sT) \geq 1$. Therefore, \begin{align*}
+        \max_{\substack{\vx \in \sW \\ \vx \neq \vZero}} \frac{\trans{\vx}\mA\vx}{\trans{\vx}\vx} &\geq \max_{\substack{\vx \in \sW \cap \sT \\ \vx \neq \vZero}} \frac{\trans{\vx}\mA\vx}{\trans{\vx}\vx} \\
+        &\geq \min_{\substack{\text{subspace $\sV \subseteq \sT$} \\ \dim(\sV) = 1}} \max_{\substack{\vx \in \sV \\ \vx \neq \vZero}} \frac{\trans{\vx}\mA\vx}{\trans{\vx}\vx}.
+    \end{align*} For the last inequality note that $\sV$ can be chosen as $\sW \cap \sT$.
+    
+     We choose $\sV \defeq \vspan\{\vv_i\}$. For some $c \in \R$, we can write $\vx = c\vv_i$. Similarly to the previous part, we obtain, \begin{align*}
+         \frac{\trans{\vx}\mA\vx}{\trans{\vx}\vx} = \frac{\lambda_i c^2}{c^2} = \lambda_i. &\qedhere
+     \end{align*}
+\end{itemize}
+\end{proof}
+
+\begin{proof}[Proof of \cref{thm:psd_eigenvalues}] Using Courant-Fischer, we have for the smallest eigenvalue $\lambda_1$ of $\mA$, \begin{align*}
+    \lambda_1 = \min_{\substack{\vx \in \R^n \\ \vx \neq \vZero}} \frac{\trans{\vx}\mA\vx}{\trans{\vx}\vx}.
+\end{align*} Thus, if $\lambda_{\min}$ is positive, then $\trans{\vx}\mA\vx > 0$ for all $\vx \in \R^n \setminus \{\vZero\}$. In contrast, if for any such $\vx$, $\trans{\vx}\mA\vx > 0$, then $\lambda_1$ must be positive. The proof of positive semi-definiteness is analogous.
+\end{proof}
+
+\section{Matrix Norms}
+
+\begin{defn}[Matrix norm]\index{matrix norm} Given a matrix $\mA \in \R^{n \times n}$ and norms $\norm{\cdot}_\alpha$ and $\norm{\cdot}_\beta$ on $\R^n$, the \emph{(induced) norm} of $\mA$ is defined as,\footnote{If you think of $\mA$ as a linear map, you can think of $\norm{\cdot}_\alpha$ as a norm of the input space and $\norm{\cdot}_\beta$ as a norm of the output space.} \begin{align}
+    \norm{\mA}_{\alpha\to\beta} \defeq \sup_{\substack{\vx \in \R^n \\ \vx \neq \vZero}} \frac{\norm{\mA\vx}_\beta}{\norm{\vx}_\alpha}.
+\end{align} We write $\norm{\mA}_\alpha \defeq \norm{\mA}_{\alpha\to\alpha}$.
+\end{defn}
+
+\begin{lem} For a symmetric matrix $\mA \in \R^{n \times n}$, \begin{align}
+    \norm{\mA}_2 = \max\{|\lambda_{\min}(\mA)|, |\lambda_{\max}(\mA)|\}.
+\end{align} $\norm{\mA}_2$ is called the \emph{spectral norm}\index{spectral norm} of $\mA$.
+\end{lem}
+\begin{proof}
+We have, \begin{align*}
+    \norm{\mA}_2^2 &= \sup_{\substack{\vx \in \R^n \\ \vx \neq \vZero}} \frac{\trans{\vx}\trans{\mA}\mA\vx}{\trans{\vx}\vx} \\
+    &= \sup_{\substack{\vx \in \R^n \\ \vx \neq \vZero}} \frac{\trans{\vx}\mA^2\vx}{\trans{\vx}\vx} \margintag{using that $\mA$ is symmetric, $\trans{\mA} = \mA$} \\
+    &= \sup_{\substack{\vx \in \R^n \\ \vx \neq \vZero}} \frac{\trans{\vx}\mV\mLambda^2\trans{\mV}\vx}{\trans{\vx}\vx} \margintag{using that $\mV$ is orthogonal, $\trans{\mV} = \mV^{-1}$} \\
+    &= \sup_{\substack{\vx \in \R^n \\ \vx \neq \vZero}} \frac{\trans{\trans{\mV}\vx}\mLambda^2(\trans{\mV}\vx)}{\trans{\trans{\mV}\vx}(\trans{\mV}\vx)} \\
+    &= \sup_{\substack{\vy \in \R^n \\ \vy \neq \vZero}} \frac{\trans{\vy}\mLambda^2\vy}{\trans{\vy}\vy} = \norm{\mLambda}_2^2. \margintag{using that the columns of $\mV$ form a basis of $\R^n$, set $\vy \defeq \trans{\mV}\vx$}
+\end{align*} Finally, \begin{align*}
+    \norm{\mLambda}_2^2 = \sup_{\substack{\vx \in \R^n \\ \vx \neq \vZero}} \frac{\trans{\vx}\mLambda^2\vx}{\trans{\vx}\vx} = \sup_{\substack{\vx \in \R^n \\ \vx \neq \vZero}} \frac{\sum_{i=1}^n \lambda_i^2 \vx(i)^2}{\sum_{i=1}^n \vx(i)^2} = \max_{i \in [n]} \lambda_i^2. &\qedhere
+\end{align*}
+\end{proof}
+
+\section{Loewner Order}
+% also cover "on graphs"
+
+\section{Pseudo-inverses}
+
+\section{Cholesky Decomposition}
