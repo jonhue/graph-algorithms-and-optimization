@@ -37,6 +37,8 @@ Let $f : \R^n \to \R$ be continuous, and let $\spa{F} \subseteq \R^n$ be non-emp
 \end{marginfigure}
 \begin{defn}[Convex function] For a convex set $\sS \subseteq \R^n$, a function $f : \sS \to \R$ is \emph{convex}\index{convex function} on $\sS$ iff \begin{align}
     \forall \vx, \vy \in \sS: \forall \theta \in [0,1]: f(\theta\vx + (1-\theta)\vy) \leq \theta f(\vx) + (1-\theta) f(\vy).
+\end{align} Similarly, we call $f$ \emph{strictly convex}\index{strictly convex function} on $\sS$ iff \begin{align}
+    \forall \vx, \vy \in \sS: \forall \theta\in[0,1]: f(\theta\vx + (1-\theta)\vy) < \theta f(\vx) + (1-\theta) f(\vy).
 \end{align}
 \end{defn}
 \begin{marginfigure}
@@ -47,7 +49,6 @@ Let $f : \R^n \to \R$ be continuous, and let $\spa{F} \subseteq \R^n$ be non-emp
 \begin{rmk}
 If the function $f$ is convex on $\sS$, we say that the function $-f$ is \emph{concave}\index{concave function} on $\sS$.
 \end{rmk}
-
 
 \begin{lem} A differentiable and convex function $f$, whose domain $\sS \subseteq \R^n$ is open and convex, is always continuously differentiable.
 \end{lem} In the following, we will assume that $\sS \subseteq \R^n$ is open.
@@ -78,9 +79,11 @@ Any $\alpha$-sub-level set of a convex function is convex.\footnote{Proof in \cr
 \end{marginfigure}
 \begin{thm}[First-order characterization of convexity] Consider a differentiable function $f: \sS \to \R$. Then, $f$ is convex iff \begin{align}
     f(\vy) \geq f(\vx) + \trans{\grad f(\vx)}(\vy - \vx)
-\end{align} for all $\vx, \vy \in \sS$.
+\end{align} for all $\vx, \vy \in \sS$. Moreover, $f$ is strictly convex iff \begin{align}
+    f(\vy) > f(\vx) + \trans{\grad f(\vx)}(\vy - \vx)
+\end{align}
 \end{thm}
-\begin{proof} \begin{itemize}
+\begin{proof} We first prove the statement about convexity. \begin{itemize}
     \item ``$\Rightarrow$'': Fix any $\vx, \vy \in \sS$. As $f$ is convex, \begin{align*}
         f((1-\theta)\vx + \theta\vy) \leq (1-\theta)f(\vx) + \theta f(\vy),
     \end{align*} for all $\theta \in [0,1]$. We can rearrange to, \begin{align*}
@@ -96,9 +99,11 @@ Any $\alpha$-sub-level set of a convex function is convex.\footnote{Proof in \cr
         f(\vx) &\geq f(\vz) + \trans{\grad f(\vz)}(\vx - \vz).
     \end{align*} We also have $(1-\theta)(\vy-\vx) = \vy - \vz$ and $\theta(\vy - \vx) = \vx - \vz$. Hence, \begin{align*}
         \theta f(\vy) + (1-\theta) f(\vx) &\geq f(\vz) + \trans{\grad f(\vz)}(\underbrace{\theta(\vy - \vz) + (1-\theta)(\vx - \vz)}_{0}) \\
-        &= f(\theta\vy + (1-\theta)\vx). \qedhere
+        &= f(\theta\vy + (1-\theta)\vx).
     \end{align*}
 \end{itemize}
+
+Finally, observe that the statement about strict convexity can be proven analogously by making the inequalities strict.
 \end{proof}
 
 \begin{thm} Let $f: \sS \to \R$ be a convex and differentiable function. Then, if $\vx \in \sS$ is a stationary point of $f$, then $\vx$ is a global minimum of $f$.
@@ -109,3 +114,25 @@ Any $\alpha$-sub-level set of a convex function is convex.\footnote{Proof in \cr
 \end{proof}
 
 \section{Second-order Characterization of Convexity}
+
+\begin{thm}[Second-order characterization of convexity] Consider a twice continuously differentiable function $f: \sS \to \R$.\footnote{Here we need our assumption that $\sS$ is open.} \begin{enumerate}
+    \item $f$ is convex iff $\mH_f(\vx)$ is positive semi-definite for all $\vx \in \sS$.
+    \item $f$ is strictly convex iff $\mH_f(\vx)$ is positive definite for all $\vx \in \sS$.
+\end{enumerate}
+\end{thm}
+\begin{proof} We first prove the statement about convexity. \begin{itemize}
+    \item ``$\Leftarrow$'': Fix any $\vx, \vy \in \sS$. By the second-order form of Taylor's theorem, \begin{align*}
+        f(\vy) &= f(\vx) + \trans{\grad f(\vx)}(\vy - \vx) + \frac{1}{2}\underbrace{\trans{(\vy - \vx)}\mH_f(\vz)(\vy - \vx)}_{\geq 0} \\
+        &\geq f(\vx) + \trans{\grad f(\vx)}(\vy - \vx),
+    \end{align*} for some $\vz \in [\vx,\vy]$. This coincides with the first-order characterization of convexity.
+    
+    \item ``$\Rightarrow$'': Fix any $\vx \in \sS$ and $\vd \in \R^n$. Note that, as $\sS$ is open, for small enough $\lambda \in [-\epsilon,\epsilon] \setminus \{0\}$, $\vx + \lambda\vd \in \sS$. We have, \begin{align*}
+        0 &\leq f(\vx + \lambda\vd) - [f(\vx) + \lambda \trans{\grad f(\vx)}\vd] \margintag{using the first-order characterization of convexity} \\
+        &= \frac{1}{2}\lambda^2\trans{\vd}\mH_f(\vx)\vd + o(\lambda^2 \norm{\vd}_2^2). \margintag{using a second-order expansion}
+    \end{align*} Multiplying both sides by $\nicefrac{2}{\lambda^2}$ and taking the limit $\lambda \to 0$, we obtain, \begin{align*}
+        0 \leq \trans{\vd}\mH_f(\vx)\vd + \lim_{\lambda \to 0}\frac{o(\lambda^2 \norm{\vd}_2^2)}{\lambda^2} = \trans{\vd}\mH_f(\vx)\vd.
+    \end{align*}
+\end{itemize}
+
+The statement about strict convexity follows by using the first-order characterization of strict convexity instead and replacing inequalities with strict inequalities.
+\end{proof}

@@ -59,7 +59,18 @@ We show \cref{eq:courant_fischer_1}. The proof of the other equation proceeds an
 
 \begin{proof}[Proof of \cref{thm:psd_eigenvalues}] Using Courant-Fischer, we have for the smallest eigenvalue $\lambda_1$ of $\mA$, \begin{align*}
     \lambda_1 = \min_{\substack{\vx \in \R^n \\ \vx \neq \vZero}} \frac{\trans{\vx}\mA\vx}{\trans{\vx}\vx}.
-\end{align*} Thus, if $\lambda_{\min}$ is positive, then $\trans{\vx}\mA\vx > 0$ for all $\vx \in \R^n \setminus \{\vZero\}$. In contrast, if for any such $\vx$, $\trans{\vx}\mA\vx > 0$, then $\lambda_1$ must be positive. The proof of positive semi-definiteness is analogous.
+\end{align*} Thus, if $\lambda_1$ is positive, then $\trans{\vx}\mA\vx > 0$ for all $\vx \in \R^n \setminus \{\vZero\}$. In contrast, if for any such $\vx$, $\trans{\vx}\mA\vx > 0$, then $\lambda_1$ must be positive. The proof of positive semi-definiteness is analogous.
+\end{proof}
+
+\begin{cor}\label{lem:quadratic_form_lower_bound}
+    For a symmetric matrix $\mA \in \R^{n \times n}$ and any $\vx \in \R^n$, we have, \begin{align}
+        \lambda_{\min}(\mA) \norm{\vx}_2^2 \leq \trans{\vx}\mA\vx,
+    \end{align} where $\lambda_{\min}(\mA)$ is the smallest eigenvalue of $\mA$.
+\end{cor}
+\begin{proof}
+By Courant-Fischer, we have for any $\vx \in \R^n$ such that $\vx \neq \vZero$, \begin{align*}
+    \lambda_{\min}(\mA) = \min_{\substack{\vy \in \R^n \\ \vy \neq \vZero}} \frac{\trans{\vy}\mA\vy}{\norm{\vy}_2^2} \leq \frac{\trans{\vx}\mA\vx}{\norm{\vx}_2^2}.
+\end{align*} If $\vx = \vZero$, the inequality trivially holds.
 \end{proof}
 
 \section{Matrix Norms}
@@ -68,6 +79,16 @@ We show \cref{eq:courant_fischer_1}. The proof of the other equation proceeds an
     \norm{\mA}_{\alpha\to\beta} \defeq \sup_{\substack{\vx \in \R^n \\ \vx \neq \vZero}} \frac{\norm{\mA\vx}_\beta}{\norm{\vx}_\alpha}.
 \end{align} We write $\norm{\mA}_\alpha \defeq \norm{\mA}_{\alpha\to\alpha}$.
 \end{defn}
+
+\begin{lem} For any matrix $\mA \in \R^{n \times n}$, any $\vx\ in \R^n$, and any norm $\norm{\cdot}$ on $\R^n$, \begin{align}
+    |\trans{\vx}\mA\vx| \leq \norm{\mA}\norm{\vx}^2.
+\end{align}
+\end{lem}
+\begin{proof} We have, \begin{align*}
+    |\trans{\vx}\mA\vx| &\leq \norm{\vx} \norm{\mA\vx} \margintag{using Cauchy-Schwarz} \\
+    &\leq \norm{\mA} \norm{\vx}^2. \margintag{using the definition of the induced matrix norm} \qedhere
+\end{align*}
+\end{proof}
 
 \begin{lem} For a symmetric matrix $\mA \in \R^{n \times n}$, \begin{align}
     \norm{\mA}_2 = \max\{|\lambda_{\min}(\mA)|, |\lambda_{\max}(\mA)|\}.

@@ -60,15 +60,15 @@ We follow these general rules: \begin{itemize}[noitemsep]
    $\mathrm{epi}(f)$ & epigraph of a function $f$, $\{(\vx,y) \mid f(\vx) \leq y\} \subseteq \R^{n+1}$ \\
    $\sS_\alpha(f)$ & $\alpha$-sub-level set of a function $f$, $\{\vx \in \sS \mid f(\vx) \leq \alpha\}$ \\
    $\sL_\alpha(f)$ & $\alpha$-level set of a function $f$, $\{\vx \in \sS \mid f(\vx) = \alpha\}$ \\
-   $\grad f(\vx)$ & gradient of a function $f$ at a point $\vx$, $\trans{\begin{bmatrix}
+   $\grad f(\vx) \in \R^{n \times 1}$ & gradient of a function $f$ at a point $\vx$, $\trans{\begin{bmatrix}
         \pdv{f(\vx)}{\vx(1)} & \cdots & \pdv{f(\vx)}{\vx(n)}
     \end{bmatrix}}$ \\
    $[\vx,\vy]$ & set of convex combinations of $\vx$ and $\vy$, $\{\theta\vx + (1-\theta)\vy \mid \theta\in[0,1]\}$ \\
    $D f(\vx)[\vd]$ & directional derivative of $f$ at $\vx$ in direction $\vd$, $\lim_{\lambda \to 0} \frac{f(\vx + \lambda\vd) - f(\vx)}{\lambda}$ \\
-   $D \vg(\vx)$ & Jacobian of vector-valued function $\vg$, $\begin{bmatrix}
+   $D \vg(\vx) \in \R^{m \times n}$ & Jacobian of vector-valued function $\vg: \R^n \to \R^m$, $\begin{bmatrix}
         \pdv{\vg(\vx)}{\vx(1)} & \cdots & \pdv{\vg(\vx)}{\vx(n)}
     \end{bmatrix}$ \\
-   $\mH_f(\vx)$ & Hessian of $f$, $\trans{D \grad f(\vx)}$ \\
+   $\mH_f(\vx) \in \R^{n \times n}$ & Hessian of $f$, $\trans{D \grad f(\vx)}$ \\
 \end{longtable}
 
 \section*{\smallcaps{Graphs}}\vspace{-0.5cm}

@@ -57,23 +57,21 @@ If this holds, $\vg = \grad f(\vx)$.
 \end{align*} Taking the limit $\lambda \to 0$ gives the desired result.
 \end{proof}
 
-\section{Conditions for Optimality}
+\subsection{First-order Optimality Conditions}
 
 \begin{defn}[Stationary point] Given a function $f: \sS \to \R$, a point $\vx \in \sS$ where $\grad f(\vx) = 0$ is called a \emph{stationary point}\index{stationary point} of $f$.\footnote{Being a stationary point is not sufficient for optimality. Take for example the point $x \defeq 0$ of $f(x) \defeq x^3$.}
 \end{defn}
 
-\begin{lem}
+\begin{thm}[First-order optimality condition]
 If $\vx \in \sS$ is a local extremum of a differentiable function $f: \sS \to \R$, then $\grad f(\vx) = 0$.\footnote{Here it is important that we have chosen $\sS \subseteq \R^n$ to be open. When $\sS$ is not open, an extremum could be on the boundary of the domain, where the gradient is non-zero.}
-\end{lem}
+\end{thm}
 \begin{proof}
     Assume $\vx$ is a local minimum of $f$. Then, for all $\vd \in \R^n$ and for all small enough $\lambda \in R$, we have $f(\vx) \leq f(\vx + \lambda\vd)$, so, \begin{align*}
         0 &\leq f(\vx + \lambda\vd) - f(\vx) \\
         &= \lambda \trans{\grad f(\vx)}\vd + o(\lambda\norm{\vd}_2). \margintag{using a first-order expansion of $f$ around $x$}
     \end{align*} Dividing by $\lambda$ and taking the limit $\lambda \to 0$, we obtain, \begin{align*}
-        0 \leq \trans{\grad f(\vx)}\vd + \underbrace{\frac{o(\lambda\norm{\vd}_2)}{\lambda}}_{\to 0} \to \trans{\grad f(\vx)}\vd.
-    \end{align*} Take $\vd \defeq - \grad f(\vx)$.\footnote{We can only take this step because we assumed that $\sS$ is open.} Then, \begin{align*}
-        0 \leq - \norm{\grad f(\vx)}_2^2,
-    \end{align*} so $\grad f(\vx) = 0$.
+        0 \leq \trans{\grad f(\vx)}\vd + \lim_{\lambda \to 0}\frac{o(\lambda\norm{\vd}_2)}{\lambda} = \trans{\grad f(\vx)}\vd.
+    \end{align*} Take $\vd \defeq - \grad f(\vx)$.\footnote{We can only take this step because we assumed that $\sS$ is open.} Then, $0 \leq - \norm{\grad f(\vx)}_2^2$, so $\grad f(\vx) = 0$.
 \end{proof}
 
 \section{Second-order Taylor Approximations}
@@ -136,3 +134,25 @@ If this holds, \begin{enumerate}
     f(\vy) = f(\vx) + \trans{\grad f(\vx)}(\vy - \vx) + \frac{1}{2}\trans{(\vy - \vx)}\mH_f(\vz)(\vy - \vx),
 \end{align} for some $\vz \in [\vx,\vy]$.
 \end{thm}
+
+\subsection{Second-order Optimality Conditions}
+
+\begin{thm}[Necessary second-order optimality condition] Let $f: \sS \to \R$ be twice continuously differentiable at $\vx \in \sS$ and $\sS$ be open. Then, if $\vx$ is a local minimum, $\mH_f(\vx)$ is positive semi-definite.\footnote[][-3\baselineskip]{In other words, if $\mH_f(\vx)$ has a negative eigenvalue, $\vx$ cannot be a minimum. Intuitively, you can think of $\mH_f(\vx)$ as the curvature of $f$ around $\vx$, and therefore, a negative eigenvalue indicates that the function value can be decreased by moving in some direction.}
+\end{thm}
+\begin{proof} Suppose $\vx \in \sS$ is a local minimum. By the first-order optimality condition, $\grad f(\vx) = 0$. For any direction $\vd \in \R^n$ and small enough $\lambda \in [-\epsilon, \epsilon] \setminus \{0\}$, \begin{align*}
+    0 &\leq f(\vx + \lambda\vd) - f(\vx) \margintag{using that $f$ is locally minimized at $\vx$} \\
+    &= \frac{1}{2} \lambda^2 \trans{\vd}\mH_f(\vx)\vd + o(\lambda^2 \norm{\vd}_2^2). \margintag{using a second-order expansion}
+\end{align*} Multiplying both sides by $\nicefrac{2}{\lambda^2}$ and taking the limit $\lambda \to 0$, we obtain, \begin{align*}
+    0 \leq \trans{\vd}\mH_f(\vx)\vd + \lim_{\lambda \to 0}\frac{o(\lambda^2 \norm{\vd}_2^2)}{\lambda^2} = \trans{\vd}\mH_f(\vx)\vd. &\qedhere
+\end{align*}
+\end{proof}
+
+\begin{thm}[Sufficient second-order optimality condition] Let $f: \sS \to \R$ be twice continuously differentiable at $\vx \in \sS$ and $\sS$ be open. Then, if $\vx$ is a stationary point and $\mH_f(\vx)$ is positive definite, $\vx$ is a local minimum.
+\end{thm}
+\begin{proof} Suppose that $\vx \in \sS$ is stationary, i.e., $\grad f(\vx) = \vZero$, and $\mH_f(\vx)$ is positive definite. For any direction $\vd \in \R^n$ and small enough $\lambda \in [-\epsilon,\epsilon] \setminus \{0\}$, \begin{align*}
+    f(\vx + \lambda\vd) &= f(\vx) + \underbrace{\trans{\grad f(\vx)}\vd}_{0} + \frac{1}{2}\lambda^2\trans{\vd}\mH_f(\vx)\vd + o(\lambda^2\norm{\vd}_2^2) \margintag{using a second-order expansion} \\
+    &\geq f(\vx) + \frac{1}{2}\lambda^2 \lambda_{\min}(\mH_f(\vx)) \norm{\vd}_2^2 + o(\lambda^2\norm{\vd}_2^2) \margintag{by \cref{lem:quadratic_form_lower_bound}} \\
+    &\geq f(\vx) + \frac{1}{4}\lambda_{\min}(\mH_f(\vx)) \norm{\vd}_2^2 \margintag{for small $\lambda$} \\
+    &> f(\vx) \margintag{using positive definiteness of $\mH_f(\vx)$} \qedhere
+\end{align*}
+\end{proof}
