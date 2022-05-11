@@ -18,21 +18,20 @@ For a single-variable function $f: \R \to \R$ that is differentiable, we have fo
     f(x + \delta) = f(x) + \odv{f(x)}{x} + o(|\delta|), \quad \text{where } \lim_{\delta \to 0} \frac{o(|\delta|)}{|\delta|} = 0,
 \end{align*} using a first-order Taylor approximation around $x$. We can use a similar approximation when $f$ is a multi-variable function.
 
-\begin{defn}[Fréchet differentiability] A function $f: \sS \to \R$ is \emph{(Fréchet) differentiable}\index{Fréchet differentiability} at $\vx \in \sS$ if there exists $\vg \in \R^n$ such that, \begin{align}
-    \lim_{\substack{\vdelta \in \R^n \\ \vdelta \to \vZero}} \frac{|f(\vx + \vdelta) - (f(\vx) + \trans{\vg}\vdelta)|}{\norm{\vdelta}_2} = 0.
-\end{align}
-\end{defn}\noindent Here, $\vg$ can be understood as a candidate for $\grad f(\vx)$ and $f(\vx) + \trans{\vg}\vdelta$ is a linear approximation of $f$ around $\vx$.
-
-This notion of differentiability is equivalent to, \begin{align}
-    f(\vx + \vdelta) = f(\vx) + \trans{\grad f(\vx)}\vdelta + o(\norm{\vdelta}_2),
-\end{align} for any $\vx, \vdelta \in \R^n$. This is also called a \emph{first-order expansion}\index{first-order expansion} of $f$.
-
-\begin{defn}[Continuous differentiability] We say that $f : \sS \to \R$ is \emph{continuously differentiable}\index{continuous differentiability} on $\sS$ if it is differentiable and its gradient is continuous on $\sS$.
+\begin{defn}[Fréchet differentiable] A function $f: \sS \to \R$ is \emph{(Fréchet) differentiable}\index{Fréchet differentiable} at $\vx \in \sS$ if there exists $\vg \in \R^n$ such that,\footnote{Here, $\vg$ can be understood as a candidate for $\grad f(\vx)$ and $f(\vx) + \trans{\vg}\vdelta$ is a linear approximation of $f$ around $\vx$.} \begin{align}
+    \lim_{\substack{\vdelta \in \R^n \\ \vdelta \to \vZero}} \frac{|f(\vx + \vdelta) - [f(\vx) + \trans{\vg}\vdelta]|}{\norm{\vdelta}_2} = 0.
+\end{align} This is equivalent to, \begin{align}
+    f(\vx + \vdelta) = f(\vx) + \trans{\vg}\vdelta + o(\norm{\vdelta}_2),
+\end{align} for any $\vx \in \sS$ and $\vdelta \in \R^n$ where $\lim_{\vdelta \to \vZero} \frac{o(\norm{\vdelta}_2)}{\norm{\vdelta}_2} = 0$. This is also called a \emph{first-order expansion}\index{first-order expansion} of $f$ around $\vx$.
 \end{defn}
-\begin{lem} A differentiable and convex function $f$, whose domain $\sS \subseteq \R^n$ is open and convex, is always continuously differentiable.
-\end{lem}
+\begin{rmk}
+If this holds, $\vg = \grad f(\vx)$.
+\end{rmk}
 
-\begin{thm}[Taylor's theorem]\index{Taylor's theorem} If $f: \sS \to \R$ is continuously differentiable, then for all $\vx, \vy \in \R^n$, \begin{align}
+\begin{defn}[Continuously differentiable] We say that $f : \sS \to \R$ is \emph{continuously differentiable}\index{continuously differentiable} on $\sS$ if it is differentiable and its gradient is continuous on $\sS$.
+\end{defn}
+
+\begin{thm}[Taylor's theorem, multivariate first-order remainder form]\index{Taylor's theorem (first-order)} If $f: \sS \to \R$ is continuously differentiable, then for all $\vx, \vy \in \sS$, \begin{align}
     f(\vy) = f(\vx) + \trans{\grad f(\vz)}(\vy - \vx),
 \end{align} for some $\vz \in [\vx, \vy] \defeq \{\theta\vx + (1-\theta)\vy \mid \theta \in [0,1]\}$.
 \end{thm}\begin{marginfigure}
@@ -78,3 +77,62 @@ If $\vx \in \sS$ is a local extremum of a differentiable function $f: \sS \to \R
 \end{proof}
 
 \section{Second-order Taylor Approximations}
+
+\begin{defn}[Jacobian] Given a vector-valued function, \begin{align*}
+    \vg: \R^n \to \R^m, \quad \vx \mapsto \begin{bmatrix}
+        g_1(\vx) \\
+        \vdots \\
+        g_m(\vx) \\
+    \end{bmatrix},
+\end{align*} where $g_i: \R^n \to \R$, the \emph{Jacobian}\index{Jacobian} of $\vg$ at $\vx \in \R^n$ is, \begin{align}
+    D \vg(\vx) \defeq \begin{bmatrix}
+        D g_1(\vx) \\
+        \vdots \\
+        D g_m(\vx) \\
+    \end{bmatrix} \defeq \begin{bmatrix}
+        \pdv{\vg(\vx)}{\vx(1)} & \cdots & \pdv{\vg(\vx)}{\vx(n)}
+    \end{bmatrix}.
+\end{align}
+\end{defn}
+\begin{rmk} For $f: \sS \to \R$ and any $\vx \in \sS$, $D f(\vx) = \trans{\grad f(\vx)}$.
+\end{rmk}
+\begin{ex}
+Given $f: \sS \to \R$ and any $\vx \in \sS$, consider the vector-valued function $\grad f$. We have, \begin{align}
+    D \grad f(\vx) = \begin{bmatrix}
+        \pdv{\grad f(\vx)}{\vx(1)} & \cdots & \pdv{\grad f(\vx)}{\vx(n)}
+    \end{bmatrix} = \begin{bmatrix}
+        \pdv{f(\vx)}{\vx(1),\vx(1)} & \cdots & \pdv{f(\vx)}{\vx(n),\vx(1)} \\
+        \vdots & \ddots & \vdots \\
+        \pdv{f(\vx)}{\vx(1),\vx(n)} & \cdots & \pdv{f(\vx)}{\vx(n),\vx(n)}
+    \end{bmatrix}. \label{eq:jacobian_hessian}
+\end{align}
+\end{ex}
+
+\begin{defn}[Hessian] Given $f: \sS \to \R$ that is twice differentiable coordinatewise, we define the \emph{Hessian}\index{Hessian} $\mH_f(\vx) \in \R^{n \times n}$ of $f$ at a point $\vx \in \sS$ as, \begin{align}
+    \mH_f(\vx)(i,j) \defeq \pdv{f(\vx)}{\vx(i),\vx(j)}
+\end{align}
+\end{defn}
+\begin{rmk} By \cref{eq:jacobian_hessian}, $\mH_f(\vx) = \trans{(D \grad f(\vx))}$.\footnote{Sometimes, $\mH_f(\vx) = \grad^2 f(\vx)$ is written (informally!).}
+\end{rmk}
+
+\begin{defn}[Twice Fréchet Differentiable] We say a function $f: \sS \to \R$ is \emph{twice (Fréchet) differentiable}\index{twice Fréchet differentiable} at $\vx \in \sS$ if there exists $\vg \in \R^n$ and a matrix $\mM \in \R^{n \times n}$ such that,\footnote{You can think of $\vg$ as a candidate for $\grad f(\vx)$, $\mM$ as a candidate for $\mH_f(\vx)$, and $f(\vx) + \trans{\vg}\vdelta + \frac{1}{2}\trans{\vdelta}\mM\vdelta$ is a quadratic approximation of $f$ around $\vx$.} \begin{align}
+    \lim_{\substack{\vdelta \in \R^n \\ \vdelta \to \vZero}} \frac{|f(\vx + \vdelta) - [f(\vx) + \trans{\vg}\vdelta + \frac{1}{2}\trans{\vdelta}\mM\vdelta]|}{\norm{\vdelta}_2^2} = 0.
+\end{align} This is equivalent to, \begin{align}
+    f(\vx + \vdelta) = f(\vx) + \trans{\vg}\vdelta + \frac{1}{2}\trans{\vdelta}\mM\vdelta + o(\norm{\vdelta}_2^2),
+\end{align} for any $\vx \in \sS$ and $\vdelta \in \R^n$ where $\lim_{\vdelta \to \vZero} \frac{o(\norm{\vdelta}_2^2)}{\norm{\vdelta}_2^2} = 0.$ This is also called a \emph{second-order expansion}\index{second-order expansion} of $f$ around $\vx$.
+\end{defn}
+\begin{rmk}
+If this holds, \begin{enumerate}
+    \item $\vg = \grad f(\vx)$,
+    \item $\mM = \mH_f(\vx)$, and
+    \item $\mH_f(\vx) = \trans{\mH_f(\vx)}$.
+\end{enumerate}
+\end{rmk}
+
+\begin{defn}[Twice continuously differentiable] We say that $f: \sS \to \R$ is \emph{twice continuously differentiable}\index{twice continuously differentiable} on $\sS$ if it is twice differentiable and the gradient and Hessian are continuous on $\sS$.
+\end{defn}
+
+\begin{thm}[Taylor's theorem, multivariate second-order remainder form]\index{Taylor's theorem (second-order)} If $f: \sS \to \R$ is twice continuously differentiable, then for all $\vx, \vy \in \sS$, \begin{align}
+    f(\vy) = f(\vx) + \trans{\grad f(\vx)}(\vy - \vx) + \frac{1}{2}\trans{(\vy - \vx)}\mH_f(\vz)(\vy - \vx),
+\end{align} for some $\vz \in [\vx,\vy]$.
+\end{thm}

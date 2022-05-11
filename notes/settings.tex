@@ -46,6 +46,9 @@
 \theoremstyle{remark}
 \newtheorem{rmk}[thm]{Remark}
 
+\theoremstyle{remark}
+\newtheorem{ex}[thm]{Example}
+
 \numberwithin{equation}{chapter}
 
 %--------Pseudocode--------
@@ -78,30 +81,30 @@
 \def\b{\textcolor{blue}}
 \def\r{\textcolor{red}}
 
-%--------Colored Theorem-------------
-\usepackage[most]{tcolorbox}
-\tcbuselibrary{theorems}
-\newtcbtheorem
-  [use counter*=thm,number within=chapter,crefname={example}{examples},Crefname={Example}{Examples}]%
-  {ex}
-  {\textbf{Example}}
-  {%
-%   boxrule=1pt,
-%   toprule=1pt,bottomrule=1pt,
-    before skip=10pt,after skip=10pt,
-    left=0.2cm,right=0.2cm,top=0.2cm,
-%   titlerule=0.5em,
-%   toptitle=0.1cm,
-%   bottomtitle=-0.1cm,
-    breakable,
-    sharp corners,
-    before upper=\setlength{\parskip}{8pt},
-    % colback=white,
-    % coltitle=black,
-    % colframe=blue!100,
-    fonttitle=\bfseries,
-  }% options
-  {ex}% prefix
+% %--------Colored Theorem-------------
+% \usepackage[most]{tcolorbox}
+% \tcbuselibrary{theorems}
+% \newtcbtheorem
+%   [use counter*=thm,number within=chapter,crefname={example}{examples},Crefname={Example}{Examples}]%
+%   {ex}
+%   {\textbf{Example}}
+%   {%
+% %   boxrule=1pt,
+% %   toprule=1pt,bottomrule=1pt,
+%     before skip=10pt,after skip=10pt,
+%     left=0.2cm,right=0.2cm,top=0.2cm,
+% %   titlerule=0.5em,
+% %   toptitle=0.1cm,
+% %   bottomtitle=-0.1cm,
+%     breakable,
+%     sharp corners,
+%     before upper=\setlength{\parskip}{8pt},
+%     % colback=white,
+%     % coltitle=black,
+%     % colframe=blue!100,
+%     fonttitle=\bfseries,
+%   }% options
+%   {ex}% prefix
 
 \newcommand{\safefootnote}[1]{\footnotemark \margintag{\textsuperscript{\tiny\arabic{footnote}} #1}}
 

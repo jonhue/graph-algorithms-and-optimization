@@ -65,6 +65,10 @@ We follow these general rules: \begin{itemize}[noitemsep]
     \end{bmatrix}}$ \\
    $[\vx,\vy]$ & set of convex combinations of $\vx$ and $\vy$, $\{\theta\vx + (1-\theta)\vy \mid \theta\in[0,1]\}$ \\
    $D f(\vx)[\vd]$ & directional derivative of $f$ at $\vx$ in direction $\vd$, $\lim_{\lambda \to 0} \frac{f(\vx + \lambda\vd) - f(\vx)}{\lambda}$ \\
+   $D \vg(\vx)$ & Jacobian of vector-valued function $\vg$, $\begin{bmatrix}
+        \pdv{\vg(\vx)}{\vx(1)} & \cdots & \pdv{\vg(\vx)}{\vx(n)}
+    \end{bmatrix}$ \\
+   $\mH_f(\vx)$ & Hessian of $f$, $\trans{D \grad f(\vx)}$ \\
 \end{longtable}
 
 \section*{\smallcaps{Graphs}}\vspace{-0.5cm}
