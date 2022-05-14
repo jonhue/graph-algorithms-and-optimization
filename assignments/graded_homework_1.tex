@@ -120,23 +120,29 @@ To show that $h$ is $(\beta - \mu)$-smooth, it suffices to show that \par\noinde
 
 Now, suppose $\beta \neq \mu$. Let $h(\vx) \defeq f(\vx) - \nicefrac{\mu}{2} \norm{\vx}_2^2$ be defined as in (1). Using our results from (1), $h$ is convex and $(\beta - \mu)$-smooth. By \cref{eq:part:1B}, we have \begin{align*}
     \trans{(\grad h(\vx) - \grad h(\vy))}(\vx - \vy) \geq \frac{1}{\beta - \mu} \norm{\grad h(\vx) - \grad h(\vy)}_2^2.
-\end{align*} Note that $\grad h(\vx) = \grad f(\vx) - \mu \vx$. This gives us, \begin{align}
-    &\trans{(\grad f(\vx) - \grad f(\vy))}(\vx - \vy) \nonumber\\
-    &= \trans{(\grad h(\vx) - \grad h(\vy))}(\vx - \vy) + \underbrace{\trans{(\mu\vx - \mu\vy)}(\vx - \vy)}_{= \mu \norm{\vx - \vy}_2^2} \nonumber\\
-    &\geq \frac{1}{\beta - \mu} \norm{\grad h(\vx) - \grad h(\vy)}_2^2 + \mu \norm{\vx - \vy}_2^2 \nonumber\\
-    &= \frac{1}{\beta - \mu} \norm{\grad f(\vx) - \grad f(\vy) + \mu(\vy - \vx)}_2^2 + \mu \norm{\vx - \vy}_2^2. \label{eq:part:1C:2:1}
-\end{align} Expanding the squared norm, yields, \begin{align*}
-    &\norm{\grad f(\vx) - \grad f(\vy) + \mu(\vy - \vx)}_2^2 \\
-    &= \norm{\grad f(\vx) - \grad f(\vy)}_2^2 + 2\mu\trans{(\grad f(\vx) - \grad f(\vy))}(\vy - \vx) + \mu^2 \norm{\vx - \vy}_2^2 \\
-    &\geq \norm{\grad f(\vx) - \grad f(\vy)}_2^2 + \frac{2\mu}{\beta}\norm{\grad f(\vx) - \grad f(\vy)}_2^2 + \mu^2 \norm{\vx - \vy}_2^2 \margintag{using \cref{eq:part:1B} noting that $f$ is $\beta$-smooth} \\
-    &= \parentheses*{1 + \frac{2\mu}{\beta}}\norm{\grad f(\vx) - \grad f(\vy)}_2^2 + \mu^2 \norm{\vx - \vy}_2^2.
-\end{align*} Substituting back into \cref{eq:part:1C:2:1}, \begin{align*}
-    &\frac{1}{\beta - \mu} \norm{\grad f(\vx) - \grad f(\vy) + \mu(\vy - \vx)}_2^2 + \mu \norm{\vx - \vy}_2^2 \\
-    &\geq \frac{1}{\beta - \mu}\parentheses*{1 + \frac{2\mu}{\beta}}\norm{\grad f(\vx) - \grad f(\vy)}_2^2 + \mu\parentheses*{1 + \frac{\mu}{\beta - \mu}}\norm{\vx - \vy}_2^2
-\end{align*} It remains to show, \begin{enumerate}
-    \item $\frac{1}{\beta - \mu}\parentheses*{1 + \frac{2\mu}{\beta}} \geq \frac{1}{\beta + \mu}$ and
-    \item $\mu\parentheses*{1 + \frac{\mu}{\beta - \mu}} \geq \frac{\mu\beta}{\beta + \mu}$.
-\end{enumerate} It is not hard to check that both inequalities are satisfied for $\beta > 0$ and $\mu \in (0, \beta)$. Hence, to complete our proof, we will argue that $\mu \leq \beta$. Suppose for a contradiction that $\mu > \beta$. Recall that for any $\vx \in \R^n$, $\lmin(\mH_f(\vx)) \geq \mu$ and $\lmax(\mH_f(\vx)) \leq \beta$ as $f$ is $\mu$-strongly convex and $\beta$-smooth. But this yields, \begin{align*}
+\end{align*} Note that $\grad h(\vx) = \grad f(\vx) - \mu \vx$. This gives us, \begin{align*}
+    &\trans{(\grad f(\vx) - \grad f(\vy))}(\vx - \vy) \\
+    &= \trans{(\grad h(\vx) - \grad h(\vy))}(\vx - \vy) + \underbrace{\trans{(\mu\vx - \mu\vy)}(\vx - \vy)}_{= \mu \norm{\vx - \vy}_2^2} \\
+    &\geq \frac{1}{\beta - \mu} \norm{\grad h(\vx) - \grad h(\vy)}_2^2 + \mu \norm{\vx - \vy}_2^2 \\
+    &= \frac{1}{\beta - \mu} \norm{\grad f(\vx) - \grad f(\vy) + \mu(\vy - \vx)}_2^2 + \mu \norm{\vx - \vy}_2^2 \\
+    &= \begin{multlined}[t]
+        \frac{1}{\beta-\mu}\norm{\grad f(\vx) - \grad f(\vy)}_2^2 - \frac{2\mu}{\beta-\mu}\trans{(\grad f(\vx) - \grad f(\vy))}(\vx - \vy) \\ + \frac{\beta\mu}{\beta-\mu}\norm{\vx - \vy}_2^2.
+    \end{multlined} \margintag{expanding the squared norm}
+\end{align*} Rearranging the terms, we get, \begin{align*}
+    \frac{\beta+\mu}{\beta-\mu}\trans{(\grad f(\vx) - \grad f(\vy))}(\vx - \vy) \geq \begin{multlined}[t]
+        \frac{1}{\beta-\mu}\norm{\grad f(\vx) - \grad f(\vy)}_2^2 \\ + \frac{\beta\mu}{\beta-\mu}\norm{\vx - \vy}_2^2.
+    \end{multlined}
+\end{align*} Finally, multiplying both sides by $\frac{\beta-\mu}{\beta+\mu} > 0$, we obtain, \begin{align*}
+    \trans{(\grad f(\vx) - \grad f(\vy))}(\vx - \vy) \geq \begin{multlined}[t]
+        \frac{1}{\beta+\mu}\norm{\grad f(\vx) - \grad f(\vy)}_2^2 \\ + \frac{\beta\mu}{\beta+\mu}\norm{\vx - \vy}_2^2. \qedhere
+    \end{multlined}
+\end{align*}
+\end{proof}
+
+\begin{lem}
+When $f$ is $\beta$-smooth and $|mu$-strongly convex, we always have $\mu \leq \beta$.
+\end{lem} \begin{proof}
+Suppose for a contradiction that $\mu > \beta$. Recall that for any $\vx \in \R^n$, $\lmin(\mH_f(\vx)) \geq \mu$ and $\lmax(\mH_f(\vx)) \leq \beta$ as $f$ is $\mu$-strongly convex and $\beta$-smooth. But this yields, \begin{align*}
     \lmin(\mH_f(\vx)) \geq \mu > \beta \geq \lmax(\mH_f(\vx)). &\qedhere
 \end{align*}
 \end{proof}

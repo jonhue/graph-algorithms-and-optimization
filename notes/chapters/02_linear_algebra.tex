@@ -107,7 +107,51 @@ We have, \begin{align*}
 \end{proof}
 
 \section{Loewner Order}
-% also cover "on graphs"
+
+The Loewner order (or positive semi-definite order) is a partial ordering on symmetric matrices.
+
+\begin{defn}[Loewner order]\index{Loewner order}
+Given symmetric matrices $\mA, \mB \in \R^{n \times n}$, $\mA \preceq \mB$ iff $\forall \vx \in \R^n: \trans{\vx}\mA\vx \leq \trans{\vx}\mB\vx$.
+\end{defn}
+\begin{rmk}
+$\mA \succeq \mZero$ iff $\mA$ is positive semi-definite.
+\end{rmk}
+
+\begin{lem}[Properties of the Loewner order] We have that for any symmetric $\mA, \mB, \mC \in \R^{n \times n}$,
+\begin{enumerate}
+    \item $\mA \preceq \mA$ (reflexivity);
+    \item $\mA \preceq \mB, \mB \preceq \mA \implies \mA = \mB$ (antisymmetry);
+    \item $\mA \preceq \mB, \mB \preceq \mC \implies \mA \preceq \mC$ (transitivity);
+    \item $\mA \preceq \mB \implies \mA + \mC \preceq \mB + \mC$;
+    \item if $\mA \succeq \mZero$, then $\frac{1}{\alpha}\mA \preceq \mA \preceq \alpha\mA$ for any $\alpha \geq 1$; and
+    \item if $\mA \preceq \mB$, then $\forall i \in [n]: \lambda_i(\mA) \leq \lambda_i(\mB)$, where $\lambda_i(\mM)$ is the $i$-th largest eigenvalue of $\mM$.\footnote{The converse is false: \begin{align*}
+        \mA \defeq \begin{bmatrix}
+            2 & 0 \\
+            0 & 1 \\
+        \end{bmatrix}, \quad \mB \defeq \begin{bmatrix}
+            1 & 0 \\
+            0 & 2 \\
+        \end{bmatrix}
+    \end{align*} have equal eigenvalues, but $\mA \not\preceq \mB$ and $\mB \not\preceq \mA$.}
+\end{enumerate}
+\end{lem}
+\begin{rmk}
+Properties (1), (2), and (3) together imply that the Loewner order is a partial ordering of symmetric matrices.
+\end{rmk}
+\begin{proof} Properties (1) through (5) follow directly from the definition using only elementary operations. For property (6), we have by Courant-Fischer, \begin{align*}
+    \lambda_i(\mA) &= \min_{\substack{\text{subspace $\sW \subseteq \R^n$} \\ \dim(\sW) = i}} \max_{\substack{\vx \in \sW \\ \vx \neq \vZero}} \frac{\trans{\vx}\mA\vx}{\trans{\vx}\vx} \\
+    &\leq \min_{\substack{\text{subspace $\sW \subseteq \R^n$} \\ \dim(\sW) = i}} \max_{\substack{\vx \in \sW \\ \vx \neq \vZero}} \frac{\trans{\vx}\mB\vx}{\trans{\vx}\vx} = \lambda_i(\mB). &\qedhere
+\end{align*}
+\end{proof}
+
+\subsection{Loewner Order on Graphs}
+
+\begin{defn} We write $G \preceq H$ iff we have for the Laplacian matrices $\mL_G$ and $\mL_H$ that $\mL_G \preceq \mL_H$. For any $c > 0$, we write $c G$ in place of $c \mL_G$, which corresponds to scaling the weight of every edge of $G$ by $c$.
+\end{defn}
+\begin{lem} For subgraphs $H \subseteq G$, we have $H \preceq G$.
+\end{lem}
+\begin{proof} Dropping edges can only decrease the quadratic form of the Laplacian of $G$ (see \cref{eq:laplacian_quadratic_form}).
+\end{proof}
 
 \section{Pseudo-inverses}
 
