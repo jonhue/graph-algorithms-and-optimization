@@ -173,7 +173,7 @@ When $\mA$ is not invertible, the corresponding system of linear equations does 
 Thus, provided $\vb \perp \ker\mA$, $\vx \defeq \pinv{\mA}\vb$ is a solution to \cref{eq:linear_system}.
 
 \begin{lem}
-The pseudoinverse of the symmetric matrix $\mA \in \R^{n \times n}$ is (uniquely) characterized as, \begin{align}
+The pseudoinverse of the symmetric matrix $\mA \in \R^{n \times n}$ is (uniquely\footnote{this we will not prove}) characterized as, \begin{align}
     \pinv{\mA} = \mV\pinv{\mLambda}\trans{\mV},
 \end{align} where $\mV$ is the matrix of orthogonal eigenvectors and \begin{align}
     \pinv{\mLambda} = \diag_{i\in[n]}\begin{cases}
@@ -182,5 +182,8 @@ The pseudoinverse of the symmetric matrix $\mA \in \R^{n \times n}$ is (uniquely
     \end{cases}
 \end{align} for eigenvalues $\lambda_i$.
 \end{lem}
+\begin{proof}
+The properties of a pseudoinverse follow from the definition immediately.
+\end{proof}
 
 \section{Cholesky Decomposition}
