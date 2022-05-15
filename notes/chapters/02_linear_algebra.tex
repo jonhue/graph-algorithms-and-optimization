@@ -98,7 +98,7 @@ By Courant-Fischer, we have for any $\vx \in \R^n$ such that $\vx \neq \vZero$, 
 We have, \begin{align*}
     \norm{\mA}_2^2 &= \sup_{\substack{\vx \in \R^n \\ \vx \neq \vZero}} \frac{\trans{\vx}\trans{\mA}\mA\vx}{\trans{\vx}\vx} \\
     &= \sup_{\substack{\vx \in \R^n \\ \vx \neq \vZero}} \frac{\trans{\vx}\mA^2\vx}{\trans{\vx}\vx} \margintag{using that $\mA$ is symmetric, $\trans{\mA} = \mA$} \\
-    &= \sup_{\substack{\vx \in \R^n \\ \vx \neq \vZero}} \frac{\trans{\vx}\mV\mLambda^2\trans{\mV}\vx}{\trans{\vx}\vx} \margintag{using that $\mV$ is orthogonal, $\trans{\mV} = \mV^{-1}$} \\
+    &= \sup_{\substack{\vx \in \R^n \\ \vx \neq \vZero}} \frac{\trans{\vx}\mV\mLambda^2\trans{\mV}\vx}{\trans{\vx}\vx} \margintag{using that $\mV$ is orthogonal, $\trans{\mV} = \inv{\mV}$} \\
     &= \sup_{\substack{\vx \in \R^n \\ \vx \neq \vZero}} \frac{\trans{\trans{\mV}\vx}\mLambda^2(\trans{\mV}\vx)}{\trans{\trans{\mV}\vx}(\trans{\mV}\vx)} \\
     &= \sup_{\substack{\vy \in \R^n \\ \vy \neq \vZero}} \frac{\trans{\vy}\mLambda^2\vy}{\trans{\vy}\vy} = \norm{\mLambda}_2^2. \margintag{using that the columns of $\mV$ form a basis of $\R^n$, set $\vy \defeq \trans{\mV}\vx$}
 \end{align*} Finally, \begin{align*}
@@ -153,6 +153,34 @@ Properties (1), (2), and (3) together imply that the Loewner order is a partial 
 \begin{proof} Dropping edges can only decrease the quadratic form of the Laplacian of $G$ (see \cref{eq:laplacian_quadratic_form}).
 \end{proof}
 
-\section{Pseudo-inverses}
+\section{Pseudoinverses}
+
+We often want to solve systems of linear equations such as \begin{align}
+    \mA\vx = \vb \label{eq:linear_system}
+\end{align} where $\mA$ and $\vb$ are given and we seek to identify $\vx$. If $\mA$ is invertible, a solution to \cref{eq:linear_system} is given by $\vx \defeq \inv{\mA}\vb$. Recall that a square matrix $\mA$ is invertible iff $\det\mA \neq 0$. Can we still explicitly write $\vx$ when $\mA$ is not invertible?
+
+When $\mA$ is not invertible, the corresponding system of linear equations does not have a unique solution. However, we may still be able to find \emph{some} solution. The Moore-Penrose inverse is such a generalization of the inverse.
+
+\begin{defn}[Moore-Penrose inverse] Given a symmetric matrix $\mA \in \R^{n \times n}$,\footnote{The Moore-Penrose inverse can also be defined for non-symmetric and even non-square matrices, but this will not be important for us.} its \emph{Moore-Penrose inverse}\index{Moore-Penrose inverse} (or simply \emph{pseudoinverse}\index{pseudoinverse}) is a matrix $\pinv{\mA} \in \R^{n \times n}$ such that \begin{enumerate}
+    \item $\pinv{\mA}$ is symmetric;
+    \item $\ker{\pinv{\mA}} = \ker{\mA}$;\footnote{that is, for any $\vv \in \R^n$, \begin{align*}
+        \pinv{\mA}\vv = \vZero \iff \mA\vv = \vZero
+    \end{align*}} and
+    \item for $\vv \perp \ker{\mA}$, $\pinv{\mA}\mA\vv = \vv$ and $\mA\pinv{\mA}\vv = \vv$.
+\end{enumerate}
+\end{defn}
+
+Thus, provided $\vb \perp \ker\mA$, $\vx \defeq \pinv{\mA}\vb$ is a solution to \cref{eq:linear_system}.
+
+\begin{lem}
+The pseudoinverse of the symmetric matrix $\mA \in \R^{n \times n}$ is (uniquely) characterized as, \begin{align}
+    \pinv{\mA} = \mV\pinv{\mLambda}\trans{\mV},
+\end{align} where $\mV$ is the matrix of orthogonal eigenvectors and \begin{align}
+    \pinv{\mLambda} = \diag_{i\in[n]}\begin{cases}
+    \inv{\lambda_i} & \lambda_i \neq 0 \\
+    0 & \text{otherwise}
+    \end{cases}
+\end{align} for eigenvalues $\lambda_i$.
+\end{lem}
 
 \section{Cholesky Decomposition}
