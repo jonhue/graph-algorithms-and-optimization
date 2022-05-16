@@ -153,6 +153,30 @@ Properties (1), (2), and (3) together imply that the Loewner order is a partial 
 \begin{proof} Dropping edges can only decrease the quadratic form of the Laplacian of $G$ (see \cref{eq:laplacian_quadratic_form}).
 \end{proof}
 
+\subsection{Kernel and Image}
+
+\begin{defn}[Kernel] The \emph{kernel}\index{kernel} (or \emph{null space}\index{null space}) of a linear map $\mA \in \R^{n \times m}$ is the linear subspace, \begin{align}
+    \ker\mA \defeq \{\vx \in \R^m \mid \mA\vx = \vZero\}\subseteq \R^m.
+\end{align}
+\end{defn}
+\begin{defn}[Image] The \emph{image}\index{image} (or \emph{range}\index{range}) of a linear map $\mA \in \R^{n \times m}$ is the linear subspace, \begin{align}
+    \im\mA \defeq \{\mA\vx \mid \vx \in \R^m\} = \vspan\{\va_{:,1}, \dots, \va_{:,m}\} \subseteq \R^n,
+\end{align} where $\va_{:,i}$ denotes the $i$-th column vector of $\mA$.
+\end{defn}
+
+We have the following useful property relating image and kernel.
+
+\begin{lem}
+For a matrix $\mA \in \R^{n \times m}$, we have $\compl{\im(\trans{\mA})} = \ker\mA$ and $\compl{(\im\mA)} = \ker(\trans{\mA})$.\footnote{Note that $\compl{(\compl{\sW})} = \sW$ for any subspace $\sW$.}
+\end{lem}
+\begin{proof}
+If $\vx \in \compl{\im(\trans{\mA})}$, we have $\trans{\va_{i,:}}\vx = 0$ for all $i \in [n]$. Hence, $\mA\vx = 0$ and $\vx \in \ker\mA$.
+
+Conversely, if $\vx \in \ker\mA$, then $\mA\vx = \vZero$. Therefore, $\trans{\va_{i,:}}\vx = 0$ for all $i \in [n]$. As $\im(\trans{\mA}) = \vspan\{\va_{1,:}, \dots, \va_{n,:}\}$, we have $\trans{\vz}\vx = 0$ for any $\vz \in \im(\trans{\mA})$, yielding, $\vx \in \compl{\im(\trans{\mA})}$.
+
+The same argument goes through for the transpose of $\mA$ on both sides.
+\end{proof}
+
 \section{Pseudoinverses}
 
 We often want to solve systems of linear equations such as \begin{align}
@@ -186,4 +210,36 @@ The pseudoinverse of the symmetric matrix $\mA \in \R^{n \times n}$ is (uniquely
 The properties of a pseudoinverse follow from the definition immediately.
 \end{proof}
 
-\section{Cholesky Decomposition}
+\section{Solving Linear Systems}
+
+Linear systems such as \cref{eq:linear_system} can often be solved much faster than by computing the pseudoinverse of $\mA$.
+
+We first need to remind ourselves of the notion of a projection.
+
+\begin{defn}[Projection matrix] A \emph{projection matrix}\index{projection matrix} is a matrix $\mPi \in \R^{n \times n}$ such that $\mPi^2 = \mPi$.\footnote{This property is called \emph{idempotency}\index{idempotency}.} We say that $\mPi$ is \emph{orthogonal} iff $\im\mPi \perp \ker\mPi$.
+\end{defn}
+\begin{rmk}
+Note that $\mPi$ is the identity operator on $\im\mPi$, i.e., for all $\vx \in \im\mPi$ we have that $\mPi\vx = \vx$.
+\end{rmk}
+
+\begin{lem} Consider a real symmetric matrix $\mA = \mX\mY\trans{\mX}$, where $\mX$ is real and invertible and $\mY$ is real and symmetric. Let $\mPi_\mA$ denote the orthogonal projection to the image of $\mA$. Then, $\pinv{\mA} = \mPi_\mA\inv{(\trans{\mX})}\pinv{\mY}\inv{\mX}\mPi_\mA$.\footnote{Proof in \cref{lem:a6}.}
+\end{lem}
+
+Now, let us return to solving linear systems.
+
+\begin{lem}
+Given an invertible square lower triangular matrix $\mCalL$ or an invertible square upper triangular matrix $\mCalU$, we can solve the linear systems $\mCalL\vy = \vb$ and $\mCalU\vz = \vb$ in time $\LandauO{\nnz{\mCalL}}$ and $\LandauO{\nnz{\mCalU}}$, respectively, where $\nnz{\mA}$ denotes the number of non-zero entries of $\mA$.\footnote{We need the matrices to be stored as an adjacency list to have fast access to their non-zero entries.}
+\end{lem}\begin{proof}[Proof sketch] We can iteratively solve the linear equations of $\mCalL\vy = \vb$. As $\mCalL$ has full rank and is lower triangular, there is always one linear equation in a single variable.
+
+These algorithms are known as forward and back substitution for lower and upper triangular matrices, respectively.
+\end{proof}
+
+Thus, if we can decompose $\mA = \mCalL\trans{\mCalL}$ such that $\mCalL$ is invertible and lower triangular, we can solve the linear system of \cref{eq:linear_system} in time $\LandauO{\nnz{\mCalL}}$ by solving the two linear systems, \begin{align}
+    \mCalL\vy &= \vb \quad\text{and} \\
+    \trans{\mCalL}\vx &= \vy.
+\end{align}
+
+\begin{lem}[Cholesky decomposition]\index{Cholesky decomposition} For any positive semi-definite matrix $\mA \in \R^{n \times n}$, there is a decomposition of the form $\mA = \mCalL\trans{\mCalL}$ where $\mCalL \in \R^{n \times n}$ is lower triangular and positive semi-definite.
+\end{lem}
+
+We will see that the Cholesky decomposition can be computed efficiently when $\mA$ is a graph Laplacian.
