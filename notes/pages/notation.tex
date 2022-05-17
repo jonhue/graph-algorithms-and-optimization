@@ -62,6 +62,8 @@ We follow these general rules: \begin{itemize}[noitemsep]
 %   $\Var{X}$ & variance of random variable $X$ \\
 %   $\Cov{X,Y}$ & covariance of random variable $X$ and random variable $Y$ \\
 %   $\Delta^{\spA}$ & set of all probability distributions over the set $\spA$ \\
+   $\mW \in \R^{|\sV|\times|\sV|}$ & transition matrix of a random walk, $\mA\inv{\mD}$ \\
+   $\vp_t \in \R^{|\sV|}$ & probability distribution of a random walk at time $t$, $\mW^t\vp_0$ \\
 \end{longtable}
 
 \section*{\smallcaps{Analysis}}\vspace{-0.5cm}
@@ -87,8 +89,8 @@ We follow these general rules: \begin{itemize}[noitemsep]
    $u \sim v$ & vertices $u$ and $v$ are adjacent \\
    $\deg(v)$ & degree of vertex $v$ \\
    $\vr \in \R^{|\sE|}$ & resistances \\
-   $\vw \in \R^{|\sE|}$ & weights, $\vw(e) = \nicefrac{1}{\vr(e)}$ \\
-   $\vw \in \R^{|\sV|}$ & weighted degrees, $\vw(v) = \sum_{\{u,v\} \in \sE} \vw(\{u,v\})$ \\
+   $\vw \in \R^{|\sE|}$ & weights, $\nicefrac{1}{\vr(e)}$ \\
+   $\vd \in \R^{|\sV|}$ & weighted degrees, $\sum_{\{u,v\} \in \sE} \vw(\{u,v\})$ \\
    $\Tilde{\mA} \in \R^{|\sV|\times|\sV|}$ & adjacency matrix \\
    $\mA \in \R^{|\sV|\times|\sV|}$ & weighted adjacency matrix \\
    $\mB \in \R^{|\sV|\times|\sE|}$ & incidence matrix \\

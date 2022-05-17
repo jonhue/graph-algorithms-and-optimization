@@ -54,3 +54,11 @@ Consider a real symmetric matrix $\mA = \mX\mY\trans{\mX}$, where $\mX$ is real 
 \end{lem}
 \begin{proof} TBD
 \end{proof}
+
+\begin{lem}\label{lem:a7} For any matrix $\mM$ and invertible matrix $\mT$, $\mM$ and $\mT\mM\inv{\mT}$ have the same eigenvalues.
+\end{lem}
+\begin{proof}
+Suppose $\lambda$ is an eigenvalue of $\mM$ with associated eigenvector $\vv$. Also suppose that $\mT\vv = \vw$. Then, \begin{align*}
+    \mT\mM\inv{\mT}\vw = \mT\mM\vv = \lambda\mT\vv = \vw.
+\end{align*} It is easy to check that the other direction holds too.
+\end{proof}

@@ -58,7 +58,7 @@ We can now also write the net flow constraint\index{net flow constraint}, \begin
     \underbrace{\mB\mR^{-1}\trans{\mB}}_{\text{Laplacian}}\vx = \mB\vf = \vd. \label{eq:ohms_law_and_net_flow_constraint}
 \end{align}
 \begin{defn}[Laplacian matrix]
-The \emph{Laplacian matrix} of an oriented graph $G$, is defined as, \begin{align}
+The \emph{Laplacian matrix} of an oriented graph $G$ is defined as, \begin{align}
     \mL \defeq \mB\mR^{-1}\trans{\mB} = \mB\mW\trans{\mB} \in \R^{|\sV|\times|\sV|},
 \end{align} where $\mW \defeq \mR^{-1}$ is a diagonal matrix of weights\index{weight (of an edge)} $\vw(e) \defeq \frac{1}{\vr(e)}$.
 \end{defn}\noindent Intuitively, the weight of an edge can be understood as how ``connected'' the two vertices at its endpoints are. In contrast, the resistance of an edge is smaller when endpoints are well-connected.
@@ -80,8 +80,8 @@ This follows immediately from the fact that $G$ is undirected.
 \end{proof}
 \begin{defn}[Weighted degree]\index{weighted degree}
 The \emph{weighted degree} of a vertex $v \in \sV$ is given as, \begin{align}
-    \vw(v) \defeq \sum_{\{u,v\} \in \sE} \vw(\{u,v\}).
-\end{align} We write $\mD \defeq \diag\{\vw(v)\}_{v \in \sV}$.
+    \vd(v) \defeq \sum_{\{u,v\} \in \sE} \vw(\{u,v\}).
+\end{align} We write $\mD \defeq \diag\{\vd(v)\}_{v \in \sV}$.
 \end{defn}
 
 \begin{lem}
@@ -106,7 +106,7 @@ For any $\vx \in \R^{|\sV|}$, we have, \begin{align}
 \begin{proof}
 We have, \begin{align*}
     \trans{\vx}\mL\vx &= \trans{\vx}\mD\vx - \trans{\vx}\mA\vx. \\
-    \trans{\vx}\mD\vx &= \sum_{v \in \sV} \vw(v) \vx(v)^2 = \sum_{\{u,v\}\in\sE} \vw(\{u,v\})[\vx(u)^2 + \vx(v)^2]. \\
+    \trans{\vx}\mD\vx &= \sum_{v \in \sV} \vd(v) \vx(v)^2 = \sum_{\{u,v\}\in\sE} \vw(\{u,v\})[\vx(u)^2 + \vx(v)^2]. \\
     \trans{\vx}\mA\vx &= \sum_{v \in \sV} \vx(v) (\mA\vx)(v) \\
     &= \sum_{v \in \sV} \vx(v) \sum_{u \in \sV} \mA(v,u) \vx(u) \\
     &= \sum_{v,u \in \sV} \vw(\{u,v\})\vx(u)\vx(v) \\
@@ -119,6 +119,25 @@ We have, \begin{align*}
 \begin{cor}
 $\mL$ is positive semi-definite.\footnote{By the previous lemma, $\mL$ satisfies the definition of positive semi-definiteness, which we will introduce in the following section.}
 \end{cor}
+
+It is often to useful to look at a normalized Laplacian matrix, where weighted vertex degrees are normalized to one and edges are weighted based on the degrees of their endpoints.
+
+\begin{defn}[Normalized Laplacian matrix] The \emph{normalized Laplacian matrix}\index{normalized Laplacian matrix} of an oriented graph $G$ is defined as, \begin{align}
+    \mN(i,j) \defeq \begin{cases}
+        1 & \text{if $i = j$} \\
+        - \frac{1}{\sqrt{\vd(i) \vd(j)}} & \text{if $i \sim j$} \\
+        0 & \text{otherwise}.
+    \end{cases}
+\end{align} This characterization is equivalent to,\footnote{$\mA^{-\frac{1}{2}}$, where $\mA$ is a diagonal matrix, is the diagonal matrix $\diag\{a_{i,i}^{-\nicefrac{1}{2}}\}_i$.} \begin{align}
+    \mN = \mD^{-\frac{1}{2}}\mL\mD^{-\frac{1}{2}} = \mI - \mD^{-\frac{1}{2}}\mA\mD^{-\frac{1}{2}}.
+\end{align}
+\end{defn}
+\begin{lem}
+$\mN$ is positive semi-definite.
+\end{lem}\begin{proof} We have for any $\vx \in \R^n$, \begin{align*}
+    \trans{\vx}\mN\vx = \trans{\vx}\mD^{-\frac{1}{2}}\mL\mD^{-\frac{1}{2}}\vx = \trans{(\mD^{-\frac{1}{2}}\vx)}\mL(\mD^{-\frac{1}{2}}\vx) \geq 0,
+\end{align*} using positive semi-definiteness of $\mL$.
+\end{proof}
 
 \section{An Optimization Problem}
 
