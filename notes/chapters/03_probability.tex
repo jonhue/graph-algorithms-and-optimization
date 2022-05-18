@@ -55,7 +55,9 @@ Given the random walk $\mW$, the associated \emph{lazy random walk}\index{lazy r
 \end{align*} that is, we add self-loops to each vertex with weight $\nicefrac{1}{2}$ and halve all other weights. Observe that this does not change the stationary distribution of the random walk. This ensures that the following holds.
 
 \begin{thm}[Convergence of lazy random walk]\label{thm:convergence_of_lazy_random_walk}
-$\lim_{t\to\infty} \Tilde{\mW}^t\vp_0 = \Tilde{\vpi} = \vpi.$
+For a connected graph, the lazy random walk converges to its unique stationary distribution irrespectively of the initial distribution $\vp_0$, \begin{align}
+    \lim_{t\to\infty} \Tilde{\mW}^t\vp_0 = \Tilde{\vpi} = \vpi.
+\end{align}
 \end{thm}
 
 To prove this theorem, let us first understand the transition matrix in terms of the graph Laplacian.
@@ -86,5 +88,20 @@ For any unweighted connected graph $G$, we have that at time step $t$,\footnote{
     \norm{\vp_t - \vpi}_\infty \leq e^{-\nicefrac{\nu_2 t}{2}}\sqrt{n}.
 \end{align}
 \end{thm}
+\begin{proof}
+TBD
+\end{proof}
 
 \section{Concentration}
+
+\begin{thm}[Bernstein concentration bound]\index{Bernstein concentration bound} Given independent real-valued random variables $X_1, \dots, X_k \in \R$ such that $\E{X_i} = 0$ and $|X_i| \leq R$. Let $X \defeq \sum_i X_i$ and $\sigma^2 \defeq \Var{X} = \sum_i \E{X_i^2}$. Then, for $t > 0$, \begin{align}
+    \Pr{|X| \geq t} \leq 2 \exp\parentheses*{\frac{-t^2}{2Rt + 4\sigma^2}}.
+\end{align}
+\end{thm}
+
+\begin{thm}[Bernstein matrix concentration bound]\index{Bernstein matrix concentration bound} Suppose $\rX_1, \dots, \rX_k \in \R^{n \times n}$ are independent symmetric matrix-valued random variables satisfying $\E{\rX_i} = \mZero$ and $\norm{\rX_i}_2 \leq R$. Let $\rX \defeq \sum_i \rX_i$ and $\sigma^2 \defeq \Var{\rX} = \sum_i \E{\rX_i^2}$. Then, for $t > 0$, \begin{align}
+    \Pr{\norm{\rX}_2 \geq t} \leq 2 n \exp\parentheses*{\frac{-t^2}{2Rt + 4\sigma^2}}.
+\end{align}
+\end{thm}
+
+\section{Martingales}
