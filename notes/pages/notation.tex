@@ -34,10 +34,14 @@ We follow these general rules: \begin{itemize}[noitemsep]
 
 \section*{\smallcaps{Linear Algebra}}\vspace{-0.5cm}
 \begin{longtable}{p{2.5cm}l}
+   $\sS^n$ set of symmetric $n \times n$ matrices \\
+   $\sS_+^n$ set of symmetric and positive semi-definite $n \times n$ matrices \\
+   $\sS_{++}^n$ set of symmetric and positive definite $n \times n$ matrices \\
    $\vx \perp \vy$ & $\vx$ and $\vy$ are orthogonal, i.e., $\trans{\vx}\vy = 0$ \\
    $\vx \perp \sW$ & $\vx$ is orthogonal to every vector $\vy$ in subspace $\sW$ \\
    $\compl{\sW}$ & orthogonal complement of subspace $\sW$, $\{\vx \in \R^n \mid \vx \perp \sW\}$ \\
    $\nnz{\mA}$ & number of non-zero entries of $\mA$ \\
+   $\tr{\mA}$ & trace of $\mA$, $\sum_i \mA(i,i)$ \\
    $\trans{\mA}$ & transpose of matrix $\mA$ \\
    $\inv{\mA}$ & inverse of matrix $\mA$ \\
    $\pinv{\mA}$ & pseudoinverse of matrix $\mA$ \\
@@ -45,7 +49,7 @@ We follow these general rules: \begin{itemize}[noitemsep]
    $\vspan\{\vx_1, \dots, \vx_n\}$ & smallest subspace containing $\vx_1, \dots, \vx_n$ \\
    $\dim(\sW)$ & number of vectors in a basis of a subspace $\sW$ \\
    $\ker\mA$ & kernel (or null space) of $\mA$, $\{\vx \in \R^n \mid \mA\vx = \vZero\}$ \\
-   $\im\mA$ & image of $\mA$, $\vspan\{\va_{:,i}\}_{i\in[n]}$ \\
+   $\im\mA$ & image of $\mA$, $\vspan\{\mA(:,i)\}_{i\in[n]}$ \\
    $\norm{\mA}_{\alpha\to\beta}$ & matrix norm of $\mA$ induced by norms $\norm{\cdot}_\alpha$ and $\norm{\cdot}_\beta$ \\
    $\mA \preceq \mB$ & Loewner order on symmetric matrices, $\forall \vx \in \R^n: \trans{\vx}\mA\vx \leq \trans{\vx}\mB\vx$ \\
 \end{longtable}
