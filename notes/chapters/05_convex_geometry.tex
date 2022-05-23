@@ -4,7 +4,7 @@
 \chapter{Convex Geometry}
 
 We want to develop a better understanding of optimization problems. The general form of an \emph{optimization problem}\index{optimization problem} is, \begin{align}
-    \min_{\substack{\vx \in \R^n \\ g_1(\vx) \leq b_1 \\ \vdots \\ g_m(\vx) \leq b_m}} f(\vx),
+    \min_{\substack{\vx \in \R^n \\ g_1(\vx) \leq b_1 \\ \vdots \\ g_m(\vx) \leq b_m}} f(\vx), \label{eq:optimization_problem}
 \end{align} where $f : \R^n \to \R$ and $g_i : \R^n \to \R$.\footnote{It suffices to consider minimization problems. If we want to maximize a function $f$, this is equivalent to minimizing the function $-f$.}
 
 \begin{defn}[Feasible set] We call \begin{align}
@@ -109,7 +109,7 @@ Finally, observe that the statement about strict convexity can be proven analogo
 \begin{thm} Let $f: \sS \to \R$ be a convex and differentiable function. Then, if $\vx \in \sS$ is a stationary point of $f$, then $\vx$ is a global minimum of $f$.
 \end{thm}
 \begin{proof} By the first-order characterization of convexity, we have for any $\vy \in \sS$, \begin{align*}
-    f(\vy) \geq f(\vx) + \trans{\underbrace{\grad f(\vx)}_{0}}(\vy - \vx) = f(\vx). &\qedhere
+    f(\vy) \geq f(\vx) + \underbrace{\trans{\grad f(\vx)}}_{0}(\vy - \vx) = f(\vx). &\qedhere
 \end{align*}
 \end{proof}
 
