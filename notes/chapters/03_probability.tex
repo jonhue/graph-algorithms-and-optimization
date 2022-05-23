@@ -105,20 +105,28 @@ For any random variable $X \geq 0$ and $t > 0$, \begin{align}
 \end{proof}
 
 \begin{thm}[Jensen's inequality]\index{Jensen's inequality}
-For a random variable $X$, \begin{enumerate}
-    \item if $f$ is convex, then $\E{f(X)} \geq f(\E{X})$; and
-    \item if $f$ is concave, then $\E{f(X)} \leq f(\E{X})$.
-\end{enumerate}
+For a random variable $X$, if $f$ is convex, then $\E{f(X)} \geq f(\E{X})$.\footnote{Proof of the finite form in \cref{thm:a8}.}
 \end{thm}
+\begin{marginfigure}
+TBD
+% \centering\includegraphics[width=4cm]{notes/figures/convex_set.png}
+\caption{Jensen's inequality.}
+\end{marginfigure}
 
 \begin{thm}[Bernstein concentration bound]\index{Bernstein concentration bound} Given independent real-valued random variables $X_1, \dots, X_k \in \R$ such that $\E{X_i} = 0$ and $|X_i| \leq R$. Let $X \defeq \sum_i X_i$ and $\sigma^2 \defeq \Var{X} = \sum_i \E{X_i^2}$. Then, for $t > 0$, \begin{align}
     \Pr{|X| \geq t} \leq 2 \exp\parentheses*{\frac{-t^2}{2Rt + 4\sigma^2}}.
 \end{align}
 \end{thm}
+\begin{proof}
+TBD
+\end{proof}
 
 \begin{thm}[Bernstein matrix concentration bound]\index{Bernstein matrix concentration bound} Suppose $\rX_1, \dots, \rX_k \in \R^{n \times n}$ are independent symmetric matrix-valued random variables satisfying $\E{\rX_i} = \mZero$ and $\norm{\rX_i}_2 \leq R$. Let $\rX \defeq \sum_i \rX_i$ and $\sigma^2 \defeq \Var{\rX} = \sum_i \E{\rX_i^2}$. Then, for $t > 0$, \begin{align}
     \Pr{\norm{\rX}_2 \geq t} \leq 2 n \exp\parentheses*{\frac{-t^2}{2Rt + 4\sigma^2}}.
 \end{align}
 \end{thm}
+\begin{proof}
+TBD
+\end{proof}
 
 \section{Martingales}

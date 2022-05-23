@@ -62,3 +62,18 @@ Suppose $\lambda$ is an eigenvalue of $\mM$ with associated eigenvector $\vv$. A
     \mT\mM\inv{\mT}\vw = \mT\mM\vv = \lambda\mT\vv = \vw.
 \end{align*} It is easy to check that the other direction holds too.
 \end{proof}
+
+\section{Probability}
+
+\begin{thm}[Jensen's inequality, finite form]\label{thm:a8}
+Let $f: \sS \to \R$ be a convex function on the convex set $\sS \subseteq \R^n$. Suppose that $\vx_1, \dots, \vx_k \sS$ and $\theta_1, \dots, \theta_k \geq 0$ with $\theta_1 + \dots + \theta_k = 1$. Then, \begin{align}
+    f(\theta_1\vx_1 + \dots + \theta_k\vx_k) \leq \theta_1 f(\vx_1) + \dots + \theta_k f(\vx_k).
+\end{align}
+\end{thm}
+\begin{proof}
+We prove the statement by induction on $k$. The base case, $k = 2$, follows trivially from the convexity of $f$. For the induction step, suppose that the statement holds for some $k \geq 2$. Assume w.l.o.g. that $\theta_{k+1} \in (0,1)$. We have, \begin{align*}
+    \sum_{i=1}^{k+1} \theta_i f(\vx_i) &= (1-\theta_{k+1})\parentheses*{\sum_{i=1}^k \frac{\theta_i}{1 - \theta_{k+1}} f(\vx_i)} + \theta_{k+1} f(\vx_{k+1}) \\
+    &\geq (1-\theta_{k+1})f\parentheses*{\sum_{i=1}^k \frac{\theta_i}{1-\theta_{k+1}}\vx_i} + \theta_{k+1}f(\vx_{k+1}) \margintag{using the induction hypothesis} \\
+    &\geq f\parentheses*{\sum_{i=1}^{k+1} \theta_i \vx_i}. \margintag{using convexity of $f$} &\qedhere
+\end{align*}
+\end{proof}
