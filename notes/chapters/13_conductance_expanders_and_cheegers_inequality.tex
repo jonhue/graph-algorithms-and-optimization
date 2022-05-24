@@ -2,3 +2,77 @@
 % Add the above to each chapter to make compiling the PDF easier in some editors.
 
 \chapter{Conductance and Expanders}
+
+\begin{defn}[Volume] The \emph{volume}\index{volume} of a set of vertices $\sS \subseteq \sV$ is, \begin{align}
+    \vol(S) \defeq \sum_{v \in \sS} \vd(v) = \trans{\vOne_\sS}\vd = \trans{\vOne_\sS}\mD\vOne_\sS,
+\end{align} where $\vd(v)$ is the weighted degree of vertex $v$.
+\end{defn}
+
+\begin{defn}[Conductance of a cut] The \emph{conductance}\index{conductance} of a cut $(\sS, \sV \setminus \sS)$ where $\emptyset \subset \sS \subset \sV$ is, \begin{align}
+    \phi(\sS) \defeq \frac{\trans{\vOne_\sS}\mL\vOne_\sS}{\min\{\vol(\sS), \vol(\sV \setminus \sS)\}} = \phi(\sV \setminus \sS) \in [0,1],
+\end{align} where, if the graph has unit weights, $\trans{\vOne_\sS}\mL\vOne_\sS = \sum_{\{a,b\}\in\sE} [\vOne_\sS(a) - \vOne_\sS(b)]^2 = |\sE(\sS, \sV \setminus \sS)|$ counts the number of crossing edges.
+\end{defn}
+
+\begin{rmk}
+If $\vol(\sS) \leq \vol(\sV \setminus \sS)$, then we can write \begin{align}
+    \phi(\sS) = \frac{\trans{\vOne_\sS}\mL\vOne_\sS}{\trans{\vOne_\sS}\mD\vOne_\sS}.
+\end{align}
+\end{rmk}
+
+\begin{defn}[Conductance of a graph]The \emph{conductance} of a graph $G$ is the smallest conductance of all cuts, \begin{align}
+    \phi(G) \defeq \min_{\emptyset \subset \sS \subset \sV} \phi(S).
+\end{align}
+\end{defn} Thus, $\phi(G)$ is small if there is a ``good'' cut (with few crossing edges relative to the volume of the parts). In contrast, if $\phi(G)$ is large, then $G$ is well-connected, i.e., there is no ``good'' cut.
+
+\begin{defn}[Expander] If $\phi(G) \geq \phi$, then $G$ is called a \emph{$\phi$-expander}\index{expander}.
+\end{defn}
+
+Let us consider a few examples.
+
+\begin{lem}
+$\phi(K_n) = \frac{n}{2(n-1)}$. So $K_n$ is a $\frac{1}{2}$-expander.
+\end{lem}
+\begin{proof}
+TBD
+\end{proof}
+
+\begin{lem}
+$\phi(P_n) = \frac{1}{n-1}$. So $P_n$ is a $\frac{1}{n}$-expander.
+\end{lem}
+\begin{proof}
+TBD
+\end{proof}
+
+\section{Expander Decompositions}
+
+\begin{defn}[Expander decomposition] An \emph{expander decomposition}\index{expander decomposition} is a partition of the vertex set $\sV = \sX_1 \cup \dots \cup \sX_k$ such that \begin{enumerate}
+    \item $G[\sX_i]$ is an expander; and
+    \item only ``few'' edges cross the parts.
+\end{enumerate}
+\end{defn}\noindent There is a procedure \emph{CertifyOrCut($G$)} that either \begin{itemize}
+    \item certifies that $G$ is a $\phi$-expander; or
+    \item presents a cut $\sS$ such that $\phi(S) \leq \sqrt{2\phi}$.\footnote{Finding the best cut (i.e., a cut with conductance $\phi$) is NP-hard.}
+\end{itemize}
+
+\section{Cheeger's Inequality}
+
+\begin{thm}[Cheeger's inequality]\index{Cheeger's inequality} We have for a graph $G$ and its normalized Laplacian matrix $\mN$, \begin{align}
+    \frac{\lambda_2(\mN)}{2} \leq \phi(G) \leq \sqrt{2 \lambda_2(\mN)}.
+\end{align}
+\end{thm}\noindent In words, $\lambda_2(\mN)$ approximates the conductance $\phi(G)$ up to a square root. This is why we say that $\lambda_2(\mN)$ is a measure of connectivity of a graph.
+
+\section{Sparsity}
+
+A concept related to conductance is the notion of \emph{sparsity}.
+
+\begin{defn}[Sparsity] The \emph{sparsity}\index{sparsity} of a cut $(\sS, \sV \setminus \sS)$ where $\emptyset \subset \sS \subset \sV$ is, \begin{align}
+    \sigma(\sS) \defeq \frac{\trans{\vOne_\sS}\mL\vOne_\sS}{\min\{|\sS|, |\sV \setminus \sS|\}} = \sigma(\sV \setminus \sS) \in [0, \max_{v \in \sV} \vd(v)].
+\end{align} The sparsity of a graph is again defined as the smallest sparsity of all cuts.
+\end{defn}
+
+An alternative version of Cheeger's inequality relates the second eigenvalue of $\mL$ (not $\mN$!) to the sparsity of the graph.
+
+\begin{thm} We have for a graph $G$ and its Laplacian matrix $\mL$, \begin{align}
+    \frac{\lambda_2(\mL)}{2} \leq \sigma(G) \leq \sqrt{2 \lambda_2(\mL) \max_{v \in \sV} \vd(v)}.
+\end{align}
+\end{thm}
