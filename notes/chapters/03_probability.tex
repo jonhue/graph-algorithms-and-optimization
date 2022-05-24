@@ -130,3 +130,14 @@ TBD
 \end{proof}
 
 \section{Martingales}
+
+\begin{defn}[Martingale] A \emph{martingale}\index{martingale} is a sequence of random variables $Z_0, \dots, Z_k$ such that \begin{align}
+    \E{Z_i \mid Z_0, \dots, Z_{i-1}} = Z_{i-1}.
+\end{align} That is, conditional on the outcome of all the previous random variables, the expectation of $Z_i$ equals $Z_{i-1}$.% In particular, $\E{Z_k} = \E{Z_0}$.
+\end{defn} Typically, we use martingales to show a statement such as ``$Z_k$ is concentrated around $\E{Z_k}$''.
+
+We can alternatively think of a martingale as the sequence of changes in $Z_i$. Let $X_i \defeq Z_i - Z_{i-1}$. The sequence of $X_i$ is called \emph{martingale difference sequence}\index{martingale difference sequence}. The martingale condition is equivalent to, \begin{align}
+    \E{X_i \mid Z_0, \dots, Z_{i-1}} = \E{X_i \mid Z_0, X_1, \dots, X_{i-1}} = 0.
+\end{align} We can write, \begin{align}
+    Z_k = Z_0 + \sum_{i=1}^k Z_i - Z_{i-1} = Z_0 + \sum_{i=1}^k X_i.
+\end{align}

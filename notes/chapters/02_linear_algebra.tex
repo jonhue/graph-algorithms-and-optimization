@@ -293,7 +293,21 @@ We first need to remind ourselves of the notion of a projection.
 Note that $\mPi$ is the identity operator on $\im\mPi$, i.e., for all $\vx \in \im\mPi$ we have that $\mPi\vx = \vx$.
 \end{rmk}
 
-\begin{lem} Consider a real symmetric matrix $\mA = \mX\mY\trans{\mX}$, where $\mX$ is real and invertible and $\mY$ is real and symmetric. Let $\mPi_\mA$ denote the orthogonal projection to the image of $\mA$. Then, $\pinv{\mA} = \mPi_\mA\inv{(\trans{\mX})}\pinv{\mY}\inv{\mX}\mPi_\mA$.\footnote{Proof in \cref{lem:a6}.}
+\begin{defn}[Orthogonal projection to the complement of the kernel] Given a matrix $\mA$, $\mPi_\mA$ is the \emph{orthogonal projection to $\compl{(\ker{\mA})}$}, that is, \begin{enumerate}
+    \item $\mPi_\mA \vv = \vZero$ if $\vv \in \ker{\mA}$; and
+    \item $\mPi_\mA \vv = \vv$ if $\vv \in \compl{(\ker{\mA})}$.\footnote{Recall that $\compl{(\ker{\mA})} = \im{\trans{\mA}}$.}
+\end{enumerate}
+\end{defn}
+
+\begin{lem}
+For $\mA \in \sS^n$ with spectral decomposition $\mA = \mV\mLambda\trans{\mV} = \sum_i \lambda_i \vv_i \trans{\vv_i}$ where $\mV$ is orthonormal, we have,\footnote{Proof in \cref{lem:a8}.} \begin{align}
+    \mPi_\mA = \sum_{\substack{i \\ \lambda_i \neq 0}} \vv_i \trans{\vv_i} = \mA^{\nicefrac{+}{2}}\mA\mA^{\nicefrac{+}{2}} = \mA\pinv{\mA} = \pinv{\mA}\mA.
+\end{align}
+\end{lem}
+
+\begin{lem} Consider a real symmetric matrix $\mA = \mX\mY\trans{\mX}$, where $\mX$ is real and invertible and $\mY$ is real and symmetric. Then,\footnote{Proof in \cref{lem:a6}.} \begin{align}
+    \pinv{\mA} = \mPi_\mA\inv{(\trans{\mX})}\pinv{\mY}\inv{\mX}\mPi_\mA.
+\end{align}
 \end{lem}
 
 Now, let us return to solving linear systems.
