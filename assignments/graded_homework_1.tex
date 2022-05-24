@@ -495,7 +495,7 @@ We will often work with the dual vector map with respect to the dual norm of a g
     \trans{\vx}\dvm{\vx} &= \frac{\trans{\vx}\mM\vx}{\sqrt{\trans{\vx}\mM\vx}} = \sqrt{\trans{\vx}\mM\vx} = \norm{\vx}_\mM \quad \text{and} \\
     \norm{\dvm{\vx}}_{\mM^{-1}} &= \frac{\norm{\mM\vx}_{\mM^{-1}}}{\sqrt{\trans{\vx}\mM\vx}} = \frac{\sqrt{\trans{(\mM\vx)}\mM^{-1}\mM\vx}}{\sqrt{\trans{\vx}\mM\vx}} = \frac{\sqrt{\trans{\vx}\mM\vx}}{\sqrt{\trans{\vx}\mM\vx}} = 1. \margintag{as $\mM$ is positive definite, it is also symmetric}
 \end{align*} It remains to show that this choice of $\dvm{\vx}$ is unique. Consider the special case where $\mM \defeq \mI$.\footnote{As we have seen, $\norm{\cdot}_\mI = \norm{\cdot}_2$.} As $\norm{\cdot}_2$ is self-dual, we need that \begin{align*}
-    \norm{\dvm{\vx}}_2 = \trans{\dvm{\vx}}\dvm{\vx} \overset{!}{=} 1,
+    \norm{\dvm{\vx}}_2 = \trans{{\dvm{\vx}}}\dvm{\vx} \overset{!}{=} 1,
 \end{align*} implying that $\dvm{\vx}$ must have unit length. Then, to satisfy $\trans{\vx}\dvm{\vx} \overset{!}{=} \norm{\vx}_2$, we must have $\dvm{\vx} = \nicefrac{\vx}{\norm{\vx}_2}$, which corresponds uniquely to our choice of the dual vector map for $\norm{\cdot}_\mI$.
 \end{proof}
 
