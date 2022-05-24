@@ -75,6 +75,20 @@ By Courant-Fischer, we have for any $\vx \in \R^n$ such that $\vx \neq \vZero$, 
 \end{align*} If $\vx = \vZero$, the inequality trivially holds.
 \end{proof}
 
+\section{Square Roots}
+
+We now state a useful fact for positive semi-definite matrices.
+
+\begin{lem}
+Any symmetric and positive semi-definite matrix $\mA$ has a positive semi-definite square root $\mA^{\nicefrac{1}{2}}$ such that $\mA^{\nicefrac{1}{2}} \mA^{\nicefrac{1}{2}} = \mA$.
+\end{lem}
+\begin{proof} By the spectral theorem, $\mA = \mV\mLambda\trans{\mV}$, where $\mV$ is an orthonormal matrix of eigenvectors and $\mLambda$ is a diagonal matrix of eigenvalues. Let $\mA^{\nicefrac{1}{2}} \defeq \mV\mLambda^{\nicefrac{1}{2}}\trans{\mV}$, where $\mLambda^{\nicefrac{1}{2}} = \diag_i\{\mLambda(i,i)^{\nicefrac{1}{2}}\}$. Then, \begin{align*}
+    \mA^{\nicefrac{1}{2}} \mA^{\nicefrac{1}{2}} &= \mV \mLambda^{\nicefrac{1}{2}} \trans{\mV} \mV \mLambda^{\nicefrac{1}{2}} \trans{\mV} \\
+    &= \mV \mLambda^{\nicefrac{1}{2}} \mLambda^{\nicefrac{1}{2}} \trans{\mV} \\
+    &= \mV \mLambda \trans{\mV} = \mA.
+\end{align*} It is immediately clear from the definition that $\mA^{\nicefrac{1}{2}}$ is positive semi-definite.
+\end{proof}
+
 \section{Matrix Norms}
 
 \begin{defn}[Matrix norm]\index{matrix norm} Given a matrix $\mA \in \R^{n \times n}$ and norms $\norm{\cdot}_\alpha$ and $\norm{\cdot}_\beta$ on $\R^n$, the \emph{(induced) norm} of $\mA$ is defined as,\footnote{If you think of $\mA$ as a linear map, you can think of $\norm{\cdot}_\alpha$ as a norm of the input space and $\norm{\cdot}_\beta$ as a norm of the output space.} \begin{align}
@@ -82,8 +96,8 @@ By Courant-Fischer, we have for any $\vx \in \R^n$ such that $\vx \neq \vZero$, 
 \end{align} We write $\norm{\mA}_\alpha \defeq \norm{\mA}_{\alpha\to\alpha}$.
 \end{defn}
 
-\begin{lem} For any matrix $\mA \in \R^{n \times n}$, any $\vx\ in \R^n$, and any norm $\norm{\cdot}$ on $\R^n$, \begin{align}
-    |\trans{\vx}\mA\vx| \leq \norm{\mA}\norm{\vx}^2.
+\begin{lem} For any matrix $\mA \in \R^{n \times n}$, any $\vx \in \R^n$, and any norm $\norm{\cdot}$ on $\R^n$, \begin{align}
+    |\trans{\vx}\mA\vx| \leq \norm{\mA}\norm{\vx}^2. \label{eq:quadratic_form_bound}
 \end{align}
 \end{lem}
 \begin{proof} We have, \begin{align*}
@@ -260,7 +274,7 @@ The pseudoinverse of the symmetric matrix $\mA \in \R^{n \times n}$ is (uniquely
     \pinv{\mLambda} = \diag_{i\in[n]}\begin{cases}
     \inv{\lambda_i} & \lambda_i \neq 0 \\
     0 & \text{otherwise}
-    \end{cases}
+    \end{cases} \label{eq:pseudoinverse_spectrum}
 \end{align} for eigenvalues $\lambda_i$.
 \end{lem}
 \begin{proof}

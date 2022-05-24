@@ -8,13 +8,22 @@
 \begin{lem}\label{lem:a1}
 $c(\vx) \defeq \frac{1}{2}\trans{\vx}\mL\vx - \trans{\vx}\vd$ is convex.
 \end{lem}
-\begin{proof} TBD
+\begin{proof} We have that $\mH_c(\vx) = \mL(\vx) \succeq \mZero$.
 \end{proof}
 
 \begin{lem}\label{lem:a2}
 The electrical energy-minimizing flow $\s{\vf}$ from \cref{eq:electrical_energy_minimizing_flow} is the electrical flow, i.e., satisfies Ohm's law.
 \end{lem}
-\begin{proof} TBD
+\begin{proof} Consider any $\vf \in \R^{|\sE|}$ satisfying $\mB\vf = \vd$. We have for any $\vx \in \R^{|\sV|}$, \begin{align*}
+    \frac{1}{2}\trans{\vf}\mR\vf &= \frac{1}{2}\trans{\vf}\mR\vf - \trans{\vx}\underbrace{(\mB\vf - \vd)}_{0} \\
+    &\geq \min_{\vf' \in \R^{|\sE|}} \underbrace{\frac{1}{2}\trans{\vf'}\mR\vf' - \trans{\vx}(\mB\vf' - \vd)}_{\eqdef g(\vf')}.
+\end{align*} Note that $g$ is convex. Taking the gradient gives, \begin{align*}
+    \grad_{\vf'} g(\vf') = \mR\vf' - \trans{\mB}\vx.
+\end{align*} So $\vf' = \inv{\mR}\trans{\mB}\vx$ is the minimizer of $g$. We obtain, \begin{align*}
+    \frac{1}{2}\trans{\vf}\mR\vf \geq -\frac{1}{2}\trans{\vx}\mL\vx + \trans{\vd}\vx,
+\end{align*} but $\trans{\Tilde{\vf}}\mR\Tilde{\vf} = \trans{\Tilde{\vx}}\mL\Tilde{\vx} = \trans{\vd}\Tilde{\vx}$ for electrical voltages $\Tilde{\vx}$ and electrical flow $\Tilde{\vf}$ (see \cref{eq:electrical_energy_demands}). Thus, \begin{align*}
+    \frac{1}{2}\trans{\vf}\mR\vf \geq \frac{1}{2}\trans{\Tilde{\vx}}\mL\Tilde{\vx} = \frac{1}{2}\trans{\Tilde{\vf}}\mR\Tilde{\vf}.
+\end{align*} Hence, $\Tilde{\vf}$ is the minimum electrical energy flow among all flows routing $\vd$.
 \end{proof}
 
 \begin{lem}\label{lem:a3}

@@ -44,7 +44,12 @@ Voltages $\vx \in \R^{|\sV|}$ routing demands $\vd \perp \vOne$ satisfy, \begin{
 \end{align}
 \end{lem}
 \begin{proof}
-TBD
+Recall from \cref{eq:electrical_energy_demands} that $\mathcal{E}(\vx) = \trans{\vd}\pinv{\mL}\vd$. Using Courant-Fischer, \begin{align*}
+    \lambda_n(\pinv{\mL}) &= \max_{\vx \neq \vZero} \frac{\trans{\vx}\pinv{\mL}\vx}{\norm{\vx}_2^2} \geq \frac{\trans{\vd}\pinv{\mL}\vd}{\norm{\vd}_2^2} \\
+    \lambda_2(\pinv{\mL}) &= \min_{\substack{\vx \neq \vZero \\ \vx \perp \vOne}} \frac{\trans{\vx}\pinv{\mL}\vx}{\norm{\vx}_2^2} \leq \frac{\trans{\vd}\pinv{\mL}\vd}{\norm{\vd}_2^2}, \margintag{using that $\ker{\pinv{\mL}} = \ker{\mL} = \vspan\{\vOne\}$}
+\end{align*} using that $\vd \neq \vZero$ and $\vd \perp \vOne$. Rearranging the inequalities, we obtain, \begin{align*}
+    \lambda_2(\pinv{\mL}) \norm{\vd}_2^2 \leq \trans{\vd}\pinv{\mL}\vd \leq \lambda_n(\pinv{\mL}) \norm{\vd}_2^2.
+\end{align*} Finally, recall from \cref{eq:pseudoinverse_spectrum} that $\lambda_2(\pinv{\mL}) = \inv{\lambda_n(\mL)}$ and $\lambda_n(\pinv{\mL}) = \inv{\lambda_2(\mL)}$.
 \end{proof}
 
 \subsection{Useful Inequalities}
