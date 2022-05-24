@@ -3,8 +3,123 @@
 
 \chapter{Introduction to Spectral Graph Theory}
 
-\section{Eigenvalues of the Laplacian}
-% first: kernel of laplacian
-\section{Complete Graph}
-\section{Path Graph}
-\section{Complete Binary Tree}
+Spectral graph theory studies graphs through linear algebra. The fundamental object that we will work with is the Laplacian matrix that we introduced in \cref{defn:laplacian_matrix}.
+
+\section{Eigenvalues of the Laplacian Matrix}
+
+\begin{lem}
+Denote by $\sX_1 \cup \dots \cup \sX_k = V$ the connected components of a graph $G$. Then we have for the Laplacian matrix $\mL$ of $G$, \begin{align}
+    \ker{\mL} = \vspan\{\vOne_{\sX_1}, \dots, \vOne_{\sX_k}\},
+\end{align} where $\vOne_{\sX}(v) = \Ind{v \in \sX}$. In particular, $\ker{\mL} = \vspan\{\vOne\}$ if $G$ is connected.
+\end{lem}
+\begin{proof}
+TBD
+\end{proof}
+\begin{cor}
+When $G$ has $k$ connected components, then $\lambda_i(\mL) = 0$ for all $i \in [k]$.
+\end{cor}
+
+In the following, we will study connected graphs. If a graph consists of multiple connected components, we may study each individually.
+
+\begin{lem}
+$\mL \preceq 2\mD$.
+\end{lem}
+\begin{proof} It can be shown that $\mD + \mA \succeq \mZero$,\footnote{The proof is similar to the proof that $\mL = \mD - \mA \succeq \mZero$. $\mD + \mA$ is also called the \emph{signless Laplacian matrix}\index{signless Laplacian matrix} and is an interesting object in its own right: its eigenvalues can be used to count edges and identify bipartite components.} so, $\mD \succeq -\mA$, and hence, $\mL \preceq 2\mD$.
+\end{proof}
+
+\subsection{Electrical Energy}
+
+\begin{lem}
+For any voltages $\vx \in \R^{|\sV|}$, \begin{align}
+    \lambda_2(\mL) \norm{\vx}_2^2 \leq \spa{E}(\vx) \leq \lambda_n(\mL) \norm{\vx}_2^2.
+\end{align}
+\end{lem}
+\begin{proof}
+TBD
+\end{proof}
+
+\begin{lem}
+Voltages $\vx \in \R^{|\sV|}$ routing demands $\vd \perp \vOne$ satisfy, \begin{align}
+    \frac{\norm{\vd}_2^2}{\lambda_n(\mL)} \leq \spa{E}(\vx) \leq \frac{\norm{\vd}_2^2}{\lambda_2(\mL)}.
+\end{align}
+\end{lem}
+\begin{proof}
+TBD
+\end{proof}
+
+\subsection{Useful Inequalities}
+
+\begin{lem}[Path inequality]\index{path inequality} We have that \begin{align}
+    (n-1) P_n \succeq G_{1,n},
+\end{align} where $P_n$ is the unit weight path graph on $n$ vertices and $G_{i,j}$ is the unit weight graph on $n$ vertices with the single edge $\{i,j\}$.
+\end{lem}
+\begin{proof}
+Fix any $\vx \in \R^n$ and let $\vDelta(i) \defeq \vx(i+1) - \vx(i)$. We have, \begin{align*}
+    \trans{\vx}G_{1,n}\vx &= (\vx(n) - \vx(1))^2 \\
+    &= \parentheses*{\sum_{i=1}^{n-1} \vDelta(i)}^2 \\
+    &= (\trans{\vOne_{n-1}}\vDelta)^2 \\
+    &\leq \norm{\vOne_{n-1}}_2^2 \norm{\vDelta}_2^2 \margintag{using Cauchy-Schwarz} \\
+    &= (n-1) \sum_{i=1}^{n-1} \vDelta(i)^2 \\
+    &= (n-1) \sum_{i=1}^{n-1} (\vx(i+1) - \vx(i))^2 \\
+    &= (n-1)\trans{\vx}P_n\vx. \qedhere
+\end{align*}
+\end{proof}
+
+\begin{lem}
+For any unit weight graph $G$ on $n$ vertices with diameter\footnote{The \emph{diameter}\index{diameter} of a graph is the length of its longest path.} $D$, \begin{align}
+    \lambda_2(G) \geq \frac{1}{nD}.
+\end{align}
+\end{lem}
+\begin{proof} We denote by $G^{i,j}$ the subgraph of $G$ consisting of the shortest $i-j$ path. We have, \begin{align*}
+    K_n = \sum_{i < j} G_{i,j} &\preceq \sum_{i<j} \underbrace{(j-i)}_{\leq D} \underbrace{G^{i,j}}_{\subseteq G} \margintag{analogously to the path inequality} \\
+    &\preceq n^2 D G.
+\end{align*} Thus, $n^2 D \lambda_2(G) \geq \lambda_2(K_n) = n$, and hence, $\lambda_2(G) \geq \frac{1}{nD}$.
+\end{proof}
+
+\section{Examples}
+
+\begin{lem}[Spectrum of the complete graph] \begin{align}
+    \lambda_2(K_n) = \dots = \lambda_n(K_n) = n.
+\end{align}
+\end{lem}
+\begin{proof} We have, $\mA = \vOne\trans{\vOne} - \mI$ and $\mD = (n-1)\mI$, so $\mL = n\mI - \vOne\trans{\vOne}$. For any $\vx \perp \vOne$, $\mL\vx = n\vx$.
+\end{proof}
+
+We now want to better understand $\lambda_2$ and $\lambda_n$ for some common graphs. The tools we will use are the following: \begin{itemize}
+    \item \underline{to lower bound $\lambda_2(G)$:} Relate the eigenvalues of $K_n$ and $G$, yielding $K_n \preceq f(n) G$. Knowing that $\lambda_2(K_n) = n$, we have, $f(n) \lambda_2(G) \geq n$, and hence, $\lambda_2(G) \geq \frac{n}{f(n)}$.
+    \item \underline{to upper bound $\lambda_2(G)$:} Due to Courant-Fischer, \begin{align*}
+        \lambda_2(G) = \min_{\substack{\vx \perp \vOne \\ \vx \neq \vZero}} \frac{\trans{\vx}\mL\vx}{\trans{\vx}\vx} \leq \frac{\trans{\vy}\mL\vy}{\trans{\vy}\vy},
+    \end{align*} for any $\vy \perp \vOne, \vy \neq \vZero$. We can therefore find a so-called \emph{test vector}\index{test vector} $\vy$ with these properties.
+    \item \underline{to lower bound $\lambda_n(G)$:} Similarly, due to Courant-Fischer, \begin{align*}
+        \lambda_n(G) = \max_{\vx \neq \vZero} \frac{\trans{\vx}\mL\vx}{\trans{\vx}\vx} \geq \frac{\trans{\vy}\mL\vy}{\trans{\vy}\vy},
+    \end{align*} for any $\vy \neq \vZero$.
+    \item \underline{to upper bound $\lambda_n(G)$:} Using that $\mL \preceq 2 \mD$, we have, $\lambda_n(G) \leq 2 \max_{v \in \sV} \vd(v)$, where $\vd(v)$ is the weighted degree of $v$.
+\end{itemize}
+
+\subsection{Path Graph}
+
+\begin{lem} $\lambda_2(P_n) = \Theta\parentheses*{\frac{1}{n^2}}$.
+\end{lem}
+\begin{proof}
+TBD
+\end{proof}
+
+\begin{lem} $\lambda_n(P_n) \in [1,4]$.
+\end{lem}
+\begin{proof}
+TBD
+\end{proof}
+
+\subsection{Complete Binary Tree}
+
+\begin{lem} $\lambda_2(T_d) = \Theta\parentheses*{\frac{1}{n}}$.
+\end{lem}
+\begin{proof}
+TBD
+\end{proof}
+
+\begin{lem} $\lambda_n(T_d) \in [1,6]$.
+\end{lem}
+\begin{proof}
+TBD
+\end{proof}

@@ -57,7 +57,7 @@ We can now also write the net flow constraint\index{net flow constraint}, \begin
 \end{align} If the net flow constraint is satisfied, this yields, \begin{align}
     \underbrace{\mB\mR^{-1}\trans{\mB}}_{\text{Laplacian}}\vx = \mB\vf = \vd. \label{eq:ohms_law_and_net_flow_constraint}
 \end{align}
-\begin{defn}[Laplacian matrix]
+\begin{defn}[Laplacian matrix]\index{Laplacian matrix}\label{defn:laplacian_matrix}
 The \emph{Laplacian matrix} of an oriented graph $G$ is defined as, \begin{align}
     \mL \defeq \mB\mR^{-1}\trans{\mB} = \mB\mW\trans{\mB} \in \R^{|\sV|\times|\sV|},
 \end{align} where $\mW \defeq \mR^{-1}$ is a diagonal matrix of weights\index{weight (of an edge)} $\vw(e) \defeq \frac{1}{\vr(e)}$.
@@ -128,10 +128,11 @@ It is often to useful to look at a normalized Laplacian matrix, where weighted v
         - \frac{1}{\sqrt{\vd(i) \vd(j)}} & \text{if $i \sim j$} \\
         0 & \text{otherwise}.
     \end{cases}
-\end{align} This characterization is equivalent to,\footnote{$\mA^{-\frac{1}{2}}$, where $\mA$ is a diagonal matrix, is the diagonal matrix $\diag\{a_{i,i}^{-\nicefrac{1}{2}}\}_i$.} \begin{align}
+\end{align} This characterization is equivalent to,\footnote{$\mA^{-\frac{1}{2}}$, where $\mA$ is a diagonal matrix, is the diagonal matrix $\diag_i\{\mA(i,i)^{-\nicefrac{1}{2}}\}$.} \begin{align}
     \mN = \mD^{-\frac{1}{2}}\mL\mD^{-\frac{1}{2}} = \mI - \mD^{-\frac{1}{2}}\mA\mD^{-\frac{1}{2}}.
 \end{align}
-\end{defn}
+\end{defn} As we will see later, the normalized Laplacian matrix is intimately related to the probability transition matrix of a random walk on $G$, where transition probabilities are proportional to edge weights.
+
 \begin{lem}
 $\mN$ is positive semi-definite.
 \end{lem}\begin{proof} We have for any $\vx \in \R^n$, \begin{align*}
