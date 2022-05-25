@@ -3,6 +3,8 @@
 
 \chapter{Conductance and Expanders}
 
+\section{Conductance}
+
 \begin{defn}[Volume] The \emph{volume}\index{volume} of a set of vertices $\sS \subseteq \sV$ is the sum of weighted degrees, \begin{align}
     \vol(S) \defeq \sum_{v \in \sS} \vd(v) = \trans{\vOne_\sS}\vd = \trans{\vOne_\sS}\mD\vOne_\sS.
 \end{align}
@@ -38,16 +40,10 @@ Let us consider a few examples.
 \begin{lem}
 $\phi(K_n) = \frac{n}{2(n-1)}$. So $K_n$ is a $\frac{1}{2}$-expander.\footnote{Proof in \cref{lem:c5}.}
 \end{lem}
-\begin{proof}
-TBD
-\end{proof}
 
 \begin{lem}
 $\phi(P_n) = \frac{1}{n-1}$. So $P_n$ is a $\frac{1}{n}$-expander.\footnote{Proof in \cref{lem:c6}.}
 \end{lem}
-\begin{proof}
-TBD
-\end{proof}
 
 \section{Expander Decompositions}
 
@@ -58,13 +54,15 @@ TBD
 \end{defn}
 
 \begin{thm}
-There is an algorithm that computes a $\phi$-expander decomposition of quality $q = \LandauO{\phi^{-\nicefrac{1}{2}} \log n}$ in time $\LandauO{m \log^c n}$ for some constant $c$.
+There is a procedure \textsc{CertifyOrCut($G$)} that either \begin{itemize}
+    \item certifies that $G$ is a $\phi$-expander; or
+    \item presents a cut $\sS$ such that $\phi(S) \leq \sqrt{2\phi}$.\footnote{Finding the best cut (i.e., a cut with conductance $\phi$) is NP-hard.}
+\end{itemize}
 \end{thm}
 
-% \noindent There is a procedure \emph{CertifyOrCut($G$)} that either \begin{itemize}
-%     \item certifies that $G$ is a $\phi$-expander; or
-%     \item presents a cut $\sS$ such that $\phi(S) \leq \sqrt{2\phi}$.\footnote{Finding the best cut (i.e., a cut with conductance $\phi$) is NP-hard.}
-% \end{itemize}
+\begin{thm}
+There is an algorithm that computes a $\phi$-expander decomposition of quality $q = \LandauO{\phi^{-\nicefrac{1}{2}} \log n}$ in time $\LandauO{m \log^c n}$ for some constant $c$.
+\end{thm}
 
 \section{Cheeger's Inequality}
 
@@ -90,6 +88,13 @@ If $|\sS| \leq |\sV \setminus \sS|$, then we can write \begin{align}
     \sigma(\sS) = \frac{\trans{\vOne_\sS}\mL\vOne_\sS}{\trans{\vOne_\sS}\vOne_\sS}.
 \end{align}
 \end{rmk}
+
+\begin{lem}
+We have for any cut $(\sS, \sV \setminus \sS)$ in a connected unit weight graph that $\sigma(\sS) \geq \phi(\sS)$.
+\end{lem}
+\begin{proof}
+As the graph is connected and has unit weights, $\vol(\sS) = \sum_{v \in \sS} \vd(v) \geq |\sS|$.
+\end{proof}
 
 An alternative version of Cheeger's inequality relates the second eigenvalue of $\mL$ (not $\mN$!) to the sparsity of the graph.
 

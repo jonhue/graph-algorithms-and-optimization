@@ -25,7 +25,10 @@ We can therefore model the update of a single round using the linear map $\mW \i
 
 A probability distribution over vertices is a vector $\vp \in \R^{|\sV|}$ such that $\trans{\vOne}\vp = 1$ and $\vp \geq \vZero$. If our initial distribution is $\vp_0$, we have, \begin{align}
     \vp_t = \mW^t\vp_0.
-\end{align}
+\end{align} Observe that $\mW^t(u,v)$ denotes the probability to reach $v$ from $u$ in exactly $t$ steps.
+
+\begin{defn}[Mixing] We say that a random walk $\mW$ is \emph{mixing}\index{mixing random walk} at step $t$ iff for each $u, v \in \sV$, $\mW^t(u,v) \geq \frac{1}{2n}$.\footnote{That is, the random walk is ``half way'' to being completely mixed.}
+\end{defn}
 
 \begin{defn}[Stationary distribution] A distribution $\vpi \in \R^{|\sV|}$ is \emph{stationary}\index{stationary distribution} iff $\vpi = \mW\vpi$.
 \end{defn}
@@ -113,7 +116,7 @@ For any $a \neq s$, we can equivalently write \cref{eq:expected_hitting_time} as
     \vOne - \alpha \vOne_s = (\mI - \underbrace{\trans{\mW}}_{\inv{\mD}\mA})\vh_s,
 \end{align} where $\alpha$ is due to the remaining degree of freedom, as the entry corresponding to $s$ is not fixed. Multiplying from the left with $\mD$, we obtain, \begin{align*}
     \vd - \alpha \vd(s) \vOne_s = (\mD - \mA)\vh_s = \mL\vh_s.
-\end{align*} Recall that $\ker{\mL} = \vspan\{\vOne\}$, and hence, for $\vh$ to exist, we must choose $\alpha$ such that $\vd - \alpha \vd(s) \vOne_s \perp \vOne$. We have, \begin{align*}
+\end{align*} Recall that $\ker{\mL} = \vspan\{\vOne\}$, and hence, for $\vh_s$ to exist, we must choose $\alpha$ such that $\vd - \alpha \vd(s) \vOne_s \perp \vOne$. We have, \begin{align*}
     \trans{\vOne}(\vd - \alpha \vd(s) \vOne_s) = \norm{\vd}_1 - \alpha \vd(s) \overset{!}{=} 0 \iff \alpha = \frac{\norm{\vd}_1}{\vd(s)}.
 \end{align*} Finally, note that the solution $\elx$ to $\mL\elx = \vd - \norm{\vd}_1 \vOne_s$ is not unique. Given that $\vh_s$ is one solution, we have that any $\elx = \vh_s + c\vOne$ for $c \in \R$ is also a solution.\footnote{This follows directly from the fact that $\ker{\mL} = \vspan\{\vOne\}$.} Yet, we know that $\vh_s(s) = 0$, implying that $\vh_s = \elx - \elx(s)\vOne$.
 \end{proof}
@@ -194,8 +197,18 @@ TBD
 \end{align} That is, conditional on the outcome of all the previous random variables, the expectation of $Z_i$ equals $Z_{i-1}$.% In particular, $\E{Z_k} = \E{Z_0}$.
 \end{defn} Typically, we use martingales to show a statement such as ``$Z_k$ is concentrated around $\E{Z_k}$''.
 
-We can alternatively think of a martingale as the sequence of changes in $Z_i$. Let $X_i \defeq Z_i - Z_{i-1}$. The sequence of $X_i$ is called \emph{martingale difference sequence}\index{martingale difference sequence}. The martingale condition is equivalent to, \begin{align}
+We can alternatively think of a martingale as the sequence of changes in $\{Z_i\}_i$. Let $X_i \defeq Z_i - Z_{i-1}$. The sequence of $\{X_i\}_i$ is called \emph{martingale difference sequence}\index{martingale difference sequence}. The martingale condition is equivalent to, \begin{align}
     \E{X_i \mid Z_0, \dots, Z_{i-1}} = \E{X_i \mid Z_0, X_1, \dots, X_{i-1}} = 0.
 \end{align} We can write, \begin{align}
     Z_k = Z_0 + \sum_{i=1}^k Z_i - Z_{i-1} = Z_0 + \sum_{i=1}^k X_i.
+\end{align}
+
+\begin{thm}
+    Suppose that $\{X_i\}_i$ form a scalar martingale difference sequence and $|X_i| \leq R$. Define the ``pseudo-variance'', \begin{align}
+        W_i \defeq \sum_{j=1}^i \E{X_j^2 \mid X_1, \dots, X_{j-1}},
+    \end{align} Then, \begin{align}
+        \Pr{\abs{\sum_{i=1}^k X_i} \geq k \text{ and } W_k \leq \sigma^2} \leq C_2 \exp\parentheses*{-C_1 \frac{t^2}{Rt + \sigma^2}},
+    \end{align} for constants $C_1, C_2$.
+\end{thm}\noindent By a simple union bound, \begin{align}
+    \Pr{\abs{\sum_{i=1}^k X_i} \geq k} \leq \Pr{\abs{\sum_{i=1}^k X_i} \geq k \text{ and } W_k \leq \sigma^2} + \Pr{W_k > \sigma^2}.
 \end{align}

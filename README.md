@@ -5,7 +5,7 @@ title: PubTeX
 
 # Graph Algorithms and Optimization
 
-These notes are based on material from ``Advanced Graph Algorithms and Optimization'' taught by Rasmus Kyng at ETH Zurich in the summer of 2022.
+These notes are based on material from "Advanced Graph Algorithms and Optimization" taught by Rasmus Kyng at ETH Zurich in the summer of 2022.
 
 [Notes](https://jonhue.github.io/graph-algorithms-and-optimization/main.pdf)
 
