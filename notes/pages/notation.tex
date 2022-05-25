@@ -139,9 +139,9 @@ We follow these general rules: \begin{itemize}[noitemsep]
    $\vf \in \R^{|\sE|}$ & flow \\
    $\vd \in \R^{|\sV|}$ & demands, modeling the net flow \\
    \addlinespace
-   $\ex \in \R^{|\sV|}$ & electrical voltages \\
-   $\ex_{a,b} \in \R^{|\sV|}$ & electrical voltages routing demands $\vOne_b - \vOne_a$ \\
+   $\elx \in \R^{|\sV|}$ & electrical voltages \\
+   $\elx_{a,b} \in \R^{|\sV|}$ & electrical voltages routing demands $\vOne_b - \vOne_a$ \\
    $\ef \in \R^{|\sE|}$ & electrical flow \\
-   $\e(\ef), \e(\ex), \e(\vd)$ & electrical energy, $\trans{\ef}\trans{\mB}\ex = \trans{\ef}\mR\ef = \trans{\ex}\mL\ex = \trans{\vd}\vx = \trans{\vd}\pinv{\mL}\vd$ \\
+   $\e(\ef), \e(\elx), \e(\vd)$ & electrical energy, $\trans{\ef}\trans{\mB}\elx = \trans{\ef}\mR\ef = \trans{\elx}\mL\elx = \trans{\vd}\vx = \trans{\vd}\pinv{\mL}\vd$ \\
 \end{longtable}
 \end{fullwidth}
