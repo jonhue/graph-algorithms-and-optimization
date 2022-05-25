@@ -45,6 +45,23 @@ $\phi(K_n) = \frac{n}{2(n-1)}$. So $K_n$ is a $\frac{1}{2}$-expander.\footnote{P
 $\phi(P_n) = \frac{1}{n-1}$. So $P_n$ is a $\frac{1}{n}$-expander.\footnote{Proof in \cref{lem:c6}.}
 \end{lem}
 
+\begin{lem}
+If $G$ is a connected $\phi$-expander with unit weights, then we have for the diameter $D$ of $G$, \begin{align}
+    D = \LandauO{\frac{\log m}{\phi}}.
+\end{align}
+\end{lem}
+\begin{proof}
+Fix any pair of vertices $s,t \in \sV$. Let $B(s,d)$ be the closed ball around $s$ of radius $d$. Let $E(B(s,d))$ be the internal edge set of $B(s,d)$.
+
+Observe that since $G$ is connected, we have $|E(B(s,0))| \geq 1$. Moreover, for each $d \geq 0$ where $|E(B(s,d))| \leq \frac{m}{2}$, we have by the definition of a $\phi$-expander that \begin{align*}
+    |E(B(s,d), \sV \setminus B(s,d))| \geq \phi \cdot |E(B(s,d))|.
+\end{align*} Thus, $|E(B(s,d+1))| \geq (1+\phi)|E(B(s,d))|$. Let $d_{\max}$ be the largest integer such that $|E(B(s,d_{\max}))| \leq \nicefrac{m}{2}$. We have $d_{\max} \leq \nicefrac{2\log m}{\phi}$ as otherwise, \begin{align*}
+    |E(B(s,d_{\max}))| > (1+\phi)^{\nicefrac{2 \log m}{\phi}} \geq (1 + \nicefrac{\phi}{2} (\nicefrac{\phi}{2})^2)^{\nicefrac{2 \log m}{\phi}} \geq e^{\log m} = m, \margintag{using $e^x < 1 + x + x^2$ for $x < 1.79$}
+\end{align*} which gives a contradiction to the fact that the number of edges in $G$ is $m$. Thus, for a radius of $\nicefrac{2 \log m}{\phi} + 1$, the ball centered at $s$ has more than $\nicefrac{m}{2}$ edges.
+
+Finally, follow the same argument from $t$. As both balls contain more than $\nicefrac{m}{2}$ edges, they must intersect in at least one edge. But this implies that there is a $s$-$t$ path of length $\LandauO{\nicefrac{\log m}{\phi}}$.
+\end{proof}
+
 \section{Expander Decompositions}
 
 \begin{defn}[Expander decomposition] For any $\phi \in (0,1]$, a \emph{$\phi$-expander decomposition}\index{expander decomposition} of \emph{quality}\index{quality} $q$ is a partition of the vertex set $\sV = \sX_1 \cup \dots \cup \sX_k$ such that \begin{enumerate}
