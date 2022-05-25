@@ -5,13 +5,13 @@
 
 \section{Random Walks}
 
-In this section, we study random walks on undirected weighted graphs $G = (\sV, \sE, \vw)$ with self-loops. A \emph{random walk}\index{random walk} visits a random sequence of vertices $v_1, v_2, \dots$, where \begin{align}
-    \Pr{v_{t+1} = v \mid v_t = u} = \frac{\vw(\{v, u\})}{\vd(u)}
+In this section, we study random walks on undirected weighted graphs $G = (\sV, \sE, \vw)$ with self-loops. A \emph{random walk}\index{random walk} visits a random sequence of vertices $X_1, X_2, \dots$, where \begin{align}
+    \Pr{X_{t+1} = v \mid X_t = u} = \frac{\vw(\{v, u\})}{\vd(u)}
 \end{align} and $\vd(u)$ is the weighted degree of vertex $u$, as we have defined previously.
 
 \begin{rmk}
 The random walks considered here satisfy the \emph{Markov property}\index{Markov property}, that is, \begin{align}
-    (v_{t+1} = v) \perp (v_1 = u_1), \dots, (v_{t-1} = u_{t-1}) \mid (v_t = u_t).\safefootnote{So you can think of these random walks as Markov chains.}
+    X_{t+1} \perp X_1, \dots, X_{t-1} \mid X_t.\safefootnote{So you can think of these random walks as Markov chains.}
 \end{align} Moreover, we restrict our attention to time-homogeneous random walks, that is, the transition probabilities remain constant over time.
 \end{rmk}
 
@@ -71,7 +71,7 @@ When $\nu_1, \dots, \nu_n$ are the eigenvalues and $\vpsi_1, \dots, \vpsi_n$ the
     &= \mD^{\nicefrac{1}{2}}(\mI - \mN)\mD^{-\nicefrac{1}{2}}. \nonumber
 \end{align} By \cref{lem:a7}, $\mD^{\nicefrac{1}{2}}(\mI - \mN)\mD^{-\nicefrac{1}{2}}$ and $\mI - \mN$ have the same eigenvalues, namely $1 - \nu_i$. We also have, \begin{align}
     \Tilde{\mW} = \frac{1}{2}\mI + \frac{1}{2}(\mI - \mD^{\nicefrac{1}{2}}\mN\mD^{-\nicefrac{1}{2}}) = \mI - \frac{1}{2}\mD^{\nicefrac{1}{2}}\mN\mD^{-\nicefrac{1}{2}},
-\end{align} implying that the eigenvectors of $\Tilde{\mW}$ are $1 - \nicefrac{\nu_i}{2}$. Finally, we have, \begin{align*}
+\end{align} implying that the eigenvalues of $\Tilde{\mW}$ are $1 - \nicefrac{\nu_i}{2}$. Finally, we have, \begin{align*}
     \Tilde{\mW}\mD^{\nicefrac{1}{2}}\vpsi_i &= (\mI - \frac{1}{2}\mD^{\nicefrac{1}{2}}\mN\mD^{-\nicefrac{1}{2}})\mD^{\nicefrac{1}{2}}\vpsi_i \\
     &= \mD^{\nicefrac{1}{2}}\vpsi_i - \frac{1}{2}\mD^{\nicefrac{1}{2}}\mN\vpsi_i \\
     &= \mD^{\nicefrac{1}{2}}\vpsi_i - \frac{\nu_i}{2}\mD^{\nicefrac{1}{2}}\vpsi_i \margintag{using that $\vpsi_i$ is an eigenvector of $\mN$ with corresponding eigenvalue $\nu_i$} \\
@@ -91,6 +91,64 @@ For any unweighted connected graph $G$, we have that at time step $t$,\footnote{
 \begin{proof}
 TBD
 \end{proof}
+
+\subsection{Hitting Time}
+
+\begin{defn}[Hitting time] The \emph{hitting time}\index{hitting time}, \begin{align}
+    H_{a,s} \defeq \min\{t \geq 1 \mid X_t = s, X_0 = a\},
+\end{align} is the number of steps to reach $s$ starting from $a$. We have, \begin{align}
+    \vh_s(a) \defeq \E{H_{a,s}} = 1 + \sum_{b \sim a} \frac{\vw(\{a,b\})}{\vd(a)} \vh_s(b). \label{eq:expected_hitting_time}
+\end{align}
+\end{defn}
+
+\begin{lem}
+If $\vx$ is a solution to $\mL\vx = \vd - \norm{\vd}_1 \vOne_s$,\footnote{We use $\vOne_s$ as a shorthand notation for $\vOne_{\{s\}}$.} then \begin{align}
+    \vh_s = \vx - \vx(s)\vOne.
+\end{align}
+\end{lem}
+\begin{proof}
+For any $a \neq s$, we can equivalently write \cref{eq:expected_hitting_time} as, \begin{align*}
+    \trans{\vOne_a}\vh_s = 1 + \trans{(\mW \vOne_a)}\vh_s \iff \trans{\vOne_a}(\mI - \trans{\mW})\vh_s = 1.
+\end{align*} This yields a linear system of $n-1$ equations, \begin{align}
+    \vOne - \alpha \vOne_s = (\mI - \underbrace{\trans{\mW}}_{\inv{\mD}\mA})\vh_s,
+\end{align} where $\alpha$ is due to the remaining degree of freedom, as the entry corresponding to $s$ is not fixed. Multiplying from the left with $\mD$, we obtain, \begin{align*}
+    \vd - \alpha \vd(s) \vOne_s = (\mD - \mA)\vh_s = \mL\vh_s.
+\end{align*} Recall that $\ker{\mL} = \vspan\{\vOne\}$, and hence, for $\vh$ to exist, we must choose $\alpha$ such that $\vd - \alpha \vd(s) \vOne_s \perp \vOne$. We have, \begin{align*}
+    \trans{\vOne}(\vd - \alpha \vd(s) \vOne_s) = \norm{\vd}_1 - \alpha \vd(s) \overset{!}{=} 0 \iff \alpha = \frac{\norm{\vd}_1}{\vd(s)}.
+\end{align*} Finally, note that the solution $\vx$ to $\mL\vx = \vd - \norm{\vd}_1 \vOne_s$ is not unique. Given that $\vh_s$ is one solution, we have that any $\vx = \vh_s + c\vOne$ for $c \in \R$ is also a solution.\footnote{This follows directly from the fact that $\ker{\mL} = \vspan\{\vOne\}$.} Yet, we know that $\vh_s(s) = 0$, implying that $\vh_s = \vx - \vx(s)\vOne$.
+\end{proof}
+
+\subsection{Commute Time}
+
+\begin{marginfigure}
+TBD
+% \centering\includegraphics[width=4cm]{notes/figures/convex_set.png}
+\caption{Example where hitting times are not symmetric.}
+\end{marginfigure}
+An issue with hitting times is that they do not need to be symmetric. This motivates the consideration of commute times, which correspond to the number of steps it takes to reach $b$ from $a$ and return to $a$.
+
+\begin{defn}[Commute time] The \emph{commute time}\index{commute time} between $a$ and $b$ is defined as, \begin{align}
+    C_{a,b} \defeq H_{a,b} + H_{b,a}.
+\end{align}
+\end{defn}
+\begin{rmk}
+By definition, commute times are symmetric.
+\end{rmk}
+
+\begin{lem}
+If $\vx$ is a solution to $\mL\vx = \norm{\vd}_1 (\vOne_a - \vOne_b)$, then \begin{align}
+    \E{C_{a,b}} = \trans{(\vOne_a - \vOne_b)}\vx = \vx(a) - \vx(b).
+\end{align}
+\end{lem} The $\vx$ can be interpreted as electrical voltages inducing flow that routes $\norm{\vd}_1$ units from $a$ to $b$.
+\begin{proof}
+We write $\vb_v \defeq \vd - \norm{\vd}_1 \vOne_v$ and let $\mL\vy = \vb_b$ and $\mL\vz = \vb_a$. Then, \begin{align*}
+    \E{C_{a,b}} &= \vh_b(a) + \vh_a(b) \\
+    &= \vy(a) - \vy(b) + \vz(b) - \vz(a) \\
+    &= \trans{(\vOne_a - \vOne_b)}(\vy - \vz).
+\end{align*} Observe that $\vx \defeq \vy - \vz$ solves $\mL\vx = \vb_b - \vb_a = \norm{\vd}_1 (\vOne_a - \vOne_b)$.
+\end{proof}
+
+We will see in \cref{cha:effective_resistance} that the expected commute time is intimately related to the electrical energy required to route flow from $a$ to $b$, also called the effective resistance between $a$ and $b$.
 
 \section{Concentration}
 
