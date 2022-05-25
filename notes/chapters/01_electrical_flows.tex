@@ -3,11 +3,11 @@
 
 \chapter{Electrical Flows}
 
-A classical graph problem is the flow of electrical currents through a network of resistors. Such a network $G = (\sV, \sE, \vr)$ can be described by a set of vertices $\sV$, set of wires (or edges) $\sE$, and resistances $\vr \in \R_{>0}^{|\sE|}$ of wires. We are interested in finding the electrical flow $\vf \in \R^{|\sE|}$ through the network, assigning to each wire the current that is transported per unit time. Alternatively, we can think of voltages $\vx \in \R^{|\sV|}$ at the vertices, which Ohm's law relates to the electrical flow.
+A classical graph problem is the flow of electrical currents through a network of resistors. Such a network $G = (\sV, \sE, \vr)$ can be described by a set of vertices $\sV$, set of wires (or edges) $\sE$, and resistances $\vr~\in~\R_{>0}^{|\sE|}$ of wires. We are interested in finding the \emph{electrical flow}\index{electrical flow} $\ef~\in~\R^{|\sE|}$ through the network, assigning to each wire the current that is transported per unit time. Alternatively, we can think of \emph{electrical voltages}\index{electrical voltages} $\ex \in \R^{|\sV|}$ at the vertices, which Ohm's law relates to the electrical flow.
 
 By \emph{Ohm's law}\index{Ohm's law}, we have that for any wire $e \in \sE$, \begin{align}
-    \vf(e) = \frac{\vx(e)}{\vr(e)}, \quad \vx(e) = \vf(e) \cdot \vr(e),
-\end{align} where $\vx(\{u,v\}) \defeq \vx(u) - \vx(v)$ is the voltage difference of vertices $u$ and $v$. The \emph{net flow}\index{net flow} of current at a vertex $u \in \sV$ is given as, \begin{align}
+    \ef(e) = \frac{\ex(e)}{\vr(e)}, \quad \ex(e) = \ef(e) \cdot \vr(e),
+\end{align} where $\ex(\{u,v\}) \defeq \ex(u) - \ex(v)$ is the voltage difference of vertices $u$ and $v$. For any \emph{flow}\index{flow} $\vf \in \R^{|\sE|}$, the \emph{net flow}\index{net flow} of current at a vertex $u \in \sV$ is given as, \begin{align}
     \sum_{v \sim u} \vf(v, u).\margintag{We use $v \sim u$ to denote all $v$ that are adjacent to $u$.}
 \end{align} We say that a flow routes \emph{demand}\index{demand} $\vd \in \R^{|\sV|}$ if the net flow at every vertex is $\vd(v)$. The fact that at vertices with zero demand, the flow is conserved\footnote{As much current is flowing into the vertex as is flowing out of it.} is also known as \emph{Kirchhoff's current law}\index{Kirchhoff's current law}.
 
@@ -53,9 +53,9 @@ $\mB \trans{\mB} = \diag\{\deg(v)\}_{v \in \sV} - \Tilde{\mA}$.
 We can now also write the net flow constraint\index{net flow constraint}, \begin{align}
     \mB\vf = \vd.
 \end{align} We define $\mR \defeq \diag\{\vr(e)\}_{e \in \sE}$ and then have that Ohm's law\index{Ohm's law} can be expressed as, \begin{align}
-    \trans{\mB}\vx = \mR\vf, \quad\text{or equivalently,}\quad \mR^{-1}\trans{\mB}\vx = \vf.
+    \trans{\mB}\ex = \mR\ef, \quad\text{or equivalently,}\quad \mR^{-1}\trans{\mB}\ex = \ef.
 \end{align} If the net flow constraint is satisfied, this yields, \begin{align}
-    \underbrace{\mB\mR^{-1}\trans{\mB}}_{\text{Laplacian}}\vx = \mB\vf = \vd. \label{eq:ohms_law_and_net_flow_constraint}
+    \underbrace{\mB\mR^{-1}\trans{\mB}}_{\text{Laplacian}}\ex = \mB\ef = \vd. \label{eq:ohms_law_and_net_flow_constraint}
 \end{align}
 \begin{defn}[Laplacian matrix]\index{Laplacian matrix}\label{defn:laplacian_matrix}
 The \emph{Laplacian matrix} of an oriented graph $G$ is defined as, \begin{align}
@@ -142,30 +142,30 @@ $\mN$ is positive semi-definite.
 
 \section{An Optimization Problem}
 
-We have seen that finding voltages $\vx$ or flows $\vf$ is equivalent, we can go from one to the other and back. So let us first focus on how we can find voltages $\vx$.
+We have seen that finding electrical voltages $\ex$ or the electrical flow $\ef$ is equivalent, we can go from one to the other and back. So let us first focus on how we can find electrical voltages $\ex$.
 
-In \cref{eq:ohms_law_and_net_flow_constraint}, we saw that voltages satisfy $\mL\vx = \vd$, obeying by Ohm's law and satisfying the net flow constraint. A standard approach to reframe the solution to such a system of linear equations as the result of an optimization problem, is to consider the cost function, \begin{align}
+In \cref{eq:ohms_law_and_net_flow_constraint}, we saw that electrical voltages satisfy $\mL\ex = \vd$, obeying by Ohm's law and satisfying the net flow constraint. A standard approach to reframe the solution to such a system of linear equations as the result of an optimization problem, is to consider the cost function, \begin{align}
     c(\vx) \defeq \frac{1}{2}\trans{\vx}\mL\vx - \trans{\vx}\vd.
-\end{align} Observe that $\grad c(\vx) = \mL\vx - \vd \overset{!}{=} 0$ iff $\mL\vx = \vd$. It can also be shown that $c$ is convex, hence, its critical point coincides with its minimizer.\footnote{We will develop tools to show this in the next part. The proof is given in \cref{lem:a1}.} We have therefore recast the problem of finding voltages to the convex optimization, \begin{align}
-    \s{\vx} \defeq \argmin_{\vx \in \R^{|\sV|}} c(\vx).
+\end{align} Observe that $\grad c(\vx) = \mL\vx - \vd \overset{!}{=} 0$ iff $\mL\vx = \vd$. It can also be shown that $c$ is convex, hence, its critical point coincides with its minimizer.\footnote{We will develop tools to show this in the next part. The proof is given in \cref{lem:a1}.} We have therefore recast the problem of finding electrical voltages to the convex optimization, \begin{align}
+    \ex = \argmin_{\vx \in \R^{|\sV|}} c(\vx).
 \end{align}
 
 \section{Energy \& Duality}
 
-Let us now look at the same problem through a different lens. Transporting current through a network of resistors requires energy, which is dissipated as heat by the resistor. By \emph{Joule's law}\index{Joule's law}, sending a current $f$ across a resistor with potential drop $x$, spends $f \cdot x$ units of energy per unit time.\footnote{We will think about everything as if happening in one unit of time.} Using Ohm's law, we have, \begin{align}
-    f \cdot x = \frac{x^2}{r} = r \cdot f^2.
-\end{align} We can therefore write the \emph{electrical energy}\index{energy} dissipated by routing a flow $\vf$ (or equivalently with voltages $\vx$) as, \begin{align}
-    \mathcal{E}(\vf) \defeq \sum_{e \in \sE} \vr(e) \vf(e)^2 = \trans{\vf}\mR\vf = \trans{\vx}\mL\vx \defeq \mathcal{E}(\vx). \margintag{using Ohm's law, $\vf = \mR^{-1}\mB\vx$}
+Let us now look at the same problem through a different lens. Transporting current through a network of resistors requires energy, which is dissipated as heat by the resistor. By \emph{Joule's law}\index{Joule's law}, sending a current $\Tilde{f}$ across a resistor with potential drop $\Tilde{x}$, spends $\Tilde{f} \cdot \Tilde{x}$ units of energy per unit time.\footnote{We will think about everything as if happening in one unit of time.} Using Ohm's law, we have, \begin{align}
+    \Tilde{f} \cdot \Tilde{x} = \frac{\Tilde{x}^2}{r} = r \cdot \Tilde{f}^2.
+\end{align} We can therefore write the \emph{electrical energy}\index{electrical energy} dissipated by routing a current $\ef$ (or equivalently with electrical voltages $\ex$) as, \begin{align}
+    \e(\ef) \defeq \sum_{e \in \sE} \vr(e) \ef(e)^2 = \trans{\ef}\mR\ef = \trans{\ex}\mL\ex \defeq \mathcal{E}(\ex). \margintag{using Ohm's law, $\ef = \mR^{-1}\mB\ex$}
 \end{align}
 
 \begin{rmk}
-Given $\vx \perp \vOne$, we can also write the elctrical energy as \begin{align}
-    \spa{E}(\vx) = \trans{\vx}\mL\vx = \trans{\vd}\vx = \trans{\vd}\pinv{\mL}\vd, \margintag{using $\mL\vx = \vd$ and $\pinv{\mL}\mL\vx = \vx$ as $\vx \perp \ker{\mL}$} \label{eq:electrical_energy_demands}
+Given electrical voltages $\ex \perp \vOne$, we can also write the electrical energy as \begin{align}
+    \e(\ex) = \trans{\ex}\mL\ex = \trans{\vd}\ex = \trans{\vd}\pinv{\mL}\vd \eqdef \e(\vd), \margintag{using $\mL\vx = \vd$ and $\pinv{\mL}\mL\vx = \vx$ as $\vx \perp \ker{\mL}$} \label{eq:electrical_energy_demands}
 \end{align} using the pseudoinverse $\pinv{\mL}$ of $\mL$.
 \end{rmk}
 
-Let us consider the \emph{electrical energy-minimizing flow}\index{electrical energy-minimizing flow}:\footnote{Note that we could instead (and equivalently) characterize the optimization problem using voltages.} \begin{align}
-    \s{\vf} \defeq &\argmin_{\substack{\vf \in \R^{|\sE|} \\ \mB\vf = \vd}} \mathcal{E}(\vf). \label{eq:electrical_energy_minimizing_flow}
-\end{align} It turns out that $\s{\vf}$ is precisely the electrical flow, that is, $\s{\vf}$ satisfies Ohm's law.\footnote{Proof in \cref{lem:a2}.} This indicates that the two above optimization problems are intimately related: both yield the electrical flow (or equivalently, electrical voltages). In fact, it can be shown that $\mathcal{E}(\s{\vf}) = -c(\s{\vx})$, where we think about maximizing $-c(\vx)$ instead of minimizing $c(\vx)$.\footnote{Proof in \cref{lem:a3}.}. More generally, $\mathcal{E}(\vf) \geq -c(\vx)$ for any flow $\vf$ routing $\vd$ and voltages $\vx$.\footnote{Proof in \cref{lem:a4}.} So, for any $\vx$, the value of $-c(\vx)$ is a lower bound on the minimum energy $\mathcal{E}(\s{\vf})$.
+Let us consider the \emph{electrical energy-minimizing flow}\index{electrical energy-minimizing flow}:\footnote{Note that we could instead (and equivalently) characterize the optimization problem using electrical voltages.} \begin{align}
+    \s{\vf} \defeq &\argmin_{\substack{\vf \in \R^{|\sE|} \\ \mB\vf = \vd}} \e(\vf). \label{eq:electrical_energy_minimizing_flow}
+\end{align} It turns out that $\s{\vf}$ is precisely the electrical flow $\ef$, that is, $\s{\vf}$ satisfies Ohm's law.\footnote{Proof in \cref{lem:a2}.} This indicates that the two above optimization problems are intimately related: both yield the electrical flow (or equivalently, electrical voltages). In fact, it can be shown that $\e(\ef) = -c(\ex)$, where we think about maximizing $-c(\vx)$ instead of minimizing $c(\vx)$.\footnote{Proof in \cref{lem:a3}.}. More generally, $\e(\vf) \geq -c(\vx)$ for any flow $\vf$ routing $\vd$ and voltages $\vx$.\footnote{Proof in \cref{lem:a4}.} So, for any voltages $\vx$, the value of $-c(\vx)$ is a lower bound on the minimum electrical energy $\e(\ef)$.
 
 This is an example of a much broader phenomenon known as Lagrangian duality, where we have a minimization problem and a related maximization problem that gives lower bounds on the optimal value of the minimization problem.

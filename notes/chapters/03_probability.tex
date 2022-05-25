@@ -102,8 +102,8 @@ TBD
 \end{defn}
 
 \begin{lem}
-If $\vx$ is a solution to $\mL\vx = \vd - \norm{\vd}_1 \vOne_s$,\footnote{We use $\vOne_s$ as a shorthand notation for $\vOne_{\{s\}}$.} then \begin{align}
-    \vh_s = \vx - \vx(s)\vOne.
+If $\ex$ is a solution to $\mL\ex = \vd - \norm{\vd}_1 \vOne_s$,\footnote{We use $\vOne_s$ as a shorthand notation for $\vOne_{\{s\}}$.} then \begin{align}
+    \vh_s = \ex - \ex(s)\vOne.
 \end{align}
 \end{lem}
 \begin{proof}
@@ -115,7 +115,7 @@ For any $a \neq s$, we can equivalently write \cref{eq:expected_hitting_time} as
     \vd - \alpha \vd(s) \vOne_s = (\mD - \mA)\vh_s = \mL\vh_s.
 \end{align*} Recall that $\ker{\mL} = \vspan\{\vOne\}$, and hence, for $\vh$ to exist, we must choose $\alpha$ such that $\vd - \alpha \vd(s) \vOne_s \perp \vOne$. We have, \begin{align*}
     \trans{\vOne}(\vd - \alpha \vd(s) \vOne_s) = \norm{\vd}_1 - \alpha \vd(s) \overset{!}{=} 0 \iff \alpha = \frac{\norm{\vd}_1}{\vd(s)}.
-\end{align*} Finally, note that the solution $\vx$ to $\mL\vx = \vd - \norm{\vd}_1 \vOne_s$ is not unique. Given that $\vh_s$ is one solution, we have that any $\vx = \vh_s + c\vOne$ for $c \in \R$ is also a solution.\footnote{This follows directly from the fact that $\ker{\mL} = \vspan\{\vOne\}$.} Yet, we know that $\vh_s(s) = 0$, implying that $\vh_s = \vx - \vx(s)\vOne$.
+\end{align*} Finally, note that the solution $\ex$ to $\mL\ex = \vd - \norm{\vd}_1 \vOne_s$ is not unique. Given that $\vh_s$ is one solution, we have that any $\ex = \vh_s + c\vOne$ for $c \in \R$ is also a solution.\footnote{This follows directly from the fact that $\ker{\mL} = \vspan\{\vOne\}$.} Yet, we know that $\vh_s(s) = 0$, implying that $\vh_s = \ex - \ex(s)\vOne$.
 \end{proof}
 
 \subsection{Commute Time}
@@ -136,16 +136,16 @@ By definition, commute times are symmetric.
 \end{rmk}
 
 \begin{lem}
-If $\vx$ is a solution to $\mL\vx = \norm{\vd}_1 (\vOne_a - \vOne_b)$, then \begin{align}
-    \E{C_{a,b}} = \trans{(\vOne_a - \vOne_b)}\vx = \vx(a) - \vx(b).
+If $\ex$ is a solution to $\mL\ex = \norm{\vd}_1 (\vOne_a - \vOne_b)$, then \begin{align}
+    \E{C_{a,b}} = \trans{(\vOne_a - \vOne_b)}\ex = \ex(a) - \ex(b).
 \end{align}
-\end{lem} The $\vx$ can be interpreted as electrical voltages inducing flow that routes $\norm{\vd}_1$ units from $a$ to $b$.
+\end{lem} The $\ex$ can be interpreted as electrical voltages inducing flow that routes $\norm{\vd}_1$ units from $a$ to $b$.
 \begin{proof}
-We write $\vb_v \defeq \vd - \norm{\vd}_1 \vOne_v$ and let $\mL\vy = \vb_b$ and $\mL\vz = \vb_a$. Then, \begin{align*}
+We write $\vb_v \defeq \vd - \norm{\vd}_1 \vOne_v$ and let $\mL\ey = \vb_b$ and $\mL\ez = \vb_a$. Then, \begin{align*}
     \E{C_{a,b}} &= \vh_b(a) + \vh_a(b) \\
-    &= \vy(a) - \vy(b) + \vz(b) - \vz(a) \\
-    &= \trans{(\vOne_a - \vOne_b)}(\vy - \vz).
-\end{align*} Observe that $\vx \defeq \vy - \vz$ solves $\mL\vx = \vb_b - \vb_a = \norm{\vd}_1 (\vOne_a - \vOne_b)$.
+    &= \ey(a) - \ey(b) + \ez(b) - \ez(a) \\
+    &= \trans{(\vOne_a - \vOne_b)}(\ey - \ez).
+\end{align*} Observe that $\ex \defeq \ey - \ez$ solves $\mL\ex = \vb_b - \vb_a = \norm{\vd}_1 (\vOne_a - \vOne_b)$.
 \end{proof}
 
 We will see in \cref{cha:effective_resistance} that the expected commute time is intimately related to the electrical energy required to route flow from $a$ to $b$, also called the effective resistance between $a$ and $b$.

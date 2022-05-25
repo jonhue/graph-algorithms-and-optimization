@@ -14,8 +14,8 @@ Per definition of electrical energy, routing $F$ units of flow from $a$ to $b$ c
 \begin{lem}
 $\Reff(a,b) = \norm{\mL^{\nicefrac{+}{2}}(\vOne_b - \vOne_a)}_2^2$.
 \end{lem}
-\begin{proof} As the electrical flow $\vf$ is energy-minimizing, we have that $\Reff(a,b) = \trans{\vf}\mR\vf$. Recall that by Ohm's law this flow corresponds to voltages $\vx$ solving $\mL\vx = \vOne_b - \vOne_a$, that is, $\vx = \pinv{\mL}(\vOne_b - \vOne_a)$. We obtain, \begin{align*}
-    \Reff(a,b) = \trans{\vf}\mR\vf = \trans{\vx}\mL\vx &= \trans{(\vOne_b - \vOne_a)}\pinv{\mL}\mL\pinv{\mL}(\vOne_b - \vOne_a) \\
+\begin{proof} As the electrical flow $\ef$ is energy-minimizing, we have that $\Reff(a,b) = \trans{\ef}\mR\ef$. Recall that by Ohm's law this flow corresponds to voltages $\ex$ solving $\mL\ex = \vOne_b - \vOne_a$, that is, $\ex = \pinv{\mL}(\vOne_b - \vOne_a)$. We obtain, \begin{align*}
+    \Reff(a,b) = \trans{\ef}\mR\ef = \trans{\ex}\mL\ex &= \trans{(\vOne_b - \vOne_a)}\pinv{\mL}\mL\pinv{\mL}(\vOne_b - \vOne_a) \\
     &= \trans{(\vOne_b - \vOne_a)}\pinv{\mL}(\vOne_b - \vOne_a) \margintag{using that $\vOne_b - \vOne_a \perp \vOne$} \\
     &= \norm{\mL^{\nicefrac{+}{2}}(\vOne_b - \vOne_a)}_2^2. \qedhere
 \end{align*}
@@ -24,8 +24,8 @@ $\Reff(a,b) = \norm{\mL^{\nicefrac{+}{2}}(\vOne_b - \vOne_a)}_2^2$.
 \begin{lem}
 $\E{C_{a,b}} = \norm{\vd}_1 \Reff(a,b)$.
 \end{lem}
-\begin{proof} Recall that $\E{C_{a,b}} = \trans{(\vOne_a - \vOne_b)}\vx$ for a solution $\vx$ to $\mL\vx = \norm{\vd}_1 (\vOne_a - \vOne_b)$, that is, $\vx = \norm{\vd}_1\pinv{\mL}(\vOne_a - \vOne_b)$. Now, observe that, \begin{align*}
-    \Reff(b,a) = \trans{(\vOne_a - \vOne_b)}\pinv{\mL}(\vOne_a - \vOne_b) = \frac{1}{\norm{\vd}_1}\trans{(\vOne_a - \vOne_b)}\vx.
+\begin{proof} Recall that $\E{C_{a,b}} = \trans{(\vOne_a - \vOne_b)}\ex$ for a solution $\ex$ to $\mL\ex = \norm{\vd}_1 (\vOne_a - \vOne_b)$, that is, $\ex = \norm{\vd}_1\pinv{\mL}(\vOne_a - \vOne_b)$. Now, observe that, \begin{align*}
+    \Reff(b,a) = \trans{(\vOne_a - \vOne_b)}\pinv{\mL}(\vOne_a - \vOne_b) = \frac{1}{\norm{\vd}_1}\trans{(\vOne_a - \vOne_b)}\ex.
 \end{align*} Thus, $\E{C_{a,b}} = \norm{\vd}_1 \Reff(b,a)$. Using symmetry of the commute time, $\E{C_{a,b}} = \E{C_{b,a}} = \norm{\vd}_1 \Reff(a,b)$.
 \end{proof}
 
@@ -55,24 +55,24 @@ TBD
 For the graph of \cref{fig:parallel_resistors}, $\Reff(1,2) = \frac{1}{\sum_{i=1}^k \nicefrac{1}{\vr(i)}}$.
 \end{lem}
 \begin{proof}[Proof sketch] For the flow to be $1$, by Ohm's law, we must have, \begin{align*}
-    1 = \sum_{i=1}^k \frac{\Delta}{\vr(i)},
-\end{align*} where $\Delta$ is the voltage difference between vertices $1$ and $2$. Note that $\Reff(1,2) = \Delta$.
+    1 = \sum_{i=1}^k \frac{\ex(\{1,2\})}{\vr(i)},
+\end{align*} where $\ex(\{1,2\})$ is the voltage difference between vertices $1$ and $2$. Note that $\Reff(1,2) = \ex(\{1,2\})$.
 \end{proof}
 
 \section{Effective Resistance as a Metric}
 
 Before showing that effective resistance is a metric on the set of vertices, we consider the following lemma. We will write, \begin{align}
-    \vx_{a,b} \defeq \pinv{\mL}(\vOne_b - \vOne_a),
+    \ex_{a,b} \defeq \pinv{\mL}(\vOne_b - \vOne_a),
 \end{align} for the electrical voltages required to route one unit of current from $a$ to $b$.
 
 \begin{lem}\label{lem:voltages_are_weighted_average}
-If $\vx_{a,b}$ is a solution to $\mL\vx_{a,b} = \vOne_b - \vOne_a$, then we have for all $c \in \sV$ that $\vx_{a,b}(b) \geq \vx_{a,b}(c) \geq \vx_{a,b}(a)$.
+If $\ex_{a,b}$ is a solution to $\mL\ex_{a,b} = \vOne_b - \vOne_a$, then we have for all $c \in \sV$ that $\ex_{a,b}(b) \geq \ex_{a,b}(c) \geq \ex_{a,b}(a)$.
 \end{lem}
-\begin{proof}[Proof sketch] Consider any $c \in \sV \setminus \{a,b\}$. Then, $(\mL\vx_{a,b})(c) = 0$. Thus, \begin{align*}
-    \parentheses*{\sum_{v \sim c} \vw(\{v,c\})} \vx_{a,b}(c) - \parentheses*{\sum_{v \sim c} \vw(\{v,c\}) \vx_{a,b}(v)} = 0.
+\begin{proof}[Proof sketch] Consider any $c \in \sV \setminus \{a,b\}$. Then, $(\mL\ex_{a,b})(c) = 0$. Thus, \begin{align*}
+    \parentheses*{\sum_{v \sim c} \vw(\{v,c\})} \ex_{a,b}(c) - \parentheses*{\sum_{v \sim c} \vw(\{v,c\}) \ex_{a,b}(v)} = 0.
 \end{align*} So, we have, \begin{align*}
-    \vx_{a,b}(c) = \frac{\sum_{v \sim c} \vw(\{v,c\}) \vx_{a,b}(v)}{\sum_{v \sim c} \vw(\{v,c\})}.
-\end{align*} In words, the voltage of $c$ is a weighted average of the voltages of its neighbors. It follows that the voltages of $a$ and $b$ take the largest absolute values.
+    \ex_{a,b}(c) = \frac{\sum_{v \sim c} \vw(\{v,c\}) \ex_{a,b}(v)}{\sum_{v \sim c} \vw(\{v,c\})}.
+\end{align*} In words, the electrical voltage of $c$ is a weighted average of the voltages of its neighbors. It follows that the voltages of $a$ and $b$ take the largest absolute values.
 \end{proof}
 
 \begin{defn}[Metric] A \emph{metric}\index{metric} on a set $\sS$ is a function $d : \sS \times \sS \to \R$ such that for any $a, b, c \in \sS$, \begin{enumerate}
@@ -88,12 +88,12 @@ Effective resistance is a metric on $\sV$.
 \begin{proof} It is easy to check that properties (1) and (2) are satisfied. We have that property (3) is satisfied by \cref{cor:effective_resistance_symmetric}.
 
 Let us therefore consider property (4), the triangle inequality. We have, \begin{align*}
-    \vx_{a,b} = \pinv{\mL}(\vOne_b - \vOne_a) = \pinv{\mL}(\vOne_c - \vOne_a + \vOne_b - \vOne_c) = \vx_{a,c} + \vx_{c,b},
+    \ex_{a,b} = \pinv{\mL}(\vOne_b - \vOne_a) = \pinv{\mL}(\vOne_c - \vOne_a + \vOne_b - \vOne_c) = \ex_{a,c} + \ex_{c,b},
 \end{align*} This we can use to rephrase the effective resistance, \begin{align*}
-    \Reff(a,b) = \trans{(\vOne_b - \vOne_a)}\vx_{a,b} &= \trans{(\vOne_b - \vOne_a)}(\vx_{a,c} + \vx_{c,b}) \\
-    &= \vx_{a,c}(b) - \vx_{a,c}(a) + \vx_{c,b}(b) - \vx_{c,b}(a) \\
-    &\leq \vx_{a,c}(c) - \vx_{a,c}(a) + \vx_{c,b}(b) - \vx_{c,b}(c) \margintag{using \cref{lem:voltages_are_weighted_average}} \\
-    &= \trans{(\vOne_c - \vOne_a)}\vx_{a,c} + \trans{(\vOne_b - \vOne_c)}\vx_{c,b} \\
+    \Reff(a,b) = \trans{(\vOne_b - \vOne_a)}\ex_{a,b} &= \trans{(\vOne_b - \vOne_a)}(\ex_{a,c} + \ex_{c,b}) \\
+    &= \ex_{a,c}(b) - \ex_{a,c}(a) + \ex_{c,b}(b) - \ex_{c,b}(a) \\
+    &\leq \ex_{a,c}(c) - \ex_{a,c}(a) + \ex_{c,b}(b) - \ex_{c,b}(c) \margintag{using \cref{lem:voltages_are_weighted_average}} \\
+    &= \trans{(\vOne_c - \vOne_a)}\ex_{a,c} + \trans{(\vOne_b - \vOne_c)}\ex_{c,b} \\
     &= \Reff(a,c) + \Reff(c,b). \qedhere
 \end{align*}
 \end{proof}

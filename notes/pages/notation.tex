@@ -132,8 +132,13 @@ We follow these general rules: \begin{itemize}[noitemsep]
 \vspace{0.5cm}\section*{\smallcaps{Flows}}\vspace{-0.5cm}
 \begin{longtable}{p{2.5cm}l}
    $\vx \in \R^{|\sV|}$ & voltages \\
+   $\vx(e)$ & voltage difference of edge $e = \{u,v\}$, $\vx(u) - \vx(v)$ \\
    $\vf \in \R^{|\sE|}$ & flow \\
    $\vd \in \R^{|\sV|}$ & demands, modeling the net flow \\
-   $\mathcal{E}(\vf), \mathcal{E}(\vx), \mathcal{E}(\vd)$ & electrical energy, $\trans{\vf}\trans{\mB}\vx = \trans{\vf}\mR\vf = \trans{\vx}\mL\vx = \trans{\vd}\vx = \trans{\vd}\pinv{\mL}\vd$ \\
+   \addlinespace
+   $\ex \in \R^{|\sV|}$ & electrical voltages \\
+   $\ex_{a,b} \in \R^{|\sV|}$ & electrical voltages routing demands $\vOne_b - \vOne_a$ \\
+   $\ef \in \R^{|\sE|}$ & electrical flow \\
+   $\e(\ef), \e(\ex), \e(\vd)$ & electrical energy, $\trans{\ef}\trans{\mB}\ex = \trans{\ef}\mR\ef = \trans{\ex}\mL\ex = \trans{\vd}\vx = \trans{\vd}\pinv{\mL}\vd$ \\
 \end{longtable}
 \end{fullwidth}
