@@ -78,9 +78,12 @@ A concept related to conductance is the notion of \emph{sparsity}.
 \begin{defn}[Sparsity] The \emph{sparsity}\index{sparsity} of a cut $(\sS, \sV \setminus \sS)$ where $\emptyset \subset \sS \subset \sV$ is, \begin{align}
     \sigma(\sS) \defeq \frac{c(\sS)}{\min\{|\sS|, |\sV \setminus \sS|\}} = \sigma(\sV \setminus \sS) \in [0, \max_{v \in \sV} \vd(v)].
 \end{align} The sparsity of a graph is again defined as the smallest sparsity of all cuts.
-\end{defn} If $|\sS| \leq |\sV \setminus \sS|$, then we can write \begin{align}
+\end{defn}
+\begin{rmk}
+If $|\sS| \leq |\sV \setminus \sS|$, then we can write \begin{align}
     \sigma(\sS) = \frac{\trans{\vOne_\sS}\mL\vOne_\sS}{\trans{\vOne_\sS}\vOne_\sS}.
 \end{align}
+\end{rmk}
 
 An alternative version of Cheeger's inequality relates the second eigenvalue of $\mL$ (not $\mN$!) to the sparsity of the graph.
 
