@@ -72,7 +72,7 @@ When $\nu_1, \dots, \nu_n$ are the eigenvalues and $\vpsi_1, \dots, \vpsi_n$ the
     &= \mI + \mD^{\nicefrac{1}{2}}\underbrace{(\mD^{-\nicefrac{1}{2}}\mA\mD^{-\nicefrac{1}{2}} - \mI)}_{-\mN}\mD^{-\nicefrac{1}{2}} \nonumber\\
     &= \mI - \mD^{\nicefrac{1}{2}}\mN\mD^{-\nicefrac{1}{2}} \\
     &= \mD^{\nicefrac{1}{2}}(\mI - \mN)\mD^{-\nicefrac{1}{2}}. \nonumber
-\end{align} By \cref{lem:a7}, $\mD^{\nicefrac{1}{2}}(\mI - \mN)\mD^{-\nicefrac{1}{2}}$ and $\mI - \mN$ have the same eigenvalues, namely $1 - \nu_i$. We also have, \begin{align}
+\end{align} By \cref{clm:eigenvalues_of_matrix_product}, $\mD^{\nicefrac{1}{2}}(\mI - \mN)\mD^{-\nicefrac{1}{2}}$ and $\mI - \mN$ have the same eigenvalues, namely $1 - \nu_i$. We also have, \begin{align}
     \Tilde{\mW} = \frac{1}{2}\mI + \frac{1}{2}(\mI - \mD^{\nicefrac{1}{2}}\mN\mD^{-\nicefrac{1}{2}}) = \mI - \frac{1}{2}\mD^{\nicefrac{1}{2}}\mN\mD^{-\nicefrac{1}{2}},
 \end{align} implying that the eigenvalues of $\Tilde{\mW}$ are $1 - \nicefrac{\nu_i}{2}$. Finally, we have, \begin{align*}
     \Tilde{\mW}\mD^{\nicefrac{1}{2}}\vpsi_i &= (\mI - \frac{1}{2}\mD^{\nicefrac{1}{2}}\mN\mD^{-\nicefrac{1}{2}})\mD^{\nicefrac{1}{2}}\vpsi_i \\
@@ -165,9 +165,9 @@ For any random variable $X \geq 0$ and $t > 0$, \begin{align}
 \end{align*} where $f$ is the probability density function of $X$.
 \end{proof}
 
-\begin{thm}[Jensen's inequality]\index{Jensen's inequality}
-For a random variable $X$, if $f$ is convex, then $\E{f(X)} \geq f(\E{X})$.\footnote{Proof of the finite form in \cref{thm:a8}.}
-\end{thm}
+\begin{fct}[Jensen's inequality]\index{Jensen's inequality}
+For a random variable $X$, if $f$ is convex, then $\E{f(X)} \geq f(\E{X})$.\footnote{We prove the finite form in \cref{thm:jensens_inequality_finite_form}.}
+\end{fct}
 \begin{marginfigure}
 TBD
 % \centering\includegraphics[width=4cm]{notes/figures/convex_set.png}
@@ -178,6 +178,13 @@ TBD
     \Pr{|X| \geq t} \leq 2 \exp\parentheses*{\frac{-t^2}{2Rt + 4\sigma^2}}.
 \end{align}
 \end{thm}
+\begin{proof}
+TBD
+\end{proof}
+
+\begin{cor}[Chernoff bound]\index{Chernoff bound}
+TBD
+\end{cor}
 \begin{proof}
 TBD
 \end{proof}
@@ -212,3 +219,5 @@ We can alternatively think of a martingale as the sequence of changes in $\{Z_i\
 \end{thm}\noindent By a simple union bound, \begin{align}
     \Pr{\abs{\sum_{i=1}^k X_i} \geq k} \leq \Pr{\abs{\sum_{i=1}^k X_i} \geq k \text{ and } W_k \leq \sigma^2} + \Pr{W_k > \sigma^2}.
 \end{align}
+\begin{proof} TBD
+\end{proof}

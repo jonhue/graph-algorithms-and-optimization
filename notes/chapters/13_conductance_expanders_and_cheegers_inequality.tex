@@ -37,13 +37,13 @@ If $\vol(\sS) \leq \vol(\sV \setminus \sS)$, then we can write \begin{align}
 
 Let us consider a few examples.
 
-\begin{lem}
-$\phi(K_n) = \frac{n}{2(n-1)}$. So $K_n$ is a $\frac{1}{2}$-expander.\footnote{Proof in \cref{lem:c5}.}
-\end{lem}
+\begin{exc}\label{exc:expander_complete_graph}
+$\phi(K_n) = \frac{n}{2(n-1)}$. So $K_n$ is a $\frac{1}{2}$-expander.
+\end{exc}
 
-\begin{lem}
-$\phi(P_n) = \frac{1}{n-1}$. So $P_n$ is a $\frac{1}{n}$-expander.\footnote{Proof in \cref{lem:c6}.}
-\end{lem}
+\begin{exc}\label{exc:expander_path_graph}
+$\phi(P_n) = \frac{1}{n-1}$. So $P_n$ is a $\frac{1}{n}$-expander.
+\end{exc}
 
 \begin{lem}
 If $G$ is a connected $\phi$-expander with unit weights, then we have for the diameter $D$ of $G$, \begin{align}
@@ -71,15 +71,21 @@ Finally, follow the same argument from $t$. As both balls contain more than $\ni
 \end{defn}
 
 \begin{thm}
-There is a procedure \textsc{CertifyOrCut($G$)} that either \begin{itemize}
+There is a procedure \textsc{CertifyOrCut($G, \phi$)} that either \begin{itemize}
     \item certifies that $G$ is a $\phi$-expander; or
     \item presents a cut $\sS$ such that $\phi(S) \leq \sqrt{2\phi}$.\footnote{Finding the best cut (i.e., a cut with conductance $\phi$) is NP-hard.}
 \end{itemize}
 \end{thm}
+\begin{proof}
+TBD
+\end{proof}
 
 \begin{thm}
 There is an algorithm that computes a $\phi$-expander decomposition of quality $q = \LandauO{\phi^{-\nicefrac{1}{2}} \log n}$ in time $\LandauO{m \log^c n}$ for some constant $c$.
 \end{thm}
+\begin{proof}
+TBD
+\end{proof}
 
 \section{Cheeger's Inequality}
 
@@ -115,7 +121,7 @@ As the graph is connected and has unit weights, $\vol(\sS) = \sum_{v \in \sS} \v
 
 An alternative version of Cheeger's inequality relates the second eigenvalue of $\mL$ (not $\mN$!) to the sparsity of the graph.
 
-\begin{thm} We have for a graph $G$ and its Laplacian matrix $\mL$, \begin{align}
+\begin{fct}[Cheeger's inequality for sparsity] We have for a graph $G$ and its Laplacian matrix $\mL$, \begin{align}
     \frac{\lambda_2(\mL)}{2} \leq \sigma(G) \leq \sqrt{2 \lambda_2(\mL) \max_{v \in \sV} \vd(v)}.
 \end{align}
-\end{thm}
+\end{fct}

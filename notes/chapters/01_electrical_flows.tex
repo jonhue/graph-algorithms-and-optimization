@@ -146,7 +146,13 @@ We have seen that finding electrical voltages $\elx$ or the electrical flow $\ef
 
 In \cref{eq:ohms_law_and_net_flow_constraint}, we saw that electrical voltages satisfy $\mL\elx = \vd$, obeying by Ohm's law and satisfying the net flow constraint. A standard approach to reframe the solution to such a system of linear equations as the result of an optimization problem, is to consider the cost function, \begin{align}
     c(\vx) \defeq \frac{1}{2}\trans{\vx}\mL\vx - \trans{\vx}\vd.
-\end{align} Observe that $\grad c(\vx) = \mL\vx - \vd \overset{!}{=} 0$ iff $\mL\vx = \vd$. It can also be shown that $c$ is convex, hence, its critical point coincides with its minimizer.\footnote{We will develop tools to show this in the next part. The proof is given in \cref{lem:a1}.} We have therefore recast the problem of finding electrical voltages to the convex optimization, \begin{align}
+\end{align} Observe that $\grad c(\vx) = \mL\vx - \vd \overset{!}{=} 0$ iff $\mL\vx = \vd$.
+
+\begin{clm}\label{clm:electrical_flow_optimization_convex}
+$c$ is convex, hence, its critical point coincides with its minimizer.\footnote{We will develop tools to show this in the next part.}
+\end{clm}
+
+We have therefore recast the problem of finding electrical voltages to the convex optimization, \begin{align}
     \elx = \argmin_{\vx \in \R^{|\sV|}} c(\vx).
 \end{align}
 
@@ -166,6 +172,16 @@ Given electrical voltages $\elx \perp \vOne$, we can also write the electrical e
 
 Let us consider the \emph{electrical energy-minimizing flow}\index{electrical energy-minimizing flow}:\footnote{Note that we could instead (and equivalently) characterize the optimization problem using electrical voltages.} \begin{align}
     \s{\vf} \defeq &\argmin_{\substack{\vf \in \R^{|\sE|} \\ \mB\vf = \vd}} \e(\vf). \label{eq:electrical_energy_minimizing_flow}
-\end{align} It turns out that $\s{\vf}$ is precisely the electrical flow $\ef$, that is, $\s{\vf}$ satisfies Ohm's law.\footnote{Proof in \cref{lem:a2}.} This indicates that the two above optimization problems are intimately related: both yield the electrical flow (or equivalently, electrical voltages). In fact, it can be shown that $\e(\ef) = -c(\elx)$, where we think about maximizing $-c(\vx)$ instead of minimizing $c(\vx)$.\footnote{Proof in \cref{lem:a3}.}. More generally, $\e(\vf) \geq -c(\vx)$ for any flow $\vf$ routing $\vd$ and voltages $\vx$.\footnote{Proof in \cref{lem:a4}.} So, for any voltages $\vx$, the value of $-c(\vx)$ is a lower bound on the minimum electrical energy $\e(\ef)$.
+\end{align}
+
+\begin{exc}\label{exc:electrical_flow_energy_minimizing}
+$\s{\vf}$ is precisely the electrical flow $\ef$, that is, $\s{\vf}$ satisfies Ohm's law.
+\end{exc}
+
+This indicates that the two above optimization problems are intimately related: both yield the electrical flow (or equivalently, electrical voltages). In fact, it can be shown that, \begin{exc}\label{exc:electrical_energy_strong_duality}
+$\e(\ef) = -c(\elx)$,
+\end{exc}\noindent where we think about maximizing $-c(\elx)$ instead of minimizing $c(\elx)$. More generally, \begin{exc}\label{exc:electrical_energy_weak_duality}
+$\e(\vf) \geq -c(\vx)$ for any flow $\vf$ routing $\vd$ and any voltages $\vx$.
+\end{exc}\noindent So, for any voltages $\vx$, the value of $-c(\vx)$ is a lower bound on the minimum electrical energy $\e(\ef)$.
 
 This is an example of a much broader phenomenon known as Lagrangian duality, where we have a minimization problem and a related maximization problem that gives lower bounds on the optimal value of the minimization problem.

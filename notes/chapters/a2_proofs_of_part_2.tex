@@ -5,29 +5,22 @@
 
 \section{Convex Geometry}
 
-\begin{thm}[Extreme value theorem]\label{thm:b1}
-Let $f : \R^n \to \R$ be continuous, and let $\spa{F} \subseteq \R^n$ be non-empty, bounded, and closed. Then, $f$ is bounded on $\spa{F}$ and has an optimal solution.
-\end{thm} In our proof, we will use the following two theorems.
-\begin{thm}[Bolzano-Weierstrass theorem]\index{Bolzano-Weierstrass theorem} Every bounded sequence in $\R^n$ has a convergent subsequence.
-\end{thm}
-\begin{thm}[Boundedness theorem]\index{Boundedness theorem}
+\begin{proof}[Proof of \cref{thm:extreme_value_theorem}] In our proof, we will use the following two theorems.
+\begin{fct}[Bolzano-Weierstrass theorem]\index{Bolzano-Weierstrass theorem} Every bounded sequence in $\R^n$ has a convergent subsequence.
+\end{fct}
+\begin{fct}[Boundedness theorem]\index{Boundedness theorem}
 Let $f : \R^n \to \R$ be a continuous function and $\spa{F} \subseteq \R^n$ be non-empty, bounded, and closed. Then $f$ is bounded on $\spa{F}$.
-\end{thm}
-\begin{proof}[Proof of \cref{thm:b1}] Let $\alpha$ be the infimum of $f$ over $\spa{F}$, i.e., the largest value for which any $\vx \in \spa{F}$ satisfies $f(\vx) \geq \alpha$. By the boundedness theorem, the infumum exists, as $f$ is lower bounded and the set of lower bounds has a greatest lower bound, $\alpha$.
+\end{fct}
+
+Let $\alpha$ be the infimum of $f$ over $\spa{F}$, i.e., the largest value for which any $\vx \in \spa{F}$ satisfies $f(\vx) \geq \alpha$. By the boundedness theorem, the infumum exists, as $f$ is lower bounded and the set of lower bounds has a greatest lower bound, $\alpha$.
 
 Let $\spa{F}_k \defeq \{\vx \in \spa{F} \mid \alpha \leq f(\vx) \leq \alpha + 2^{-k}\}$. $\spa{F}_k$ cannot be empty, since if it were, then $\alpha + 2^{-k}$ would be a strictly greater lower bound on $f$ than $\alpha$. For each $k$, let $\vx_k$ be some $\vx \in \spa{F}_k$. $\{\vx_k\}_{k=1}^\infty$ is a bounded sequence as $\spa{F}_k \subseteq \spa{F}$, so by the Bolzano-Weierstrass theorem, there exists a convergent subsequence, $\{\vy_k\}_{k=1}^\infty$, with limit $\Bar{\vy}$. Because the set is closed, $\Bar{\vy} \in \spa{F}$. By continuity, $f(\Bar{\vy}) = \lim_{k\to\infty} f(\vy_k)$, and by construction, $\lim_{k\to\infty} f(\vy_k) = \alpha$.
 
 Thus, the optimal solution is $\Bar{\vy}$.
 \end{proof}
 
-\begin{lem}\label{lem:b1}
-The function $f : \sS \to \R$ is convex iff $\mathrm{epi}(f)$ is convex.
-\end{lem}
-\begin{proof} TBD
+\begin{proof}[Solution to \cref{exc:convex_iff_epi_convex}] TBD
 \end{proof}
 
-\begin{lem}\label{lem:b2}
-Any $\alpha$-sub-level set of a convex function is convex.
-\end{lem}
-\begin{proof} TBD
+\begin{proof}[Solution to \cref{exc:sub_level_set_of_convex_function_convex}] TBD
 \end{proof}

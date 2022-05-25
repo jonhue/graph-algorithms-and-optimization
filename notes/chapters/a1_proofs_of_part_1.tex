@@ -1,20 +1,14 @@
 % !TeX root = ../main.tex
 % Add the above to each chapter to make compiling the PDF easier in some editors.
 
-\chapter{Proofs of \Cref{part1}}
+\chapter{Solutions of \Cref{part1}}
 
 \section{Electrical Flows}
 
-\begin{lem}\label{lem:a1}
-$c(\vx) \defeq \frac{1}{2}\trans{\vx}\mL\vx - \trans{\vx}\vd$ is convex.
-\end{lem}
-\begin{proof} We have that $\mH_c(\vx) = \mL(\vx) \succeq \mZero$.
+\begin{proof}[Proof of \cref{clm:electrical_flow_optimization_convex}] We have that $\mH_c(\vx) = \mL(\vx) \succeq \mZero$.
 \end{proof}
 
-\begin{lem}\label{lem:a2}
-The electrical energy-minimizing flow $\s{\vf}$ from \cref{eq:electrical_energy_minimizing_flow} is the electrical flow, i.e., satisfies Ohm's law.
-\end{lem}
-\begin{proof} Consider any $\vf \in \R^{|\sE|}$ satisfying $\mB\vf = \vd$. We have for any $\vx \in \R^{|\sV|}$, \begin{align*}
+\begin{proof}[Solution to \cref{exc:electrical_flow_energy_minimizing}] Consider any $\vf \in \R^{|\sE|}$ satisfying $\mB\vf = \vd$. We have for any $\vx \in \R^{|\sV|}$, \begin{align*}
     \frac{1}{2}\trans{\vf}\mR\vf &= \frac{1}{2}\trans{\vf}\mR\vf - \trans{\vx}\underbrace{(\mB\vf - \vd)}_{0} \\
     &\geq \min_{\vf' \in \R^{|\sE|}} \underbrace{\frac{1}{2}\trans{\vf'}\mR\vf' - \trans{\vx}(\mB\vf' - \vd)}_{\eqdef g(\vf')}.
 \end{align*} Note that $g$ is convex. Taking the gradient gives, \begin{align*}
@@ -26,24 +20,15 @@ The electrical energy-minimizing flow $\s{\vf}$ from \cref{eq:electrical_energy_
 \end{align*} Hence, $\Tilde{\vf}$ is the minimum electrical energy flow among all flows routing $\vd$.
 \end{proof}
 
-\begin{lem}\label{lem:a3}
-For the electrical flow $\s{\vf}$ and electrical voltages $\s{\vx}$,\par\noindent $\mathcal{E}(\s{\vf}) = -c(\s{\vx})$.
-\end{lem}
-\begin{proof} TBD
+\begin{proof}[Solution to \cref{exc:electrical_energy_strong_duality}] TBD
 \end{proof}
 
-\begin{lem}\label{lem:a4}
-For any flow $\vf$ routing $\vd$ and voltages $\vx$, $\mathcal{E}(\vf) \geq -c(\vx)$.
-\end{lem}
-\begin{proof} TBD
+\begin{proof}[Solution to \cref{exc:electrical_energy_weak_duality}] TBD
 \end{proof}
 
 \section{Linear Algebra}
 
-\begin{thm}\label{thm:a5}
-If a square matrix $\mA \in \R^{n \times n}$ is symmetric, then $\mA$ has $n$ real eigenvalues $\lambda_1, \dots, \lambda_n$ and eigenvectors $\vv_1, \dots, \vv_n \in \R^n$ such that $\mA\vv_i = \lambda_i\vv_i$ and the $\vv_i$ are orthogonal.
-\end{thm}
-\begin{proof} Because the characteristic polynomial of $\mA$ is of degree $n$, it has $n$ complex roots, which are the eigenvalues $\lambda_1, \dots, \lambda_n$ of $\mA$. We will first prove that the $\lambda_i$ are real. Then, we will prove that the corresponding eigenvectors $\vv_i$ are orthogonal.
+\begin{proof}[Proof of \cref{clm:eigenvalues_eigenvectors_of_matrix}] Because the characteristic polynomial of $\mA$ is of degree $n$, it has $n$ complex roots, which are the eigenvalues $\lambda_1, \dots, \lambda_n$ of $\mA$. We will first prove that the $\lambda_i$ are real. Then, we will prove that the corresponding eigenvectors $\vv_i$ are orthogonal.
 
 \begin{enumerate}
     \item Let $\lambda$ be any eigenvalue of $\mA$. We denote by $\Bar{\lambda}$ the complex conjugate of $\lambda$. Clearly, if $\lambda = \Bar{\lambda}$, then $\lambda \in \R$. By the definition of the eigenvalue $\lambda$ with associated eigenvector $\vv$, we have, \begin{align*}
@@ -58,32 +43,24 @@ If a square matrix $\mA \in \R^{n \times n}$ is symmetric, then $\mA$ has $n$ re
 \end{enumerate}
 \end{proof}
 
-\begin{lem}\label{lem:a6}
-Consider a real symmetric matrix $\mA = \mX\mY\trans{\mX}$, where $\mX$ is real and invertible and $\mY$ is real and symmetric. Let $\mPi_\mA$ denote the orthogonal projection to the image of $\mA$. Then, $\pinv{\mA} = \mPi_\mA\inv{(\trans{\mX})}\pinv{\mY}\inv{\mX}\mPi_\mA$.
-\end{lem}
-\begin{proof} TBD
-\end{proof}
-
-\begin{lem}\label{lem:a7} For any matrix $\mM$ and invertible matrix $\mT$, $\mM$ and $\mT\mM\inv{\mT}$ have the same eigenvalues.
-\end{lem}
-\begin{proof}
+\begin{proof}[Proof of \cref{clm:eigenvalues_of_matrix_product}]
 Suppose $\lambda$ is an eigenvalue of $\mM$ with associated eigenvector $\vv$. Also suppose that $\mT\vv = \vw$. Then, \begin{align*}
     \mT\mM\inv{\mT}\vw = \mT\mM\vv = \lambda\mT\vv = \vw.
 \end{align*} It is easy to check that the other direction holds too.
 \end{proof}
 
-\begin{lem}\label{lem:a8}
-For $\mA \in \sS^n$ with spectral decomposition $\mA = \mV\mLambda\trans{\mV} = \sum_i \lambda_i \vv_i \trans{\vv_i}$ where $\mV$ is orthonormal, we have, \begin{align}
-    \mPi_\mA = \sum_{\substack{i \\ \lambda_i \neq 0}} \vv_i \trans{\vv_i} = \mA^{\nicefrac{+}{2}}\mA\mA^{\nicefrac{+}{2}} = \mA\pinv{\mA} = \pinv{\mA}\mA.
-\end{align}
-\end{lem}
-\begin{proof}
-TBD
+\begin{proof}[Proof of \cref{clm:matrix_function_facts}] TBD
+\end{proof}
+
+\begin{proof}[Proof of \cref{clm:orthogonal_projection}] TBD
+\end{proof}
+
+\begin{proof}[Proof of \cref{clm:pinv_calculation}] TBD
 \end{proof}
 
 \section{Probability}
 
-\begin{thm}[Jensen's inequality, finite form]\label{thm:a8}
+\begin{thm}[Jensen's inequality, finite form]\label{thm:jensens_inequality_finite_form}
 Let $f: \sS \to \R$ be a convex function on the convex set $\sS \subseteq \R^n$. Suppose that $\vx_1, \dots, \vx_k \sS$ and $\theta_1, \dots, \theta_k \geq 0$ with $\theta_1 + \dots + \theta_k = 1$. Then, \begin{align}
     f(\theta_1\vx_1 + \dots + \theta_k\vx_k) \leq \theta_1 f(\vx_1) + \dots + \theta_k f(\vx_k).
 \end{align}

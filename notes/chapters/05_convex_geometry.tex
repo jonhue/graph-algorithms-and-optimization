@@ -21,8 +21,8 @@ We want to develop a better understanding of optimization problems. The general 
 \caption{Examples of optimization problems without an optimal solution.}
 \end{marginfigure}
 
-Let us look at a sufficient condition for optimal solutions. \begin{thm}[Extreme value theorem]\index{extreme value theorem}
-Let $f : \R^n \to \R$ be continuous, and let $\spa{F} \subseteq \R^n$ be non-empty, bounded, and closed. Then, $f$ is bounded on $\spa{F}$ and has an optimal solution.\footnote{Proof in \cref{thm:b1}}
+Let us look at a sufficient condition for optimal solutions. \begin{thm}[Extreme value theorem]\index{extreme value theorem}\label{thm:extreme_value_theorem}
+Let $f : \R^n \to \R$ be continuous, and let $\spa{F} \subseteq \R^n$ be non-empty, bounded, and closed. Then, $f$ is bounded on $\spa{F}$ and has an optimal solution.
 \end{thm}
 
 \section{Convex Sets \& Functions}
@@ -58,18 +58,18 @@ The \emph{epigraph}\index{epigraph} of a function $f : \sS \to \R$ is \begin{ali
     \mathrm{epi}(f) \defeq \{(\vx,y) \mid f(\vx) \leq y\} \subseteq \R^{n+1}.
 \end{align}
 \end{defn}
-\begin{lem}
-The function $f : \sS \to \R$ is convex iff $\mathrm{epi}(f)$ is convex.\footnote{Proof in \cref{lem:b1}.}
-\end{lem}
+\begin{exc}\label{exc:convex_iff_epi_convex}
+The function $f : \sS \to \R$ is convex iff $\mathrm{epi}(f)$ is convex.
+\end{exc}
 
 \begin{defn}[(Sub-)level set] Given a function $f : \sS \to \R$, we call, \begin{align}
     \sS_\alpha(f) &\defeq \{\vx \in \sS \mid f(\vx) \leq \alpha\}, \\
     \sL_\alpha(f) &\defeq \{\vx \in \sS \mid f(\vx) = \alpha\},
 \end{align} its \emph{$\alpha$-sub-level set}\index{sub-level set} and \emph{$\alpha$-level set}\index{level set}, respectively.
 \end{defn}
-\begin{lem}
-Any $\alpha$-sub-level set of a convex function is convex.\footnote{Proof in \cref{lem:b2}. Note that the other direction does not hold! Take $f(x) \defeq x^3$ as an example. Functions whose sub-level sets are convex are called \emph{quasiconvex}\index{quasiconvex function}.}
-\end{lem}
+\begin{exc}\label{exc:sub_level_set_of_convex_function_convex}
+Any $\alpha$-sub-level set of a convex function is convex.\footnote{Note that the other direction does not hold! Take $f(x) \defeq x^3$ as an example. Functions whose sub-level sets are convex are called \emph{quasiconvex}\index{quasiconvex function}.}
+\end{exc}
 
 \section{First-order Characterization of Convexity}
 

@@ -3,7 +3,9 @@
 
 \chapter{Linear Algebra}
 
-If a square matrix $\mA \in \R^{n \times n}$ is symmetric\footnote{$\mA$ is symmetric iff $\mA = \trans{\mA}$.}, then $\mA$ has $n$ real \emph{eigenvalues} $\lambda_1, \dots, \lambda_n$ and \emph{eigenvectors} $\vv_1, \dots, \vv_n \in \R^n$ such that $\mA\vv_i = \lambda_i\vv_i$ and the $\vv_i$ are orthogonal\footnote{that is, $\trans{\vv_i}\vv_j = 0$ for $i \neq j$}.\footnote{We prove this in \cref{thm:a5}.}
+\begin{clm}\label{clm:eigenvalues_eigenvectors_of_matrix}
+If a square matrix $\mA \in \R^{n \times n}$ is symmetric\footnote{$\mA$ is symmetric iff $\mA = \trans{\mA}$.}, then $\mA$ has $n$ real \emph{eigenvalues} $\lambda_1, \dots, \lambda_n$ and \emph{eigenvectors} $\vv_1, \dots, \vv_n \in \R^n$ such that $\mA\vv_i = \lambda_i\vv_i$ and the $\vv_i$ are orthogonal\footnote{that is, $\trans{\vv_i}\vv_j = 0$ for $i \neq j$}.
+\end{clm}
 
 \begin{defn}[Positive (semi-)definiteness]\index{positive definite matrix}\index{positive semi-definite matrix}\index{indefinite matrix}
 Let $\mA \in \R^{n \times n}$ be a symmetric matrix. We say $\mA$ is \begin{enumerate}
@@ -21,7 +23,7 @@ Let $\mA \in \R^{n \times n}$ be a symmetric matrix. Then, \begin{enumerate}
 \end{enumerate}
 \end{thm}\noindent This theorem is a corollary of the Courant-Fischer theorem, which we will work towards now.
 
-\begin{thm}[Spectral theorem for symmetric matrices]\index{spectral theorem for symmetric matrices} For all symmetric matrices $\mA \in \R^{n \times n}$ there exist \begin{align}
+\begin{fct}[Spectral theorem for symmetric matrices]\index{spectral theorem for symmetric matrices} For all symmetric matrices $\mA \in \R^{n \times n}$ there exist \begin{align}
     \mV = \begin{bmatrix}
     \vv_1 & \cdots & \vv_n
     \end{bmatrix} \in \R^{n \times n}, \quad \text{and} \quad \mLambda = \diag\{\lambda_i\}_{i \in [n]} \in \R^{n \times n},
@@ -29,7 +31,7 @@ Let $\mA \in \R^{n \times n}$ be a symmetric matrix. Then, \begin{enumerate}
     \item $\mA = \mV\mLambda\trans{\mV} = \sum_{i=1}^n \lambda_i \vv_i \trans{\vv_i}$; and
     \item $\trans{\mV}\mV = \mI$, i.e., the columns of $\mV$ form an orthonormal basis of $\R^n$.
 \end{enumerate}
-\end{thm}
+\end{fct}
 
 \begin{thm}[Courant-Fischer min-max theorem]\index{Courant-Fischer min-max theorem} For symmetric matrices $\mA \in \R^{n \times n}$ with eigenvalues $\lambda_1 \leq \dots \leq \lambda_n$, \begin{align}
     \lambda_i &= \min_{\substack{\text{subspace $\sW \subseteq \R^n$} \\ \dim(\sW) = i}} \max_{\substack{\vx \in \sW \\ \vx \neq \vZero}} \frac{\trans{\vx}\mA\vx}{\trans{\vx}\vx} \label{eq:courant_fischer_1} \\
@@ -74,6 +76,10 @@ By Courant-Fischer, we have for any $\vx \in \R^n$ such that $\vx \neq \vZero$, 
     \lambda_{\min}(\mA) = \min_{\substack{\vy \in \R^n \\ \vy \neq \vZero}} \frac{\trans{\vy}\mA\vy}{\norm{\vy}_2^2} \leq \frac{\trans{\vx}\mA\vx}{\norm{\vx}_2^2}.
 \end{align*} If $\vx = \vZero$, the inequality trivially holds.
 \end{proof}
+
+\begin{clm}\label{clm:eigenvalues_of_matrix_product}
+For any matrix $\mM$ and invertible matrix $\mT$, $\mM$ and $\mT\mM\inv{\mT}$ have the same eigenvalues.
+\end{clm}
 
 \section{Square Roots}
 
@@ -238,7 +244,7 @@ Let $\mA \preceq \mB$. Then, $\lambda_i(\mA) \leq \lambda_i(\mB)$ for all $i \in
 \end{align*} The analogous argument works when $f$ is monotonically decreasing.
 \end{proof}
 
-\begin{lem}[Facts about matrix functions]
+\begin{clm}[Facts about matrix functions]\label{clm:matrix_function_facts}
 \leavevmode\begin{enumerate}
     \item $\mX \mapsto \inv{\mX}$ is monotonically decreasing on $\sS_{++}^n$;
     \item $\log$ is monotonically increasing on $\sS_{++}^n$;
@@ -246,7 +252,7 @@ Let $\mA \preceq \mB$. Then, $\lambda_i(\mA) \leq \lambda_i(\mB)$ for all $i \in
     \item $\log(\mI + \mA) \preceq \mA$ for $\mA \succeq - \mI$; and
     \item (\emph{Lieb's theorem}\index{Lieb's theorem}) if $f(\mA) = \tr(\exp(\mH + \log(\mA)))$ for $\mA \in \sS_{++}^n$ and some $\mH \in \sS^n$, then $-f$ is convex.
 \end{enumerate}
-\end{lem}
+\end{clm}
 
 \section{Pseudoinverses}
 
@@ -303,20 +309,21 @@ Note that $\mPi$ is the identity operator on $\im\mPi$, i.e., for all $\vx \in \
 \end{enumerate}
 \end{defn}
 
-\begin{lem}
-For $\mA \in \sS^n$ with spectral decomposition $\mA = \mV\mLambda\trans{\mV} = \sum_i \lambda_i \vv_i \trans{\vv_i}$ where $\mV$ is orthonormal, we have,\footnote{Proof in \cref{lem:a8}.} \begin{align}
+\begin{clm}\label{clm:orthogonal_projection}
+For $\mA \in \sS^n$ with spectral decomposition $\mA = \mV\mLambda\trans{\mV} = \sum_i \lambda_i \vv_i \trans{\vv_i}$ where $\mV$ is orthonormal, we have, \begin{align}
     \mPi_\mA = \sum_{\substack{i \\ \lambda_i \neq 0}} \vv_i \trans{\vv_i} = \mA^{\nicefrac{+}{2}}\mA\mA^{\nicefrac{+}{2}} = \mA\pinv{\mA} = \pinv{\mA}\mA.
 \end{align}
-\end{lem}
+\end{clm}
 
 \begin{cor}
 In particular, $\pinv{\mPi_\mA} = \mPi_\mA$.
 \end{cor}
 
-\begin{lem} Consider a real symmetric matrix $\mA = \mX\mY\trans{\mX}$, where $\mX$ is real and invertible and $\mY$ is real and symmetric. Then,\footnote{Proof in \cref{lem:a6}.} \begin{align}
+\begin{clm}\label{clm:pinv_calculation}
+Consider a real symmetric matrix $\mA = \mX\mY\trans{\mX}$, where $\mX$ is real and invertible and $\mY$ is real and symmetric. Then, \begin{align}
     \pinv{\mA} = \mPi_\mA\inv{(\trans{\mX})}\pinv{\mY}\inv{\mX}\mPi_\mA. \label{eq:pinv_calculation}
 \end{align}
-\end{lem}
+\end{clm}
 
 Now, let us return to solving linear systems.
 
@@ -332,7 +339,7 @@ Thus, if we can decompose $\mA = \mCalL\trans{\mCalL}$ such that $\mCalL$ is inv
     \trans{\mCalL}\vx &= \vy.
 \end{align}
 
-\begin{lem}[Cholesky decomposition]\index{Cholesky decomposition} For any positive semi-definite matrix $\mA \in \R^{n \times n}$, there is a decomposition of the form $\mA = \mCalL\trans{\mCalL}$ where $\mCalL \in \R^{n \times n}$ is lower triangular and positive semi-definite.
-\end{lem}
+\begin{fct}[Cholesky decomposition]\index{Cholesky decomposition} For any positive semi-definite matrix $\mA \in \R^{n \times n}$, there is a decomposition of the form $\mA = \mCalL\trans{\mCalL}$ where $\mCalL \in \R^{n \times n}$ is lower triangular and positive semi-definite.
+\end{fct}
 
 We will see that the Cholesky decomposition can be computed efficiently when $\mA$ is a graph Laplacian.

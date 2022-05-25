@@ -77,6 +77,9 @@ We follow these general rules: \begin{itemize}[noitemsep]
    $\mW \in \R^{|\sV|\times|\sV|}$ & transition matrix of random walk, $\mA\inv{\mD} = \mI - \mD^{\nicefrac{1}{2}}\mN\mD^{-\nicefrac{1}{2}}$ \\
    $\Tilde{\mW} \in \R^{|\sV|\times|\sV|}$ & transition matrix of lazy random walk, $\frac{\mI}{2} + \frac{\mW}{2} = \mI - \frac{1}{2}\mD^{\nicefrac{1}{2}}\mN\mD^{-\nicefrac{1}{2}}$ \\
    $\vp_t \in \R^{|\sV|}$ & probability distribution of a random walk at time $t$, $\mW^t\vp_0$ \\
+   $H_{a,s}$ & hitting time of $s$ starting from $a$ \\
+   $\vh_s \in \R^{|\sV|}$ & expected hitting times of $s$, $\vh_s(a) = \E{H_{a,s}}$ \\
+   $C_{a,b}$ & commute time between $a$ and $b$, $H_{a,b} + H_{b,a}$ \\
 \end{longtable}
 
 \vspace{0.5cm}\section*{\smallcaps{Analysis}}\vspace{-0.5cm}
