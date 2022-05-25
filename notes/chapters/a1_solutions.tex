@@ -1,9 +1,11 @@
 % !TeX root = ../main.tex
 % Add the above to each chapter to make compiling the PDF easier in some editors.
 
-\chapter{Solutions of \Cref{part1}}
+\chapter{Solutions}
 
-\section{Electrical Flows}
+\section{\Cref{part1}}
+
+\subsection{Electrical Flows}
 
 \begin{proof}[Proof of \cref{clm:electrical_flow_optimization_convex}] We have that $\mH_c(\vx) = \mL(\vx) \succeq \mZero$.
 \end{proof}
@@ -26,7 +28,7 @@
 \begin{proof}[Solution to \cref{exc:electrical_energy_weak_duality}] TBD
 \end{proof}
 
-\section{Linear Algebra}
+\subsection{Linear Algebra}
 
 \begin{proof}[Proof of \cref{clm:eigenvalues_eigenvectors_of_matrix}] Because the characteristic polynomial of $\mA$ is of degree $n$, it has $n$ complex roots, which are the eigenvalues $\lambda_1, \dots, \lambda_n$ of $\mA$. We will first prove that the $\lambda_i$ are real. Then, we will prove that the corresponding eigenvectors $\vv_i$ are orthogonal.
 
@@ -58,7 +60,7 @@ Suppose $\lambda$ is an eigenvalue of $\mM$ with associated eigenvector $\vv$. A
 \begin{proof}[Proof of \cref{clm:pinv_calculation}] TBD
 \end{proof}
 
-\section{Probability}
+\subsection{Probability}
 
 \begin{thm}[Jensen's inequality, finite form]\label{thm:jensens_inequality_finite_form}
 Let $f: \sS \to \R$ be a convex function on the convex set $\sS \subseteq \R^n$. Suppose that $\vx_1, \dots, \vx_k \sS$ and $\theta_1, \dots, \theta_k \geq 0$ with $\theta_1 + \dots + \theta_k = 1$. Then, \begin{align}
@@ -71,4 +73,52 @@ We prove the statement by induction on $k$. The base case, $k = 2$, follows triv
     &\geq (1-\theta_{k+1})f\parentheses*{\sum_{i=1}^k \frac{\theta_i}{1-\theta_{k+1}}\vx_i} + \theta_{k+1}f(\vx_{k+1}) \margintag{using the induction hypothesis} \\
     &\geq f\parentheses*{\sum_{i=1}^{k+1} \theta_i \vx_i}. \margintag{using convexity of $f$} &\qedhere
 \end{align*}
+\end{proof}
+
+\section{\Cref{part2}}
+
+\subsection{Convex Geometry}
+
+\begin{proof}[Proof of \cref{thm:extreme_value_theorem}] In our proof, we will use the following two theorems.
+\begin{fct}[Bolzano-Weierstrass theorem]\index{Bolzano-Weierstrass theorem} Every bounded sequence in $\R^n$ has a convergent subsequence.
+\end{fct}
+\begin{fct}[Boundedness theorem]\index{Boundedness theorem}
+Let $f : \R^n \to \R$ be a continuous function and $\spa{F} \subseteq \R^n$ be non-empty, bounded, and closed. Then $f$ is bounded on $\spa{F}$.
+\end{fct}
+
+Let $\alpha$ be the infimum of $f$ over $\spa{F}$, i.e., the largest value for which any $\vx \in \spa{F}$ satisfies $f(\vx) \geq \alpha$. By the boundedness theorem, the infumum exists, as $f$ is lower bounded and the set of lower bounds has a greatest lower bound, $\alpha$.
+
+Let $\spa{F}_k \defeq \{\vx \in \spa{F} \mid \alpha \leq f(\vx) \leq \alpha + 2^{-k}\}$. $\spa{F}_k$ cannot be empty, since if it were, then $\alpha + 2^{-k}$ would be a strictly greater lower bound on $f$ than $\alpha$. For each $k$, let $\vx_k$ be some $\vx \in \spa{F}_k$. $\{\vx_k\}_{k=1}^\infty$ is a bounded sequence as $\spa{F}_k \subseteq \spa{F}$, so by the Bolzano-Weierstrass theorem, there exists a convergent subsequence, $\{\vy_k\}_{k=1}^\infty$, with limit $\Bar{\vy}$. Because the set is closed, $\Bar{\vy} \in \spa{F}$. By continuity, $f(\Bar{\vy}) = \lim_{k\to\infty} f(\vy_k)$, and by construction, $\lim_{k\to\infty} f(\vy_k) = \alpha$.
+
+Thus, the optimal solution is $\Bar{\vy}$.
+\end{proof}
+
+\begin{proof}[Solution to \cref{exc:convex_iff_epi_convex}] TBD
+\end{proof}
+
+\begin{proof}[Solution to \cref{exc:sub_level_set_of_convex_function_convex}] TBD
+\end{proof}
+
+\section{\Cref{part3}}
+
+\subsection{Introduction to Spectral Graph Theory}
+
+\begin{proof}[Solution to \cref{exc:spectrum_path_graph_2}] TBD
+\end{proof}
+
+\begin{proof}[Solution to \cref{exc:spectrum_path_graph_n}] TBD
+\end{proof}
+
+\begin{proof}[Solution to \cref{exc:spectrum_complete_binary_tree_2}] TBD
+\end{proof}
+
+\begin{proof}[Solution to \cref{exc:spectrum_complete_binary_tree_n}] TBD
+\end{proof}
+
+\subsection{Conductance and Expanders}
+
+\begin{proof}[Solution to \cref{exc:expander_complete_graph}] TBD
+\end{proof}
+
+\begin{proof}[Solution to \cref{exc:expander_path_graph}] TBD
 \end{proof}
