@@ -128,15 +128,15 @@ It is often to useful to look at a normalized Laplacian matrix, where weighted v
         - \frac{1}{\sqrt{\vd(i) \vd(j)}} & \text{if $i \sim j$} \\
         0 & \text{otherwise}.
     \end{cases}
-\end{align} This characterization is equivalent to,\footnote{$\mA^{-\frac{1}{2}}$, where $\mA$ is a diagonal matrix, is the diagonal matrix $\diag_i\{\mA(i,i)^{-\nicefrac{1}{2}}\}$.} \begin{align}
-    \mN = \mD^{-\frac{1}{2}}\mL\mD^{-\frac{1}{2}} = \mI - \mD^{-\frac{1}{2}}\mA\mD^{-\frac{1}{2}}.
+\end{align} This characterization is equivalent to,\footnote{$\mA^{-\nicefrac{1}{2}}$, where $\mA$ is a diagonal matrix, is the diagonal matrix $\diag_i\{\mA(i,i)^{-\nicefrac{1}{2}}\}$.} \begin{align}
+    \mN = \mD^{-\nicefrac{1}{2}}\mL\mD^{-\nicefrac{1}{2}} = \mI - \mD^{-\nicefrac{1}{2}}\mA\mD^{-\nicefrac{1}{2}}.
 \end{align}
 \end{defn} As we will see later, the normalized Laplacian matrix is intimately related to the probability transition matrix of a random walk on $G$, where transition probabilities are proportional to edge weights.
 
 \begin{lem}
 $\mN$ is positive semi-definite.
 \end{lem}\begin{proof} We have for any $\vx \in \R^n$, \begin{align*}
-    \trans{\vx}\mN\vx = \trans{\vx}\mD^{-\frac{1}{2}}\mL\mD^{-\frac{1}{2}}\vx = \trans{(\mD^{-\frac{1}{2}}\vx)}\mL(\mD^{-\frac{1}{2}}\vx) \geq 0,
+    \trans{\vx}\mN\vx = \trans{\vx}\mD^{-\nicefrac{1}{2}}\mL\mD^{-\nicefrac{1}{2}}\vx = \trans{(\mD^{-\nicefrac{1}{2}}\vx)}\mL(\mD^{-\nicefrac{1}{2}}\vx) \geq 0,
 \end{align*} using positive semi-definiteness of $\mL$.
 \end{proof}
 

@@ -51,14 +51,20 @@ TBD
 
 \section{Expander Decompositions}
 
-\begin{defn}[Expander decomposition] An \emph{expander decomposition}\index{expander decomposition} is a partition of the vertex set $\sV = \sX_1 \cup \dots \cup \sX_k$ such that \begin{enumerate}
-    \item $G[\sX_i]$ is an expander; and
-    \item only ``few'' edges cross the parts.
+\begin{defn}[Expander decomposition] For any $\phi \in (0,1]$, a \emph{$\phi$-expander decomposition}\index{expander decomposition} of \emph{quality}\index{quality} $q$ is a partition of the vertex set $\sV = \sX_1 \cup \dots \cup \sX_k$ such that \begin{enumerate}
+    \item $G[\sX_i]$ is a $\phi$-expander; and
+    \item the number of edges not contained in any $G[\sX_i]$ is at most $q \phi m$, i.e. only ``few'' edges cross the parts.
 \end{enumerate}
-\end{defn}\noindent There is a procedure \emph{CertifyOrCut($G$)} that either \begin{itemize}
-    \item certifies that $G$ is a $\phi$-expander; or
-    \item presents a cut $\sS$ such that $\phi(S) \leq \sqrt{2\phi}$.\footnote{Finding the best cut (i.e., a cut with conductance $\phi$) is NP-hard.}
-\end{itemize}
+\end{defn}
+
+\begin{thm}
+There is an algorithm that computes a $\phi$-expander decomposition of quality $q = \LandauO{\phi^{-\nicefrac{1}{2}} \log n}$ in time $\LandauO{m \log^c n}$ for some constant $c$.
+\end{thm}
+
+% \noindent There is a procedure \emph{CertifyOrCut($G$)} that either \begin{itemize}
+%     \item certifies that $G$ is a $\phi$-expander; or
+%     \item presents a cut $\sS$ such that $\phi(S) \leq \sqrt{2\phi}$.\footnote{Finding the best cut (i.e., a cut with conductance $\phi$) is NP-hard.}
+% \end{itemize}
 
 \section{Cheeger's Inequality}
 

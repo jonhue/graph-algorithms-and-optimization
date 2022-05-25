@@ -22,6 +22,31 @@ $\Reff(a,b) = \norm{\mL^{\nicefrac{+}{2}}(\vOne_b - \vOne_a)}_2^2$.
 \end{proof}
 
 \begin{lem}
+If $G$ is a $\phi$-expander, then \begin{align}
+    \Reff(a,b) \leq 2\phi^{-2}\parentheses*{\frac{1}{\vd(b)} + \frac{1}{\vd(a)}}.
+\end{align}
+\end{lem}
+\begin{proof}
+By Cheeger's inequality, \begin{align*}
+    \phi \leq \phi(G) \leq \sqrt{2 \lambda_2(\mN)} \implies \frac{\phi^2}{2} \leq \lambda_2(\mN).
+\end{align*} By Courant-Fischer, we have that for any $\vy \perp \ker{\mN}$, \begin{align*}
+    \frac{\phi^2}{2} \leq \lambda_2(\mN) \leq \frac{\trans{\vy}\mN\vy}{\trans{\vy}\vy} \implies \frac{\phi^2}{2}\trans{\vy}\vy \leq \trans{\vy}\mN\vy.
+\end{align*} Equivalently, \begin{align*}
+    \frac{\phi^2}{2}\mPi_\mN \preceq \mN, \margintag{using that $\mPi_\mN \vv = \vv$ for $\vv \perp \ker{\mN}$, and $\mPi_\mN \vv = 0$ if $\vv \in \ker\mN$}
+\end{align*} where $\mPi_\mN$ is the projection orthogonal to the kernel of $\mN$. From this we conclude that \begin{align*}
+    2\phi^{-2}\mPi_\mN = 2\phi^{-2}\pinv{\mPi_\mN} \succeq \pinv{\mN}, \margintag{using $\pinv{\mPi_\mN} = \mPi_\mN$}
+\end{align*} as $\mA \succeq \mB$ implies $\pinv{\mA} \preceq \pinv{\mB}$ when $\ker\mA = \ker\mB$. By \cref{eq:pinv_calculation}, \begin{align}
+    \pinv{\mN} = \pinv{(\mD^{-\nicefrac{1}{2}}\mL\mD^{-\nicefrac{1}{2}})} = \mPi_\mN\mD^{\nicefrac{1}{2}}\pinv{\mL}\mD^{\nicefrac{1}{2}}\mPi_\mN
+\end{align} Therefore, for any $\vy \perp \ker\mN$, \begin{align*}
+    2\phi^{-2}\trans{\vy}\vy \geq \trans{\vy}\pinv{\mN}\vy = \trans{\vy}\mD^{\nicefrac{1}{2}}\pinv{\mL}\mD^{\nicefrac{1}{2}}\vy.
+\end{align*} Substituting $\vz \defeq \mD^{-\nicefrac{1}{2}}\vy$, we obtain, \begin{align*}
+    2\phi^{-2}\trans{\vz}\inv{\mD}\vz \geq \trans{\vz}\pinv{\mL}\vz.
+\end{align*} Finally, observe that for $\vz \defeq \vOne_b - \vOne_a$, we have that $\vy = \mD^{\nicefrac{1}{2}}(\vOne_b - \vOne_a) \perp \ker\mN$ as $\vOne_b - \vOne_a \perp \ker\mL$ and therefore,\footnote{We have for the kernel of the normalized Laplacian matrix, $\mN = \mD^{-\nicefrac{1}{2}}\mL\mD^{-\nicefrac{1}{2}}$, that $\ker\mN = \mD^{\nicefrac{1}{2}}\ker\mL = \vspan\{\mD^{\nicefrac{1}{2}}\vOne\}$.} \begin{align*}
+    \Reff(a,b) = \trans{\vz}\pinv{\mL}\vz \leq 2\phi^{-2}\trans{\vz}\inv{\mD}\vz = 2\phi^{-2}\parentheses*{\frac{1}{\vd(b)} + \frac{1}{\vd(a)}}. &\qedhere
+\end{align*}
+\end{proof}
+
+\begin{lem}
 $\E{C_{a,b}} = \norm{\vd}_1 \Reff(a,b)$.
 \end{lem}
 \begin{proof} Recall that $\E{C_{a,b}} = \trans{(\vOne_a - \vOne_b)}\ex$ for a solution $\ex$ to $\mL\ex = \norm{\vd}_1 (\vOne_a - \vOne_b)$, that is, $\ex = \norm{\vd}_1\pinv{\mL}(\vOne_a - \vOne_b)$. Now, observe that, \begin{align*}

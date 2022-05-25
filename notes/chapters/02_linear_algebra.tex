@@ -281,6 +281,10 @@ The pseudoinverse of the symmetric matrix $\mA \in \R^{n \times n}$ is (uniquely
 The properties of a pseudoinverse follow from the definition immediately.
 \end{proof}
 
+\begin{cor}
+$\mA \succeq \mB$ implies $\pinv{\mA} \preceq \pinv{\mB}$ when $\ker\mA = \ker\mB$.
+\end{cor}
+
 \section{Solving Linear Systems}
 
 Linear systems such as \cref{eq:linear_system} can often be solved much faster than by computing the pseudoinverse of $\mA$.
@@ -305,8 +309,12 @@ For $\mA \in \sS^n$ with spectral decomposition $\mA = \mV\mLambda\trans{\mV} = 
 \end{align}
 \end{lem}
 
+\begin{cor}
+In particular, $\pinv{\mPi_\mA} = \mPi_\mA$.
+\end{cor}
+
 \begin{lem} Consider a real symmetric matrix $\mA = \mX\mY\trans{\mX}$, where $\mX$ is real and invertible and $\mY$ is real and symmetric. Then,\footnote{Proof in \cref{lem:a6}.} \begin{align}
-    \pinv{\mA} = \mPi_\mA\inv{(\trans{\mX})}\pinv{\mY}\inv{\mX}\mPi_\mA.
+    \pinv{\mA} = \mPi_\mA\inv{(\trans{\mX})}\pinv{\mY}\inv{\mX}\mPi_\mA. \label{eq:pinv_calculation}
 \end{align}
 \end{lem}
 
