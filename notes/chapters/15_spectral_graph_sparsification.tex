@@ -2,3 +2,30 @@
 % Add the above to each chapter to make compiling the PDF easier in some editors.
 
 \chapter{Spectral Graph Sparsification}
+
+Many combinatorial graph algorithms perform better on sparse graphs. In this chapter, we will see that for any dense graph, we can find a sparse graph with approximately the same Laplacian matrix as measured by quadratic forms.
+
+\begin{defn}[Matrix approximation]\index{matrix approximation} Given $\mA, \mB \in \sS_+^n$ and $\epsilon > 0$, we say, \begin{align}
+    \mA \approx_\epsilon \mB \quad\text{iff}\quad \frac{1}{1+\epsilon}\mA \preceq \mB (1+\epsilon)\mA.
+\end{align}
+\end{defn}
+
+Given some graph $G = (\sV,\sE,\vw)$, our goal is to find a graph $\Tilde{G} = (\sV,\Tilde{\sE},\Tilde{\vw})$ such that $|\Tilde{\sE}| \ll |\sE|$ and $\mL_G \approx_\epsilon \mL_{\Tilde{G}}$. We will write $\mL \defeq \mL_G$ and $\Tilde{\mL} \defeq \mL_{\Tilde{G}}$.
+
+\begin{lem}
+If $\mL \approx_\epsilon \Tilde{\mL}$, then for any cut $(\sS, \sV \setminus \sS)$, \begin{align}
+    \frac{1}{1+\epsilon}c_G(\sS) \leq c_{\Tilde{G}}(\sS) \leq (1+\epsilon)c_G(\sS).
+\end{align}
+\end{lem}
+\begin{proof}
+Recall that $c_G(\sS) = \trans{\vOne_\sS}\mL\vOne_\sS$. The statement follows immediately by comparing the quadratic forms.
+\end{proof}
+
+\begin{thm}[Spectral graph approximation by sampling]
+For any $\epsilon, \delta \in (0,1)$, there exist sampling probabilities $p_e$ for each edge $e \in \sE$ such that if $e \in \Tilde{\sE}$ with probability $p_e$ and $\Tilde{\vw}(e) \defeq \nicefrac{\vw(e)}{p_e}$, then with probability at least $1-\delta$ the graph $\Tilde{G} = (\sV,\Tilde{\sE},\Tilde{\vw})$ satisfies,\cite{spielman2011graph} \begin{align*}
+    \mL \approx_\epsilon \Tilde{\mL} \quad\text{and}\quad |\Tilde{\sE}| = \LandauO{\frac{n}{\epsilon} \log\parentheses*{\frac{n}{\delta}}}.
+\end{align*}
+\end{thm}
+\begin{proof}
+TBD
+\end{proof}
