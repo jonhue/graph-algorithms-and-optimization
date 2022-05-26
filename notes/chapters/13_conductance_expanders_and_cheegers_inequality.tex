@@ -32,10 +32,15 @@ If $\vol(\sS) \leq \vol(\sV \setminus \sS)$, then we can write \begin{align}
 \end{align}
 \end{defn} Thus, $\phi(G)$ is small if there is a ``good'' cut (with few crossing edges relative to the volume of the parts). In contrast, if $\phi(G)$ is large, then $G$ is well-connected, i.e., there is no ``good'' cut.
 
-\begin{defn}[Expander] If $\phi(G) \geq \phi$, then $G$ is called a \emph{$\phi$-expander}\index{expander}.
+\begin{defn}[Expander and expander decomposition] For any $\phi \in (0,1]$, if $\phi(G) \geq \phi$, then $G$ is called a \emph{$\phi$-expander}\index{expander}.
+
+A \emph{$\phi$-expander decomposition}\index{expander decomposition} of \emph{quality}\index{quality} $q$ is a partition of the vertex set $\sV = \sX_1 \cup \dots \cup \sX_k$ such that \begin{enumerate}
+    \item $G[\sX_i]$ is a $\phi$-expander; and
+    \item the number of edges not contained in any $G[\sX_i]$ is at most $q \phi m$, i.e. only ``few'' edges cross the parts.
+\end{enumerate}
 \end{defn}
 
-Let us consider a few examples.
+In \cref{cha:expanders_using_max_flow}, we discuss how we can efficiently find an expander decomposition. Let us consider a few examples.
 
 \begin{exc}\label{exc:expander_complete_graph}
 $\phi(K_n) = \frac{n}{2(n-1)}$. So $K_n$ is a $\frac{1}{2}$-expander.
@@ -62,30 +67,22 @@ Observe that since $G$ is connected, we have $|E(B(s,0))| \geq 1$. Moreover, for
 Finally, follow the same argument from $t$. As both balls contain more than $\nicefrac{m}{2}$ edges, they must intersect in at least one edge. But this implies that there is a $s$-$t$ path of length $\LandauO{\nicefrac{\log m}{\phi}}$.
 \end{proof}
 
-\section{Expander Decompositions}
+% \begin{thm}
+% There is a procedure \textsc{CertifyOrCut($G, \phi$)} that either \begin{itemize}
+%     \item certifies that $G$ is a $\phi$-expander; or
+%     \item presents a cut $\sS$ such that $\phi(S) \leq \sqrt{2\phi}$.\footnote{Finding the best cut (i.e., a cut with conductance $\phi$) is NP-hard.}
+% \end{itemize}
+% \end{thm}
+% \begin{proof}
+% TBD
+% \end{proof}
 
-\begin{defn}[Expander decomposition] For any $\phi \in (0,1]$, a \emph{$\phi$-expander decomposition}\index{expander decomposition} of \emph{quality}\index{quality} $q$ is a partition of the vertex set $\sV = \sX_1 \cup \dots \cup \sX_k$ such that \begin{enumerate}
-    \item $G[\sX_i]$ is a $\phi$-expander; and
-    \item the number of edges not contained in any $G[\sX_i]$ is at most $q \phi m$, i.e. only ``few'' edges cross the parts.
-\end{enumerate}
-\end{defn}
-
-\begin{thm}
-There is a procedure \textsc{CertifyOrCut($G, \phi$)} that either \begin{itemize}
-    \item certifies that $G$ is a $\phi$-expander; or
-    \item presents a cut $\sS$ such that $\phi(S) \leq \sqrt{2\phi}$.\footnote{Finding the best cut (i.e., a cut with conductance $\phi$) is NP-hard.}
-\end{itemize}
-\end{thm}
-\begin{proof}
-TBD
-\end{proof}
-
-\begin{thm}
-There is an algorithm that computes a $\phi$-expander decomposition of quality $q = \LandauO{\phi^{-\nicefrac{1}{2}} \log n}$ in time $\LandauO{m \log^c n}$ for some constant $c$.
-\end{thm}
-\begin{proof}
-TBD
-\end{proof}
+% \begin{thm}
+% There is an algorithm that computes a $\phi$-expander decomposition of quality $q = \LandauO{\phi^{-\nicefrac{1}{2}} \log n}$ in time $\LandauO{m \log^c n}$ for some constant $c$.
+% \end{thm}
+% \begin{proof}
+% TBD
+% \end{proof}
 
 \section{Cheeger's Inequality}
 

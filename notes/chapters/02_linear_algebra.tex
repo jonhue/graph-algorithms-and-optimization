@@ -327,7 +327,7 @@ Consider a real symmetric matrix $\mA = \mX\mY\trans{\mX}$, where $\mX$ is real 
 
 Now, let us return to solving linear systems.
 
-\begin{lem}
+\begin{lem}\label{lem:solve_triangular_linear_system}
 Given an invertible square lower triangular matrix $\mCalL$ or an invertible square upper triangular matrix $\mCalU$, we can solve the linear systems $\mCalL\vy = \vb$ and $\mCalU\vz = \vb$ in time $\LandauO{\nnz{\mCalL}}$ and $\LandauO{\nnz{\mCalU}}$, respectively, where $\nnz{\mA}$ denotes the number of non-zero entries of $\mA$.\footnote{We need the matrices to be stored as an adjacency list to have fast access to their non-zero entries.}
 \end{lem}\begin{proof}[Proof sketch] We can iteratively solve the linear equations of $\mCalL\vy = \vb$. As $\mCalL$ has full rank and is lower triangular, there is always one linear equation in a single variable.
 

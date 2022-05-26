@@ -120,6 +120,14 @@ We have, \begin{align*}
 $\mL$ is positive semi-definite.\footnote{By the previous lemma, $\mL$ satisfies the definition of positive semi-definiteness, which we will introduce in the following section.}
 \end{cor}
 
+\begin{exc}\label{exc:graph_laplacian_characterization}
+A matrix $\mM$ is a Laplacian matrix iff it satisfies the following conditions: \begin{enumerate}
+    \item $\trans{\mM} = \mM$;
+    \item the diagonal entries of $\mM$ are non-negative, and the off-diagonal entries of $\mM$ are non-positive; and
+    \item $\mM\vOne = \vZero$.
+\end{enumerate}
+\end{exc}
+
 It is often to useful to look at a normalized Laplacian matrix, where weighted vertex degrees are normalized to one and edges are weighted based on the degrees of their endpoints.
 
 \begin{defn}[Normalized Laplacian matrix] The \emph{normalized Laplacian matrix}\index{normalized Laplacian matrix} of an oriented graph $G$ is defined as, \begin{align}
