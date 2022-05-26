@@ -3,7 +3,17 @@
 
 \chapter{Gradient Descent}
 
-Gradient descent\index{gradient descent} is a method for solving minimization problems such as \cref{eq:optimization_problem}, where we write $\s{\vx} \in \argmin_{\vx \in \sS} f(\vx)$. We say that a solution $\vx_k$ is \emph{$\epsilon$-approximate}\index{approximate solution} iff $f(\vx_k) - f(\s{\vx}) \leq \epsilon$ for some $\epsilon > 0$. For this chapter, we assume that the optimization problem is unconstrained, i.e., $\sS = \R^n$. The idea of gradient descent is to iteratively take a step in the opposite direction of the gradient starting from some initial point $\vx_0 \in \R^n$, \begin{align}
+Gradient descent\index{gradient descent} is a method for solving minimization problems such as \cref{eq:optimization_problem}.
+
+\begin{defn}[Approximate solution]
+We say that a solution $\vx_k$ to the optimization problem $\min_{\vx \in \sS} f(\vx)$ is \emph{$\epsilon$-approximate}\index{approximate solution} iff \begin{align}
+    f(\vx_k) - f(\s{\vx}) \leq \epsilon
+\end{align} for some $\epsilon > 0$, where $\s{\vx} \in \argmin_{\vx \in \sS} f(\vx)$.
+\end{defn}
+
+For this chapter, we assume that the optimization problem is unconstrained, i.e., $\sS = \R^n$. In \cref{cha:lagrange_multipliers_duality}, we explore how we can solve constrained optimization problems using Lagrange multipliers.
+
+The idea of gradient descent is to iteratively take a step in the opposite direction of the gradient starting from some initial point $\vx_0 \in \R^n$, \begin{align}
     \vx_{i+1} \gets \vx_i - \alpha \grad f(\vx_i),
 \end{align} where $\alpha > 0$ is some learning rate.
 \begin{marginfigure}
@@ -25,7 +35,7 @@ You can think of smoothness as providing a quadratic upper bound to our function
 
 \section{Smoothness}
 
-\begin{defn}[Smoothness] Let $f: \sS \to \R$ be continuously differentiable. We say, $f$ is \emph{$\beta$-smooth}\index{smoothness} iff for any $\vx, \vy \in \sS$ \begin{align}
+\begin{defn}[Smoothness] Let $f: \sS \to \R$ be continuously differentiable. We say, $f$ is \emph{$\beta$-smooth}\index{smoothness} for some $\beta > 0$ iff for any $\vx, \vy \in \sS$ \begin{align}
     \norm{\grad f(\vx) - \grad f(\vy)}_2 \leq \beta \norm{\vx - \vy}_2.
 \end{align} In other words, the gradient of $f$ is $\beta$-Lipschitz.
 \end{defn}
@@ -78,7 +88,7 @@ A natural approach is to choose the gradient step of each iteration such that we
 
 We can improve our analysis, when we assume that $f$ is strongly convex, that is lower bounded by a quadratic. Intuitively, this ensures that our steps are large when we are far away from the optimum.
 
-\begin{defn}[Strong convexity] Let $f: \sS \to \R$ be continuously differentiable. We say, $f$ is \emph{$\mu$-strongly convex}\index{strong convexity} iff for any $\vx,\vy \in \sS$, \begin{align}
+\begin{defn}[Strong convexity] Let $f: \sS \to \R$ be continuously differentiable. We say, $f$ is \emph{$\mu$-strongly convex}\index{strong convexity} for some $\mu > 0$ iff for any $\vx,\vy \in \sS$, \begin{align}
     f(\vy) \geq f(\vx) + \trans{\grad f(\vx)}(\vy - \vx) + \frac{\mu}{2}\norm{\vy - \vx}_2^2.
 \end{align}
 \end{defn}
@@ -95,6 +105,24 @@ If $f$ is $\beta$-smooth and $\mu$-strongly convex, then $\mu \leq \beta$.
 \begin{defn}[Condition number] We call $\kappa \defeq \frac{\beta}{\mu}$ the \emph{condition number}\index{condition number} of a function $f$ that is $\beta$-smooth and $\mu$-strongly convex.
 \end{defn}
 
+Often, a weaker condition known as \emph{PL condition} is sufficient to design fast algorithms.
+
+\begin{defn}[Polyak-Łojasiewicz inequality]\index{Polyak-Łojasiewicz inequality} A continuously differentiable function $f: \sS \to \R$ satisfies the PL inequality with parameter $\mu > 0$ iff \begin{align}
+    \frac{1}{2}\norm{\grad f(\vx)}_2^2 \geq \mu (f(\vx) - f(\s{\vx})),
+\end{align} where $\s{\vx} \in \argmin_{\vx \in \sS} f(\vx)$.
+\end{defn}\noindent Intuitively, the norm of the gradient is tied to the suboptimality of the current solution.
+
+\begin{lem}
+Let $f: \sS \to \R$ be continuously differentiable and $\mu$-strongly convex. Then, $f$ satisfies the PL condition.
+\end{lem}
+\begin{proof}
+As $f$ is $\mu$-strongly convex, \begin{align*}
+    f(\vy) \geq f(\vx) + \trans{\grad f(\vx)}(\vy - \vx) + \frac{\mu}{2}\norm{\vy - \vx}_2^2,
+\end{align*} for any $\vx, \vy \in \sS$. Taking the minimum with respect to $\vy$ on both sides yields, \begin{align*}
+    f(\s{\vx}) \geq f(\vx) - \frac{1}{2\mu}\norm{\grad f(\vx)}_2^2,
+\end{align*} as the right-hand side is minimized for $\vy = \vx - \frac{1}{\mu}\grad f(\vx)$. The PL inequality follows from rearranging the terms.
+\end{proof}
+
 \subsection{Analysis of Gradient Descent}
 
 \begin{thm}[Convergence of gradient descent with a strongly convex objective] Suppose $f: \R^n \to \R$ is $\mu$-strongly convex and $\beta$-smooth. The gradient descent scheme, \begin{align}
@@ -106,6 +134,10 @@ If $f$ is $\beta$-smooth and $\mu$-strongly convex, then $\mu \leq \beta$.
 \begin{proof}
 See the first graded homework.
 \end{proof}
+
+\begin{rmk}
+It turns out that the PL condition is sufficient to establish this convergence rate.
+\end{rmk}
 
 \section{Acceleration}
 

@@ -4,8 +4,8 @@
 \chapter{Convex Geometry}
 
 We want to develop a better understanding of optimization problems. The general form of an \emph{optimization problem}\index{optimization problem} is, \begin{align}
-    \min_{\substack{\vx \in \R^n \\ g_1(\vx) \leq b_1 \\ \vdots \\ g_m(\vx) \leq b_m}} f(\vx), \label{eq:optimization_problem}
-\end{align} where $f : \R^n \to \R$ and $g_i : \R^n \to \R$.\footnote{It suffices to consider minimization problems. If we want to maximize a function $f$, this is equivalent to minimizing the function $-f$.}
+    \min_{\substack{\vy \in \R^n \\ \vg(\vy) \leq \vb}} f(\vy), \label{eq:optimization_problem}
+\end{align} where $f : \R^n \to \R$ is the function to be minimized, $\vg : \R^n \to \R^m$ is a vector-valued function of $m$ constraints with thresholds $\vb \in \R^m$.\footnote{It suffices to consider minimization problems. If we want to maximize a function $f$, this is equivalent to minimizing the function $-f$.}
 
 \begin{defn}[Feasible set] We call \begin{align}
     \spa{F} \defeq \{\vx \in \R^n \mid \forall i \in [n]: g_i(\vx) \leq b_i\}
@@ -50,8 +50,14 @@ Let $f : \R^n \to \R$ be continuous, and let $\spa{F} \subseteq \R^n$ be non-emp
 If the function $f$ is convex on $\sS$, we say that the function $-f$ is \emph{concave}\index{concave function} on $\sS$.
 \end{rmk}
 
-\begin{lem} A differentiable and convex function $f$, whose domain $\sS \subseteq \R^n$ is open and convex, is always continuously differentiable.
-\end{lem} In the following, we will assume that $\sS \subseteq \R^n$ is open.
+\begin{rmk}
+We call the optimization problem from \cref{eq:optimization_problem} \emph{convex}\index{convex optimization} iff $f$ and $g_i$ are convex functions. Sometimes it is useful to equivalently write \begin{align}
+    \min_{\vy \in \sS} f(\vy) \quad\text{for }\sS \defeq \{\vy \in \R^n \mid \vg(\vy) \leq \vb\}.
+\end{align} Observe that these characterizations are equivalent, as any convex set $\sS$ can be characterized in terms of convex constraints.
+\end{rmk}
+
+\begin{fct} A differentiable and convex function $f$, whose domain $\sS \subseteq \R^n$ is open and convex, is always continuously differentiable.
+\end{fct} In the following, we will assume that $\sS \subseteq \R^n$ is open.
 
 \begin{defn}[Epigraph]
 The \emph{epigraph}\index{epigraph} of a function $f : \sS \to \R$ is \begin{align}
