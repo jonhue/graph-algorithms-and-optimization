@@ -142,5 +142,113 @@ Overall, we get, \begin{align*}
 \end{proof}
 
 \section{Dinitz's Algorithm}
+
+We will now look at Dinitz's algorithm, which also belongs to the family of Ford-Folkerson algorithms. That is, we still start with the initial feasible flow $\vf \gets \vZero$ and iteratively improve this flow by finding an augmenting flow in $G_\vf$.
+
+In Dinitz's algorithm, our strategy to finding an augmenting path is to find so-called \emph{blocking flows} in $G_\vf$, which in each iteration ``block'' one shortest $s$-$t$ path in $G_\vf$. Dinitz's algorithm runs in $\LandauO{n^2 m}$ time in general graphs and in time $\LandauO{\min\{m^{\nicefrac{3}{2}}, m n^{\nicefrac{2}{3}}\}}$ in unit capacity graphs.
+
+\begin{rmk}
+It can also be shown that Dinitz's algorithm converges in time $\LandauO{m \sqrt{n}}$ in bipartite matching graphs, but we will not show this here.
+\end{rmk}
+
+\begin{defn}[Level]
+The \emph{level}\index{level} $\ell(v)$ of a vertex $v \in \sV$ in $G_\vf$ is the length (i.e., number of edges) of the shortest $s$-$v$ path in $G_\vf$.
+
+We call an edge $e = (u,v)$ in $G_\vf$ \emph{admissible} iff $\ell(v) = \ell(u)+1$. Intuitively, $e$ is admissible iff it is part of a shortest $s$-$u$ path.
+
+The \emph{level graph}\index{level graph} $L_\vf$ of $G_\vf$ is the subgraph of only admissible edges.
+\end{defn}
+\begin{marginfigure}
+TBD
+% \centering\includegraphics[width=4cm]{notes/figures/convex_set.png}
+\caption{Illustration of admissible edges.}
+\end{marginfigure}
+
+\begin{defn}[Blocking flow]
+A \emph{blocking flow}\index{blocking flow} in $G_\vf$ is a flow $\hat{\vf}$ such that \begin{enumerate}
+    \item $\hat{\vf}$ is feasible;
+    \item $\hat{\vf}$ uses only admissible edges; and
+    \item for every $s$-$t$ path in the level graph, $\hat{\vf}$ saturates at least one edge.
+\end{enumerate}
+\end{defn}
+\begin{rmk}
+By definition, a blocking flow in $G_\vf$ is a $\vf$-augmenting flow.
+\end{rmk}
+\begin{marginfigure}
+TBD
+% \centering\includegraphics[width=4cm]{notes/figures/convex_set.png}
+\caption{Examples of blocking flows.}
+\end{marginfigure}
+
+\begin{algorithm}
+    \caption{\textsc{Dinitz($G$)}}\index{Dinitz's algorithm}
+    $\vf \gets \vZero$\;
+    \Repeat{$G_\vf$ is disconnected}{
+        $\hat{\vf} \gets \text{blocking flow in $G_\vf$}$\;
+        $\vf \gets \vf + \hat{\vf}$\;
+    }
+    \Return{$\vf$}
+\end{algorithm}
+
+\begin{lem}
+Let $\vf$ be a feasible flow, $\hat{\vf}$ a blocking flow in $G_\vf$, and let $\vf' \defeq \vf + \hat{\vf}$. Then $\ell_{G_{\vf'}}(t) > \ell_{G_\vf}(t)$.
+\end{lem}
+\begin{proof}
+TBD
+\end{proof}
+
+\begin{thm}[Dinitz]
+Dinitz's algorithm converges in $\LandauO{n}$ iterations.
+\end{thm}
+\begin{proof}
+By the previous lemma, $\ell(t)$ increases in every iteration by at least one. As path can contain each vertex at most once, the level of any vertex can never be larger than $n$.
+\end{proof}
+
+\subsection{Finding Blocking Flows}
+
+A naïve approach is to repeatedly use depth-first search to find an unsaturated $s$-$t$ path in the level graph $L_\vf$. Whenever we find such a path, we route the maximum possible flow along this path, saturating at least one of its edges.
+
+\begin{algorithm}
+    \caption{\textsc{FindBlockingFlow($L_\vf$)}}
+    $\hat{\vf} \gets \vZero$\;
+    \While{there exists an $s$-$t$ path $\sP$ in $L_\vf$}{
+        Let $\hat{\vf}'$ be a flow saturating $\sP$\;
+        $\hat{\vf} \gets \hat{\vf} + \hat{\vf}'$\;
+        Remove all edges saturated by $\hat{\vf}'$ from $L_\vf$\;
+    }
+    \Return{$\hat{\vf}$}
+\end{algorithm}
+
+\begin{lem}
+\textsc{FindBlockingFlow} returns a blocking flow in $\LandauO{mn}$ time.
+\end{lem}
+\begin{proof}
+TBD
+\end{proof}
+
+\subsection{Unit Capacity Graphs}
+
+\begin{lem}
+In unit capacity graphs, \textsc{FindBlockingFlow} returns a blocking flow in $\LandauO{m}$ time.
+\end{lem}
+\begin{proof}
+TBD
+\end{proof}
+
+\begin{thm}
+In unit capacity graphs, Dinic's algorithm terminates in $\LandauO{\min\{m^{\nicefrac{1}{2}}, n^{\nicefrac{2}{3}}\}}$ time.
+\end{thm}
+\begin{proof}
+TBD
+\end{proof}
+
 \section{The Push-Relabel Algorithm}
+% TBD
+
 \section{Outlook}
+
+We have seen two approaches to solving maximum flow problems: Ford-Fulkerson maintains a feasible flow and augments this flow until it is optimal. In contrast, Push-Relabel maintains that there is no augmenting path and terminates when the flow is feasible.
+
+Currently, the best known algorithm for real-valued capacities is due to Orlin and takes $\LandauO{mn}$ time.\cite{orlin2013max}
+
+Geometrically speaking, Ford-Fulkerson is analogous to a simplex method and Push-Relabel is analogous to an exterior-point method. In recent years, interior-point methods were used to find efficient algorithms when capacities are integral, the best known algorithm taking $\LandauO{m^{1+o(1)} \log U}$ time.\cite{chen2022maximum}
