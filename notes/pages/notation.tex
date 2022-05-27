@@ -147,5 +147,11 @@ We follow these general rules: \begin{itemize}[noitemsep]
    $\elx_{a,b} \in \R^{|\sV|}$ & electrical voltages routing demands $\vOne_b - \vOne_a$ \\
    $\ef \in \R^{|\sE|}$ & electrical flow \\
    $\e(\ef), \e(\elx), \e(\vd)$ & electrical energy, $\trans{\ef}\trans{\mB}\elx = \trans{\ef}\mR\ef = \trans{\elx}\mL\elx = \trans{\vd}\vx = \trans{\vd}\pinv{\mL}\vd$ \\
+   \addlinespace
+   $\vc \in \R^{|\sE|}$ & edge capacities \\
+   $\val(\vf)$ & value (routed units of flow) of an $s$-$t$ flow $\vf$ \\
+   $G_\vf$ & residual graph with respect to the flow $\vf$ \\
+   $\hat{\vf}$ & flow within the residual graph $G_\vf$ \\
+   $U$ & maximum edge capacity, $\max_e \vc(e)$ \\
 \end{longtable}
 \end{fullwidth}

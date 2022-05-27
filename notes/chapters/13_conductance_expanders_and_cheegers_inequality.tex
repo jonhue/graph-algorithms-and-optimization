@@ -10,13 +10,15 @@
 \end{align}
 \end{defn}
 
-\begin{defn}[Value of a cut] The \emph{value}\index{cut value} of a cut $(\sS, \sV \setminus \sS)$ where $\emptyset \subset \sS \subset \sV$ is the sum of weights of crossing edges, \begin{align}\begin{split}
+A \emph{cut}\index{cut} $(\sS, \sV \setminus \sS)$ is a proper subset of vertices, $\emptyset \subset \sS \subset \sV$ partitioning vertices into two sets $\sS$ and $\sV \setminus \sS$.
+
+\begin{defn}[Value of a cut] The \emph{value}\index{cut value} of a cut $(\sS, \sV \setminus \sS)$ is the sum of weights of crossing edges, \begin{align}\begin{split}
     c(\sS) &\defeq \sum_{\substack{\{a,b\} \in \sE \\ a \in \sS,\ b \in \sV \setminus \sS}} \vw(\{a,b\}) \\
     &= \sum_{\{a,b\}\in\sE} \vw(\{a,b\}) [\vOne_\sS(a) - \vOne_\sS(b)]^2 = \trans{\vOne_\sS}\mL\vOne_\sS.
 \end{split}\end{align}
 \end{defn}
 
-\begin{defn}[Conductance of a cut] The \emph{conductance}\index{conductance} of a cut $(\sS, \sV \setminus \sS)$ where $\emptyset \subset \sS \subset \sV$ is, \begin{align}
+\begin{defn}[Conductance of a cut] The \emph{conductance}\index{conductance} of a cut $(\sS, \sV \setminus \sS)$ is, \begin{align}
     \phi(\sS) \defeq \frac{c(\sS)}{\min\{\vol(\sS), \vol(\sV \setminus \sS)\}} = \phi(\sV \setminus \sS) \in [0,1],
 \end{align} where, if the graph has unit weights, $c(\sS) = |\sE(\sS, \sV \setminus \sS)|$ counts the number of crossing edges.
 \end{defn}
@@ -99,7 +101,7 @@ TBD
 
 A concept related to conductance is the notion of \emph{sparsity}.
 
-\begin{defn}[Sparsity] The \emph{sparsity}\index{sparsity} of a cut $(\sS, \sV \setminus \sS)$ where $\emptyset \subset \sS \subset \sV$ is, \begin{align}
+\begin{defn}[Sparsity] The \emph{sparsity}\index{sparsity} of a cut $(\sS, \sV \setminus \sS)$ is, \begin{align}
     \sigma(\sS) \defeq \frac{c(\sS)}{\min\{|\sS|, |\sV \setminus \sS|\}} = \sigma(\sV \setminus \sS) \in [0, \max_{v \in \sV} \vd(v)].
 \end{align} The sparsity of a graph is again defined as the smallest sparsity of all cuts.
 \end{defn}

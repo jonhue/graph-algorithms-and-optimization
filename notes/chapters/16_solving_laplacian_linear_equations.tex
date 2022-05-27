@@ -70,7 +70,7 @@ TBD
 \caption{$\mS^{(1)}$ is the Laplacian matrix of the graph, where the first vertex was removed and all of its neighbors are made to be in a clique.}
 \end{marginfigure}
 
-Observe that the sum of two Laplacian matrices is a again a graph Laplacian. Therefore, $\mL_{-1}$ is a graph Laplacian by definition. It is easy to check that by the characterization of \cref{exc:graph_laplacian_characterization}, $\mL_{+1}$ also is a graph Laplacian. Hence, $\mS^{(1)} = \mL_{+1} + \mL_{-1}$ is a graph Laplacian.
+Observe that the sum of two Laplacian matrices is a again a graph Laplacian. Therefore, $\mL_{-1}$ is a graph Laplacian by definition. It is easy to check that by the characterization of \cref{exc:graph_laplacian_characterization}, $\mL_{+1}$ also is a graph Laplacian, which represents a clique formed by the neighbors of vertex $1$. Hence, $\mS^{(1)} = \mL_{+1} + \mL_{-1}$ is a graph Laplacian.
 
 It remains to show that the underlying graph is connected. Consider any $i,j \in \sV \setminus \{1\}$. There exists an $i$-$j$ path $P$ in the graph of $\mL$. If $P$ does not use vertex $1$, then $P$ is a path in the graph of $\mL_{-1}$. If $P$ does use vertex $1$, it does so using some edges $(u,1)$ and $(1,v)$. Replacing the two edges with the edge $(u,v)$, which appears in $\mL_{+1}$ as $\mL_{+1}(u,v) < 0$, yields a path in the graph of $\mS^{(1)}$.
 \end{proof}
@@ -89,6 +89,8 @@ The fast algorithm has two main steps.
 \begin{proof}
 TBD
 \end{proof}
+
+Here, the main idea is to replace the clique of the neighbors of the eliminated vertex in each round of Gaussian elimination by a sparse approximation.
 
 \begin{thm} We can find an $\epsilon$-approximate solution $\Tilde{\vx}$ to $\mL\vx = \vd$, using an algorithm that takes $\LandauO{m \log^3 n \log(\nicefrac{1}{\epsilon})}$ time and succeeds with probability at least $1 - \nicefrac{1}{n^{10}}$.
 \end{thm}
