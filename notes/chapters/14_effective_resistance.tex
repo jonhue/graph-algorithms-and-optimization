@@ -4,12 +4,38 @@
 \chapter{Effective Resistance}\label{cha:effective_resistance}
 
 \begin{defn}[Effective resistance] The \emph{effective resistance}\index{effective resistance}, \begin{align}
-    \Reff(a,b) \defeq \min_{\substack{\vf \in \R^{|\sE|} \\ \mB\vf = \vOne_b - \vOne_a}} \mathcal{E}(\vf),
+    \Reff(a,b) \defeq \min_{\substack{\vf \in \R^{|\sE|} \\ \mB\vf = \vOne_b - \vOne_a}} \mathcal{E}(\vf) = \min_{\substack{\vf \in \R^{|\sE|} \\ \mB\vf = \vOne_b - \vOne_a}} \trans{\vf}\mR\vf,
 \end{align} is the minimum electrical energy required to route one unit of flow from $a$ to $b$.
 \end{defn}
 \begin{rmk}
 Per definition of electrical energy, routing $F$ units of flow from $a$ to $b$ costs $F^2 \Reff(a,b)$.
 \end{rmk}
+
+Let us first consider a few examples.
+
+\begin{marginfigure}
+TBD
+% \centering\includegraphics[width=4cm]{notes/figures/convex_set.png}
+\caption{Sequential resistors.}\label{fig:sequential_resistors}
+\end{marginfigure}
+\begin{ex}
+For the graph of \cref{fig:sequential_resistors}, $\Reff(1,k+1) = \sum_{i=1}^k \vr(i)$.
+\end{ex}
+\begin{proof}[Proof sketch] For the flow to be $1$, by Ohm's law, the voltage difference across edge $i$ must be $\vr(i)$.
+\end{proof}
+
+\begin{marginfigure}
+TBD
+% \centering\includegraphics[width=4cm]{notes/figures/convex_set.png}
+\caption{Parallel resistors.}\label{fig:parallel_resistors}
+\end{marginfigure}
+\begin{ex}
+For the graph of \cref{fig:parallel_resistors}, $\Reff(1,2) = \frac{1}{\sum_{i=1}^k \nicefrac{1}{\vr(i)}}$.
+\end{ex}
+\begin{proof}[Proof sketch] For the flow to be $1$, by Ohm's law, we must have, \begin{align*}
+    1 = \sum_{i=1}^k \frac{\elx(\{1,2\})}{\vr(i)},
+\end{align*} where $\elx(\{1,2\})$ is the voltage difference between vertices $1$ and $2$. Note that $\Reff(1,2) = \elx(\{1,2\})$.
+\end{proof}
 
 \begin{lem}
 $\Reff(a,b) = \norm{\mL^{\nicefrac{+}{2}}(\vOne_b - \vOne_a)}_2^2$.
@@ -57,32 +83,6 @@ $\E{C_{a,b}} = \norm{\vd}_1 \Reff(a,b)$.
 \begin{cor}\label{cor:effective_resistance_symmetric}
 Effective resistance is symmetric.
 \end{cor}
-
-Let us consider a few examples.
-
-\begin{marginfigure}
-TBD
-% \centering\includegraphics[width=4cm]{notes/figures/convex_set.png}
-\caption{Sequential resistors.}\label{fig:sequential_resistors}
-\end{marginfigure}
-\begin{lem}
-For the graph of \cref{fig:sequential_resistors}, $\Reff(1,k+1) = \sum_{i=1}^k \vr(i)$.
-\end{lem}
-\begin{proof}[Proof sketch] For the flow to be $1$, by Ohm's law, the voltage difference across edge $i$ must be $\vr(i)$.
-\end{proof}
-
-\begin{marginfigure}
-TBD
-% \centering\includegraphics[width=4cm]{notes/figures/convex_set.png}
-\caption{Parallel resistors.}\label{fig:parallel_resistors}
-\end{marginfigure}
-\begin{lem}
-For the graph of \cref{fig:parallel_resistors}, $\Reff(1,2) = \frac{1}{\sum_{i=1}^k \nicefrac{1}{\vr(i)}}$.
-\end{lem}
-\begin{proof}[Proof sketch] For the flow to be $1$, by Ohm's law, we must have, \begin{align*}
-    1 = \sum_{i=1}^k \frac{\elx(\{1,2\})}{\vr(i)},
-\end{align*} where $\elx(\{1,2\})$ is the voltage difference between vertices $1$ and $2$. Note that $\Reff(1,2) = \elx(\{1,2\})$.
-\end{proof}
 
 \section{Effective Resistance as a Metric}
 

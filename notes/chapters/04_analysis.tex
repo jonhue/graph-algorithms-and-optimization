@@ -78,6 +78,13 @@ If $\vx \in \sS$ is a local extremum of a differentiable function $f: \sS \to \R
 \end{defn}
 \begin{rmk} For $f: \sS \to \R$ and any $\vx \in \sS$, $D f(\vx) = \trans{\grad f(\vx)}$.
 \end{rmk}
+\begin{defn}
+For a vector-valued function $\vg : \R^n \to \R^m$, we define, \begin{align}
+    \grad \vg(\vx) \defeq \trans{D \vg(\vx)} = \begin{bmatrix}
+        \grad g_1(\vx) & \cdots & \grad g_m(\vx)
+    \end{bmatrix}.
+\end{align}
+\end{defn}
 
 \begin{defn}[Directional derivative] Let $f: \sS \to \R$ be differentiable at $\vx \in \R^n$. Given $\vd \in \R^n$, the \emph{directional derivative}\index{directional derivative} of $f$ at $\vx$ in the direction $\vd$ is, \begin{align}
     D f(\vx)[\vd] \defeq \lim_{\lambda \to 0} \frac{f(\vx + \lambda\vd) - f(\vx)}{\lambda}.
