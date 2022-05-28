@@ -22,7 +22,9 @@ Recall that $c_G(\sS) = \trans{\vOne_\sS}\mL\vOne_\sS$. The statement follows im
 \end{proof}
 
 \begin{thm}[Spectral graph approximation by sampling]
-For any $\epsilon, \delta \in (0,1)$, there exist sampling probabilities $p_e$ for each edge $e \in \sE$ such that if $e \in \Tilde{\sE}$ with probability $p_e$ and $\Tilde{\vw}(e) \defeq \nicefrac{\vw(e)}{p_e}$, then with probability at least $1-\delta$ the graph $\Tilde{G} = (\sV,\Tilde{\sE},\Tilde{\vw})$ satisfies,\cite{spielman2011graph} \begin{align*}
+For any $\epsilon, \delta \in (0,1)$ and sampling probabilities, \begin{align}
+    p_e \defeq \min\{\alpha \vw(e) \Reff(e), 1\},
+\end{align} of each edge $e \in \sE$ for some scaling parameter $\alpha > 0$ such that if $e \in \Tilde{\sE}$ with probability $p_e$ and $\Tilde{\vw}(e) \defeq \nicefrac{\vw(e)}{p_e}$, then with probability at least $1-\delta$ the graph $\Tilde{G} = (\sV,\Tilde{\sE},\Tilde{\vw})$ satisfies,\cite{spielman2011graph} \begin{align*}
     \mL \approx_\epsilon \Tilde{\mL} \quad\text{and}\quad |\Tilde{\sE}| = \LandauO{\frac{n}{\epsilon} \log\parentheses*{\frac{n}{\delta}}}.
 \end{align*}
 \end{thm}
@@ -31,5 +33,5 @@ TBD
 \end{proof}
 
 \begin{rmk}
-It can be shown that to compute the sampling probabilities $p_e$, it is sufficient to solve some Laplacian linear systems to find sufficiently good approximations to the effective resistances.
+It can be shown that to compute the sampling probabilities $p_e$, it is sufficient to solve Laplacian linear systems to find sufficiently good approximations to the effective resistances.
 \end{rmk}

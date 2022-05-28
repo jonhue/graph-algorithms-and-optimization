@@ -145,7 +145,7 @@ Overall, we get, \begin{align*}
 
 We will now look at Dinitz's algorithm, which also belongs to the family of Ford-Folkerson algorithms. That is, we still start with the initial feasible flow $\vf \gets \vZero$ and iteratively improve this flow by finding an augmenting flow in $G_\vf$.
 
-In Dinitz's algorithm, our strategy to finding an augmenting path is to find so-called \emph{blocking flows} in $G_\vf$, which in each iteration ``block'' one shortest $s$-$t$ path in $G_\vf$. Dinitz's algorithm runs in $\LandauO{n^2 m}$ time in general graphs and in time $\LandauO{\min\{m^{\nicefrac{3}{2}}, m n^{\nicefrac{2}{3}}\}}$ in unit capacity graphs.
+In Dinitz's algorithm, our strategy to finding an augmenting path is to find so-called \emph{blocking flows} in $G_\vf$, which in each iteration ``block'' one shortest $s$-$t$ path in $G_\vf$. Dinitz's algorithm runs in $\LandauO{n^2 + nm \log^2 n}$ time in general graphs and in time $\LandauO{\min\{m^{\nicefrac{3}{2}}, m n^{\nicefrac{2}{3}}\}}$ in unit capacity graphs.
 
 \begin{rmk}
 It can also be shown that Dinitz's algorithm converges in time $\LandauO{m \sqrt{n}}$ in bipartite matching graphs, but we will not show this here.
@@ -222,6 +222,9 @@ A naïve approach is to repeatedly use depth-first search to find an unsaturated
 \begin{lem}
 \textsc{FindBlockingFlow} returns a blocking flow in $\LandauO{mn}$ time.
 \end{lem}
+\begin{rmk}
+This can be improved to $\LandauO{m \log^2 n + n}$ by using link-cut trees, which we will discuss in the next chapter.
+\end{rmk}
 \begin{proof}
 TBD
 \end{proof}

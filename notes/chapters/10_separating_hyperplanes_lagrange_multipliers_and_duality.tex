@@ -58,4 +58,27 @@ Consider the line defined by the distance minimizer $\vd$ and the point on the `
 \end{align*} implies that $\trans{(\vd - \vc)}(\vu - \vd)$, and hence, the gradient are negative, which contradicts the minimality of $\vd$.
 \end{proof}
 
+\section{Lagrange Multipliers and KKT Conditions}
+
+We will now discuss how we can treat constraints in a convex optimization problem, \begin{align}
+    \s{\alpha} \defeq \min_{\substack{\vy \in \R^n \\ \mA\vy = \vb \\ \vg(\vy) \leq \vZero}} f(\vy),
+\end{align} where $f : \R^n \to \R$ is convex, $\mA \in \R^{m \times n}$, $\vb \in \R^m$, and we have $k$ convex constraints $g_i : \R^n \to \R$.
+
+\begin{rmk}
+The linear constraints $\mA\vy = \vb$ are not necessary, as they can also be modeled using the (convex) constraints $\mA\vy - \vb \leq \vZero$ and $\vb - \mA\vy \leq 0$. We include them here to see later that programs with only linear constraints can be handled in a slightly different way.
+\end{rmk}
+
+We call this optimization problem the \emph{primal problem}\index{primal problem} and we will later see that it has an associated dual problem. We say that $\vy \in \R^n$ is \emph{primal feasible}\index{primal feasible} iff $\mA\vy = \vb$ and $\vg(\vy) \leq \vZero$.
+
+\begin{marginfigure}
+TBD
+% \centering\includegraphics[width=4cm]{notes/figures/convex_set.png}
+\caption{Illustration of simple constrained optimization.}
+\end{marginfigure}
+In the following, we want to answer the question: ``When is a feasible point optimal?'' To simplify things a bit, let us consider the optimization problem of minimizing $f$ under the single constraint $g$. Suppose we know the feasible optimum $\s{\vy}$. Then for infinitesimal $\vdelta$, if $\vdelta \perp \grad g(\s{\vy})$, then $\s{\vy} + \vdelta$ and $\s{\vy} - \vdelta$ are feasible. But then we must have that $\vdelta \perp \grad f(\s{\vy})$, or else one direction would improve the objective. This tells us that, \begin{align*}
+    \trans{\vdelta}\grad f(\s{\vy}) = 0 = \trans{\vdelta}\grad g(\s{\vy}),
+\end{align*} and hence, there exists some $\lambda \in \R$ such that $\grad f(\s{\vy}) = \lambda \grad g(\s{\vy})$. This is the fundamental intuition behind a \emph{Lagrange multiplier}: the gradient of the objective at an optimal point is a linear combination of the gradients of the (tight) constraints.
+
+We say that the constraint $g_i$ is \emph{tight}\index{tight constraint} at $\vy$ iff $g_i(\vy) = 0$.
+
 % \section{Fenchel Conjugates}
