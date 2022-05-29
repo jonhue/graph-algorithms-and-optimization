@@ -126,8 +126,8 @@ We follow these general rules: \begin{itemize}[noitemsep]
    $c(\sS)$ & value of a cut $\sS$, $\sum_{\{a,b\} \in \sE:\ a \in \sS,\ b \in \sV \setminus \sS} \vw(\{a,b\}) = \trans{\vOne_\sS}\mL\vOne_\sS$ \\
    $\phi(\sS)$ & conductance of a cut $\sS$, $\frac{c(\sS)}{\min\{\vol(\sS), \vol(\sV \setminus \sS)\}}$ \\
    $\phi(G)$ & conductance of a graph $G$, $\min_{\emptyset \subset \sS \subset \sV} \phi(S)$ \\
-   $\sigma(\sS)$ & sparsity of a cut $\sS$, $\frac{c(\sS)}{\min\{|\sS|, |\sV \setminus \sS|\}}$ \\
-   $\sigma(G)$ & sparsity of a graph $G$, $\min_{\emptyset \subset \sS \subset \sV} \sigma(S)$ \\
+   $\psi(\sS)$ & sparsity of a cut $\sS$, $\frac{c(\sS)}{\min\{|\sS|, |\sV \setminus \sS|\}}$ \\
+   $\psi(G)$ & sparsity of a graph $G$, $\min_{\emptyset \subset \sS \subset \sV} \psi(S)$ \\
    \addlinespace
    $K_n$ & unit weight complete graph on $n$ vertices \\
    $P_n$ & unit weight path graph on $n$ vertices \\
@@ -154,5 +154,10 @@ We follow these general rules: \begin{itemize}[noitemsep]
    $\hat{\vf}$ & flow within the residual graph $G_\vf$ \\
    $U$ & maximum edge capacity, $\max_e \vc(e)$ \\
    $L_\vf$ & level graph of residual graph $G_\vf$ \\
+\end{longtable}
+
+\vspace{0.5cm}\section*{\smallcaps{Optimization}}\vspace{-0.5cm}
+\begin{longtable}{p{2.5cm}l}
+   $L(\vy, \vx, \vs)$ & Lagrangian of an optimization problem with primal variables $\vy$ and dual variables $\vx, \vs$ \\
 \end{longtable}
 \end{fullwidth}

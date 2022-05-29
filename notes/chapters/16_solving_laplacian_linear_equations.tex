@@ -39,7 +39,7 @@ Let $\mL^{(0)} \defeq \mL$. For $i \in [n-1]$, we define, \begin{align*}
 Fix some $i < n$. Let $\sU \defeq \{i+1, \dots, n\}$. Then, $\mL^{(i)}(i,j) = 0$ if $i \not\in \sU$ or $j \not\in \sU$; and $\mL^{(i)}$ is a graph Laplacian matrix of a connected graph on the vertex set $\sU$.
 \end{clm}
 
-It follows that $\mL^{(n-1)} = \mZero_{n \times n}$ because the only graph on a single vertex is the empty graph. From this, we have that $\mL = \sum_{i=1}^{n-1} \vl_i \trans{\vl_i}$ provided that $\vl_i$ is well-defined, i.e., $\mL^{(i-1)}(i,i) \neq 0$ for all $i < n$. But this follows immediately from the claim, as the diagonal of the Laplacian matrix of a connected graph on more than one vertex must be strictly positive (as the degrees must be non-zero).
+It follows that $\mL^{(n-1)} = \mZero_{n \times n}$ because the only graph on a single vertex is the empty graph. From this, we have that $\mL = \sum_{i=1}^{n-1} \vl_i \trans{\vl_i}$, so $\mCalL = [\vl_1 \cdots \vl_{n-1}\ \vZero]$, provided that $\vl_i$ is well-defined, i.e., $\mL^{(i-1)}(i,i) \neq 0$ for all $i < n$. But this follows immediately from the claim, as the diagonal of the Laplacian matrix of a connected graph on more than one vertex must be strictly positive (as the degrees must be non-zero).
 
 In each iteration, we compute $\mL^{(i)}$ in time $\LandauO{n^2}$ and we proceed for $\LandauO{n}$ iterations.
 \end{proof}
@@ -60,9 +60,18 @@ In each iteration, we compute $\mL^{(i)}$ in time $\LandauO{n^2}$ and we proceed
 \end{align*} Therefore, \begin{align*}
     \mL^{(1)} = \mL^{(0)} - \vl_1 \trans{\vl_1} = \begin{bmatrix}
         0 & \trans{\vZero} \\
-        \vZero & \mS^{(0)} \\
+        \vZero & \mS^{(1)} \\
     \end{bmatrix},
-\end{align*} where $\mS^{(1)} \defeq \mL_{+1} + \mL_{-1}$ and $\mL_{+1} \defeq \diag(\va) - \frac{1}{w}\va\trans{\va}$. $\mS^{(1)}$ is also called the \emph{Schur complement}\index{Schur complement}. It remains to show that $\mS^{(1)}$ is the Laplacian matrix of a connected graph on the vertex set $\{2, \dots, n\}$.
+\end{align*} where $\mS^{(1)} \defeq \mL_{+1} + \mL_{-1}$ and $\mL_{+1} \defeq \diag(\va) - \frac{1}{w}\va\trans{\va}$. $\mS^{(1)}$ is also called the \emph{Schur complement}\index{Schur complement}. We can also phrase it differently as, \begin{align}
+    \vl_1 \trans{\vl_1} &= \begin{bmatrix}
+        w & -\trans{\va} \\
+        -\va & \diag(\va) \\
+    \end{bmatrix} - \begin{bmatrix}
+        0 & \trans{\vZero} \\
+        \vZero & \diag(\va) - \frac{1}{w}\va\trans{\va} \\
+    \end{bmatrix} \\
+    &\eqdef \textsc{Star}(1, \mL) - \textsc{Clique}(1, \mL).
+\end{align} It remains to show that $\mS^{(1)}$ is the Laplacian matrix of a connected graph on the vertex set $\{2, \dots, n\}$.
 
 \begin{marginfigure}
 TBD

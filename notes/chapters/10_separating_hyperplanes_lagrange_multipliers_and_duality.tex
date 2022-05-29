@@ -68,7 +68,9 @@ We will now discuss how we can treat constraints in a convex optimization proble
 The linear constraints $\mA\vy = \vb$ are not necessary, as they can also be modeled using the (convex) constraints $\mA\vy - \vb \leq \vZero$ and $\vb - \mA\vy \leq 0$. We include them here to see later that programs with only linear constraints can be handled in a slightly different way.
 \end{rmk}
 
-We call this optimization problem the \emph{primal problem}\index{primal problem} and we will later see that it has an associated dual problem. We say that $\vy \in \R^n$ is \emph{primal feasible}\index{primal feasible} iff $\mA\vy = \vb$ and $\vg(\vy) \leq \vZero$.
+We call this optimization problem the \emph{primal program}\index{primal program} and we will later see that it has an associated dual problem. We say that $\vy \in \R^n$ is \emph{primal feasible}\index{primal feasible} iff $\mA\vy = \vb$ and $\vg(\vy) \leq \vZero$.
+
+\subsection{An Intuition}
 
 \begin{marginfigure}
 TBD
@@ -79,6 +81,111 @@ In the following, we want to answer the question: ``When is a feasible point opt
     \trans{\vdelta}\grad f(\s{\vy}) = 0 = \trans{\vdelta}\grad g(\s{\vy}),
 \end{align*} and hence, there exists some $\lambda \in \R$ such that $\grad f(\s{\vy}) = \lambda \grad g(\s{\vy})$. This is the fundamental intuition behind a \emph{Lagrange multiplier}: the gradient of the objective at an optimal point is a linear combination of the gradients of the (tight) constraints.
 
-We say that the constraint $g_i$ is \emph{tight}\index{tight constraint} at $\vy$ iff $g_i(\vy) = 0$.
+We say that the constraint $g_i$ is \emph{tight}\index{tight constraint} at $\vy$ iff $g_i(\vy) = 0$. We know that if $\vy$ is feasible, then $\vy + \vdelta$ is feasible for some infinitesimal $\vdelta$ if for all constraints $i \in [k]$ we have that either the constraint is not tight, $g_i(\vy) < 0$, or $\vy + \vdelta$ is ``more'' feasible, $\trans{\vdelta} \grad g_i(\vy) \leq 0$. The last condition tells us that for each tight constraint $g_i$, we get a half-space of feasible directions.
+\begin{marginfigure}
+TBD
+% \centering\includegraphics[width=4cm]{notes/figures/convex_set.png}
+\caption{Each tight constraint yields a half-space of feasible directions.}
+\end{marginfigure}
+
+On the other hand, if $\s{\vy} + \vdelta$ is feasible, then the objective $f$ must ``worsen'', $\trans{\vdelta}\grad f(\s{\vy}) \geq 0$.
+
+We can therefore write the gradient of $f$ at $\s{\vy}$ as a linear combination of the gradients of tight constraints.\footnote{Note that linear constraints are always tight.} Therefore, for some $\vx \in \R^m$ and $\vs \in \R^k$ with $\vs(i) \geq 0$ if $g_i(\s{\vy}) = 0$ and $\vs(i) = 0$ otherwise, \begin{align}
+    - \grad f(\s{\vy}) = \sum_{i=1}^k \vs(i) \grad g_i(\s{\vy}) + \sum_{j=1}^m \vx(j) \mA(j,:). \label{eq:kkt_intro}
+\end{align} The variables $\vs$ and $\vx$ are called the \emph{dual variables}\index{dual variables} and are said to be \emph{dual feasible}\index{dual feasible} iff $\vs \geq \vZero$. If $\vy$ is also primal feasible, we say that $(\vy, \vx, \vs)$ are \emph{primal-dual feasible}\index{primal-dual feasible}. \Cref{eq:kkt_intro} is equivalent to \begin{align}
+    \grad f(\s{\vy}) + \trans{\grad g(\s{\vy})}\vs + \trans{\mA}\vx = \vZero \label{eq:kkt_intro2}
+\end{align} along with the condition $\trans{\grad \vg(\s{\vy})}\vs = \vZero$, ensuring that $\vs(i) = 0$ when constraint $g_i$ is not tight.
+
+\begin{defn}[Karush-Kuhn-Tucker (KKT) conditions and Lagrangian] Points $\vy \in \R^n, \vx \in \R^m, \vs \in \R^k$ satisfy the \emph{Karush-Kuhn-Tucker conditions}\index{Karush-Kuhn-Tucker conditions} iff, \begin{align}
+    \grad_\vy L(\vy, \vx, \vs) = \vZero &&\text{\emph{gradient condition}\index{gradient condition}} \\
+    \trans{\grad \vg(\vy)}\vs = \vZero &&\text{\emph{complementary slackness}\index{complementary slackness}}\margintag{ensures that $\vs(i)$ is forced to $0$ when constraint $g_i$ is not tight} \\
+    \vg(\vy) \leq \vZero \quad\text{and}\quad \mA\vy = \vb &&\text{primal feasibility} \\
+    \vs \geq \vZero &&\text{dual feasibility},
+\end{align} where \begin{align}
+    L(\vy, \vx, \vs) \defeq f(\vy) + \trans{\vs}\vg(\vy) + \trans{\vx}(\vb - \mA\vy)
+\end{align} is the \emph{Lagrangian}\index{Lagrangian} of the optimization problem.
+\end{defn}
+\begin{rmk}
+Note that, \begin{align*}
+    \grad_\vy L(\vy, \vx, \vs) = \grad f(\vy) + \trans{\grad g(\vy)}\vs + \trans{\mA}\vx,
+\end{align*} which coincides with our intuition from \cref{eq:kkt_intro2}.
+\end{rmk}
+
+Intuitively, if $(\vy, \vx, \vs)$ satisfy the KKT conditions, then $\vy$ is optimal. It turns out that this intuition is correct, and we will prove this in the following section.
+
+\section{Lagrangian Duality}
+
+We have that if $(\vy, \vx, \vs)$ are primal-dual feasible, \begin{align}
+    L(\vy, \vx, \vs) = f(\vy) + \underbrace{\trans{\vs}}_{\geq \vZero}\underbrace{\vg(\vy)}_{\leq \vZero} + \trans{\vx}(\underbrace{\vb - \mA\vy}_{\vZero}) \leq f(\vy).
+\end{align} We can also write the primal problem as a two-player game in terms of the Lagrangian, \begin{align}
+    \s{\alpha} = \min_{\substack{\vy \in \R^n \\ \mA\vy = \vb \\ \vg(\vy) \leq \vZero}} f(\vy) = \min_{\vy \in \R^n} \max_{\substack{\vx \in \R^m \\ \vs \in \R^k \\ \vs \geq \vZero}} L(\vy, \vx, \vs).
+\end{align} This is because for a minimizing $\vy$ all constraints has to be satisfied and the Lagrangian simplifies to $L(\vy, \vx, \vs) = f(\vy)$. If $\vb - \mA\vy = \vZero$ was violated, making $\vx$ large sends $L(\vy, \vx, \vs) \to \infty$. If $\vg(\vy) \leq \vZero$ was violated, making $\vs$ large sends $L(\vy, \vx, \vs) \to \infty$.
+
+We therefore have for any dual feasible $(\vx, \vs)$, \begin{align}
+    \s{\alpha} = f(\s{\vy}) \geq L(\s{\vy}, \vx, \vs) \geq \min_{\vy \in \R^n} L(\vy, \vx, \vs) \eqdef L(\vx, \vs). \label{eq:weak_duality}
+\end{align}
+
+\begin{defn}[Dual program] The \emph{dual program}\index{dual program} is given as, \begin{align}
+    \s{\beta} \defeq \max_{\substack{\vx \in \R^m \\ \vs \in \R^k \\ \vs \geq \vZero}} L(\vx, \vs) = \max_{\substack{\vx \in \R^m \\ \vs \in \R^k \\ \vs \geq \vZero}} \min_{\vy \in \R^n} L(\vy, \vx, \vs).
+\end{align}
+\end{defn}
+\begin{thm}[Weak duality]\index{weak duality}
+$\s{\beta} \leq \s{\alpha}$.
+\end{thm}
+\begin{proof}
+This follows immediately by \cref{eq:weak_duality}.
+\end{proof}
+\begin{rmk}
+Observe that the dual program is a convex optimization problem in disguise. We can equivalently consider the optimization problem, \begin{align}
+    \s{\beta} = \min_{\substack{\vx \in \R^m \\ \vs \in \R^k \\ \vs \geq \vZero}} - L(\vx, \vs) = \min_{\substack{\vx \in \R^m \\ \vs \in \R^k \\ \vs \geq \vZero}} \max_{\vy \in \R^n} - L(\vy, \vx, \vs).
+\end{align} Note that $-L(\vy, \vx, \vs)$ is a linear function in the dual variables, hence convex, and $-L(\vx, \vs)$ is a maximum of these functions, so also convex.
+\end{rmk}
+
+\begin{defn}[Strong duality] If $\s{\alpha} = \s{\beta}$, we say that \emph{strong duality}\index{strong duality} holds.
+\end{defn}
+\begin{rmk}
+It is immediately clear that if we consider linear programs, that is, we have only linear constraints, strong duality always holds. This is because at any primal-dual feasible point $(\vy, \vx)$, we have that by definition $L(\vy, \vx) = f(\vy)$.
+\end{rmk}
+
+Before we analyze when strong duality holds, let us return to the KKT conditions and confirm our intuition from the previous section.
+
+\begin{thm}[KKT conditions are necessary]
+If strong duality holds, then the KKT conditions hold for primal-dual optimal $(\s{\vy}, \s{\vx}, \s{\vs})$.
+\end{thm}
+\begin{proof}
+By strong duality, \begin{align*}
+    L(\s{\vy}, \s{\vx}, \s{\vs}) = \s{\alpha} = \s{\beta}.
+\end{align*} As $L(\vy, \s{\vx}, \s{\vs})$ is a convex function in $\vy$, we have that \begin{align*}
+    \left.\grad_\vy L(\vy, \s{\vx}, \s{\vs})\right\vert_{\vy = \s{\vy}} = \vZero,
+\end{align*} so the gradient condition is satisfied. Moreover, we have, \begin{align*}
+    f(\s{\vy}) = \s{\alpha} = L(\s{\vy}, \s{\vx}, \s{\vs}) = f(\s{\vy}) + \trans{\vs}\vg(\s{\vy}) + \trans{\vx}(\underbrace{\vb - \mA\vy}_{\vZero}),
+\end{align*} so $\trans{\vs}\vg(\s{\vy}) = \vZero$ (complementary slack) holds. By assumption, $(\s{\vy}, \s{\vx}, \s{\vs})$ are primal-dual feasible.
+\end{proof}
+
+\begin{thm}[KKT conditions are sufficient]
+If the KKT conditions hold at $(\hat{\vy}, \hat{\vx}, \hat{\vs})$, then they are primal-dual optimal and strong duality holds.
+\end{thm}
+\begin{proof}
+Because $L(\vy, \hat{\vx}, \hat{\vs})$ is a convex function, by the gradient condition, $\hat{\vy}$ is its global minimizer. Therefore, \begin{align*}
+    L(\hat{\vy}, \hat{\vx}, \hat{\vs}) = \min_{\vy \in \R^n} L(\vy, \hat{\vx}, \hat{\vs}) = L(\hat{\vx}, \hat{\vs}) \leq \s{\beta}.
+\end{align*} At the same time, using primal-dual feasibility and complementary slack, \begin{align*}
+    L(\hat{\vy}, \hat{\vx}, \hat{\vs}) = f(\hat{\vy}) + \underbrace{\trans{\hat{\vs}}\vg(\hat{\vy})}_{\vZero} + \trans{\hat{\vx}}(\underbrace{\vb - \mA\hat{\vy}}_{\vZero}) = f(\hat{\vy}) \geq \s{\alpha}.
+\end{align*} Therefore, $\s{\alpha} \leq \s{\beta}$. By weak duality, we get the opposite inequality, and hence strong duality holds.
+\end{proof}
+
+\section{Slater's Condition}
+
+In this final section, we discuss when strong duality holds. In general, we can have that strong duality does not hold. \begin{ex} TBD
+\end{ex}
+
+\begin{defn}[Slater's condition] \emph{Slater's condition}\index{Slater's condition} is satisfied iff there exists some $\vy \in \R^n$ such that $\mA\vy = \vb$ and $\vg(\vy) < \vZero$.\footnote{This is satisfied by most useful optimization problems.} We say that $\vy$ is \emph{strictly feasible}\index{strictly feasible}.
+\end{defn}
+
+\begin{thm}
+If Slater's condition holds, then strong duality holds.
+\end{thm}
+\begin{proof}
+TBD
+\end{proof}
 
 % \section{Fenchel Conjugates}

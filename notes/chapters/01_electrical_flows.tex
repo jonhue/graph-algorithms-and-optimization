@@ -169,7 +169,7 @@ We have therefore recast the problem of finding electrical voltages to the conve
 Let us now look at the same problem through a different lens. Transporting current through a network of resistors requires energy, which is dissipated as heat by the resistor. By \emph{Joule's law}\index{Joule's law}, sending a current $\Tilde{f}$ across a resistor with potential drop $\Tilde{x}$, spends $\Tilde{f} \cdot \Tilde{x}$ units of energy per unit time.\footnote{We will think about everything as if happening in one unit of time.} Using Ohm's law, we have, \begin{align}
     \Tilde{f} \cdot \Tilde{x} = \frac{\Tilde{x}^2}{r} = r \cdot \Tilde{f}^2.
 \end{align} We can therefore write the \emph{electrical energy}\index{electrical energy} dissipated by routing a current $\ef$ (or equivalently with electrical voltages $\elx$) as, \begin{align}
-    \e(\ef) \defeq \sum_{e \in \sE} \vr(e) \ef(e)^2 = \trans{\ef}\mR\ef = \trans{\elx}\mL\elx \defeq \mathcal{E}(\elx). \margintag{using Ohm's law, $\ef = \mR^{-1}\mB\elx$}
+    \e(\ef) \defeq \sum_{e \in \sE} \vr(e) \ef(e)^2 = \trans{\ef}\mR\ef = \trans{\elx}\mL\elx \defeq \mathcal{E}(\elx). \margintag{using Ohm's law, $\ef = \mR^{-1}\trans{\mB}\elx$}
 \end{align}
 
 \begin{rmk}

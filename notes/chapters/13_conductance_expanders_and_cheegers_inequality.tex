@@ -102,17 +102,19 @@ TBD
 A concept related to conductance is the notion of \emph{sparsity}.
 
 \begin{defn}[Sparsity] The \emph{sparsity}\index{sparsity} of a cut $(\sS, \sV \setminus \sS)$ is, \begin{align}
-    \sigma(\sS) \defeq \frac{c(\sS)}{\min\{|\sS|, |\sV \setminus \sS|\}} = \sigma(\sV \setminus \sS) \in [0, \max_{v \in \sV} \vd(v)].
+    \psi(\sS) \defeq \frac{c(\sS)}{\min\{|\sS|, |\sV \setminus \sS|\}} = \psi(\sV \setminus \sS) \in [0, \max_{v \in \sV} \vd(v)].
 \end{align} The sparsity of a graph is again defined as the smallest sparsity of all cuts.
 \end{defn}
 \begin{rmk}
 If $|\sS| \leq |\sV \setminus \sS|$, then we can write \begin{align}
-    \sigma(\sS) = \frac{\trans{\vOne_\sS}\mL\vOne_\sS}{\trans{\vOne_\sS}\vOne_\sS}.
+    \psi(\sS) = \frac{\trans{\vOne_\sS}\mL\vOne_\sS}{\trans{\vOne_\sS}\vOne_\sS}.
 \end{align}
 \end{rmk}
 
+Intuitively, sparsity corresponds to a non-normalized variant of conductance. Sometimes it is easier to reason about sparsity than it is to reason about conductance.
+
 \begin{lem}
-We have for any cut $(\sS, \sV \setminus \sS)$ in a connected unit weight graph that $\sigma(\sS) \geq \phi(\sS)$.
+We have for any cut $(\sS, \sV \setminus \sS)$ in a connected unit weight graph that $\psi(\sS) \geq \phi(\sS)$.
 \end{lem}
 \begin{proof}
 As the graph is connected and has unit weights, $\vol(\sS) = \sum_{v \in \sS} \vd(v) \geq |\sS|$.
@@ -121,6 +123,6 @@ As the graph is connected and has unit weights, $\vol(\sS) = \sum_{v \in \sS} \v
 An alternative version of Cheeger's inequality relates the second eigenvalue of $\mL$ (not $\mN$!) to the sparsity of the graph.
 
 \begin{fct}[Cheeger's inequality for sparsity] We have for a graph $G$ and its Laplacian matrix $\mL$, \begin{align}
-    \frac{\lambda_2(\mL)}{2} \leq \sigma(G) \leq \sqrt{2 \lambda_2(\mL) \max_{v \in \sV} \vd(v)}.
+    \frac{\lambda_2(\mL)}{2} \leq \psi(G) \leq \sqrt{2 \lambda_2(\mL) \max_{v \in \sV} \vd(v)}.
 \end{align}
 \end{fct}

@@ -68,7 +68,7 @@ A natural approach is to choose the gradient step of each iteration such that we
 
 \begin{thm}[Convergence of gradient descent] Suppose $f: \R^n \to \R$ is convex and $\beta$-smooth. The gradient descent scheme, \begin{align}
     \vx_{i+1} \defeq \vx_i - \frac{1}{\beta}\grad f(\vx_i),
-\end{align} yields an $\epsilon$-approximate solution $\vx_k$ for some \begin{align*}
+\end{align} yields an $\epsilon$-approximate solution $\vx_k$ for any \begin{align*}
     k \geq \frac{2\beta\norm{\vx_0 - \s{\vx}}_2^2}{\epsilon}.
 \end{align*}
 \end{thm}
@@ -127,7 +127,7 @@ As $f$ is $\mu$-strongly convex, \begin{align*}
 
 \begin{thm}[Convergence of gradient descent with a strongly convex objective] Suppose $f: \R^n \to \R$ is $\mu$-strongly convex and $\beta$-smooth. The gradient descent scheme, \begin{align}
     \vx_{i+1} \defeq \vx_i - \frac{1}{\beta}\grad f(\vx_i),
-\end{align} yields an $\epsilon$-approximate solution $\vx_k$ for some \begin{align*}
+\end{align} yields an $\epsilon$-approximate solution $\vx_k$ for any \begin{align*}
     k \geq \kappa\log\parentheses*{\frac{\beta\norm{\vx_0 - \s{\vx}}_2^2}{2\epsilon}}.
 \end{align*}
 \end{thm}
@@ -149,7 +149,7 @@ We can get an algorithm that converges substantially faster than vanilla gradien
     \vy_i &\defeq \vx_i - \frac{1}{\beta} \grad f(\vx_i) \\
     \vx_{i+1} &\defeq \frac{A_i\vy_i + a_{i+1}\vv_i}{A_{i+1}} \\
     \vv_{i+1} &\defeq \vv_i - \frac{a_{i+1}}{\beta} \grad f(\vx_{i+1}),
-\end{split}\end{align} yields an $\epsilon$-approximate solution $\vx_k$ for some \begin{align*}
+\end{split}\end{align} yields an $\epsilon$-approximate solution $\vx_k$ for any \begin{align*}
     k \geq \sqrt{\frac{2\beta\norm{\vx_0 - \s{\vx}}_2^2}{\epsilon}}.
 \end{align*}
 \end{thm} Here, $\vy_i$ is the current solution (i.e., an upper bound), $\vv_i$ is a lower bound, and $\vx_i$ a point that trades improving the lower/upper bounds.
@@ -164,7 +164,7 @@ TBD
     \vy_0 &\defeq \vx_0 \\
     \vy_{i+1} &\defeq \vx_i - \frac{1}{\beta} \grad f(\vx_i) \\
     \vx_{i+1} &\defeq (1+\theta)\vy_{i+1} + \theta\vy_i
-\end{split}\end{align} for $\theta \defeq \frac{\sqrt{\kappa} - 1}{\sqrt{\kappa} + 1}$ yields an $\epsilon$-approximate solution $\vx_k$ for some \begin{align*}
+\end{split}\end{align} for $\theta \defeq \frac{\sqrt{\kappa} - 1}{\sqrt{\kappa} + 1}$ yields an $\epsilon$-approximate solution $\vx_k$ for any \begin{align*}
     k \geq \sqrt{\kappa}\log\parentheses*{\frac{\beta\norm{\vx_0 - \s{\vx}}_2^2}{\epsilon}}.
 \end{align*}
 \end{thm}
