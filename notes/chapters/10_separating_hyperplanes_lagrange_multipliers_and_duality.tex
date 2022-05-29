@@ -133,7 +133,7 @@ We therefore have for any dual feasible $(\vx, \vs)$, \begin{align}
 $\s{\beta} \leq \s{\alpha}$.
 \end{thm}
 \begin{proof}
-This follows immediately by \cref{eq:weak_duality}.
+This follows immediately from \cref{eq:weak_duality}.
 \end{proof}
 \begin{rmk}
 Observe that the dual program is a convex optimization problem in disguise. We can equivalently consider the optimization problem, \begin{align}
@@ -175,7 +175,7 @@ Because $L(\vy, \hat{\vx}, \hat{\vs})$ is a convex function, by the gradient con
 
 \section{Slater's Condition}
 
-In this final section, we discuss when strong duality holds. In general, we can have that strong duality does not hold. \begin{ex} TBD
+We will now discuss under which circumstances strong duality holds. In general, we can have that strong duality does not hold. \begin{ex} TBD
 \end{ex}
 
 \begin{defn}[Slater's condition] \emph{Slater's condition}\index{Slater's condition} is satisfied iff there exists some $\vy \in \R^n$ such that $\mA\vy = \vb$ and $\vg(\vy) < \vZero$.\footnote{This is satisfied by most useful optimization problems.} We say that $\vy$ is \emph{strictly feasible}\index{strictly feasible}.
@@ -188,4 +188,60 @@ If Slater's condition holds, then strong duality holds.
 TBD
 \end{proof}
 
-% \section{Fenchel Conjugates}
+\section{Example: Duality of Maximum Flow and Minimum Cut}\label{sec:max_flow_min_cut_duality}
+
+We can write the (directed) maximum flow problem in a graph $G$ as, \begin{align}
+    \max_{\substack{F \in \R \\ \vf \in \R^{|\sE|} \\ \mB\vf = F(\vOne_t - \vOne_s) \\ \vZero \leq \vf \leq \vc}} F = - \min_{\substack{F \in \R \\ \vf \in \R^{|\sE|} \\ \mB\vf = F(\vOne_t - \vOne_s) \\ \vZero \leq \vf \leq \vc}} -F.
+\end{align} Here, $\vZero \leq \vf$ ensures that directions are respected, and $\vf \leq \vc$ ensures that edge capacities are respected. $F(\vOne_t - \vOne_s)$ is the demand of a flow routing $F$ units from $t$ to $s$. Observe that when there exists an $s$-$t$ path, then there are flows $\vf$ strictly satisfying the constraint $\vZero \leq \vf \leq \vc$, and hence, Slater's criterion is satisfied. By strong duality, the above program is equivalent to its dual program, \begin{align}
+    &- \max_{\substack{\vx \in \R^{|\sV|} \\ \vs \in \R^{|\sE|} \\ \vs \geq \vZero}} \min_{\substack{F \in \R \\ \vf \in \R^{|\sE|} \\ \vf \geq \vZero}} -F + \trans{\vs}(\vf - \vc) + \trans{\vx}(F(\vOne_t - \vOne_s) - \mB\vf) \\
+    &= \min_{\substack{\vx \in \R^{|\sV|} \\ \vs \in \R^{|\sE|} \\ \vs \geq \vZero \\ \trans{(\vOne_t - \vOne_s)}\vx = 1 \\ \vs \geq \trans{\mB}\vx}} \trans{\vs}\vc \\
+    &= \min_{\substack{\vx \in \R^{|\sV|} \\ \trans{(\vOne_t - \vOne_s)}\vx = 1}} \sum_{e \in \sE} \max\{(\trans{\mB}\vx)(e), 0\}\cdot\vc(e).
+\end{align} Observe that the dual program is a linear program computing the minimum cut.
+
+\section{Fenchel Conjugates}
+
+\begin{defn}[Fenchel conjugate]
+Given a function $f : \sS \to \R$, its \emph{Fenchel conjugate}\index{Fenchel conjugate} is the function $\s{f} : \R^n \to \R$,\footnote{In principle, $\s{f}$ is a function defined over the dual space of $\sS$, but this will not be very important to us.} \begin{align}
+    \s{f}(\vz) \defeq \sup_{\vy \in \sS} \trans{\vz}\vy - f(\vy).
+\end{align}
+\end{defn}
+\begin{rmk}
+$\s{f}$ is convex, as it is the maximum of linear functions.
+\end{rmk}
+
+\begin{ex}
+Let us consider the function $f(\vy) \defeq \norm{\vy}$. Then we have, \begin{align}
+    \s{f}(\vz) &= \sup_{\vy \in \R^n} \trans{\vz}\vy - \underbrace{\norm{\vy}}_{\eqdef \theta} \margintag{Recall that \begin{align*}
+        \theta \norm{\vz}_* = \max_{\substack{\vy \in \R^n \\ \norm{\vy} = \theta}} \trans{\vz}\vy.
+    \end{align*}} \nonumber\\
+    &= \sup_{\theta \geq 0} \theta(\norm{\vz}_* - 1) \nonumber\\
+    &= \begin{cases}
+        \infty & \norm{\vz}_* > 1 \\
+        0 & \text{otherwise}.
+    \end{cases}
+\end{align}
+\end{ex}
+
+\begin{ex}
+For the function $f(\vy) \defeq \frac{1}{p} \norm{\vy}_p^p$, we have that $\s{f}(\vz) = \frac{1}{q} \norm{\vz}_q^q$, where $\frac{1}{p} + \frac{1}{q} = 1$.
+\end{ex}
+
+\begin{ex}
+When we have a primal program with only linear constraints, \begin{align*}
+    \min_{\substack{\vy \in \R^n \\ \mA\vy = \vb}} f(\vy),
+\end{align*} we can write the dual program as, \begin{align}
+    \max_{\vx \in \R^m} \min_{\vy \in \R^n} f(\vy) + \trans{\vx}(\vb - \mA\vy) &= \max_{\vx \in \R^m} \trans{\vb}\vx - \max_{\vy \in \R^n} (\trans{\vx}\mA\vy - f(\vy)) \nonumber\\
+    &= \max_{\vx \in \R^m} \trans{\vb}\vx - \s{f}(\trans{\mA}\vx).
+\end{align}
+
+\begin{lem}[Properties of the Fenchel conjugate]
+If $f$ is strictly convex (i.e., $\mH_f \succ \mZero$) and $\grad f$ is a surjective mapping onto $\R^n$, \begin{enumerate}
+    \item $\grad f(\grad \s{f}(\vz)) = \vz$ and $\grad \s{f}(\grad f(\vy)) = \vy$;
+    \item $\s{(\s{f})} = f$; and
+    \item $\mH_{\s{f}}(\grad f(\vy)) = \inv{\mH_f}(\vy)$.\footnote{Thus, if $f$ is $\beta$-smooth, $\s{f}$ is $\beta$-strongly convex. In other words, $\s{f}$ has the ``opposite'' curvature of $f$.}
+\end{enumerate}
+\end{lem}
+\begin{proof}
+TBD
+\end{proof}
+\end{ex}

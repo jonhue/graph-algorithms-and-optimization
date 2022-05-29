@@ -3,7 +3,7 @@
 
 \chapter{Algorithms for Maximum Flow}
 
-In this chapter, we study classical combinatorial algorithms for the maximum flow problem. Many of the algorithms can be adapted to solve the more general minimum-cost flow problem. In recent years, we have made significant progress by using convex optimization and interior point methods.
+In this chapter, we study classical combinatorial algorithms for the maximum flow problem. Many of the algorithms can be adapted to solve the more general minimum-cost flow problem. In recent years, significant progress was made by using convex optimization and interior point methods. To begin with, we will derive a combinatorial proof for the strong duality of maximum flow and minimum cut.\footnote{We have already seen a proof of this in \cref{sec:max_flow_min_cut_duality}.}
 
 We consider directed graphs $G = (V, E, \vc)$ with edge capacities $\vc \in \R^{|\sE|}$. Recall that a \emph{flow}\index{flow} is a vector $\vf \in \R^{|\sE|}$ and $\vf$ routes demands $\vd$ iff $\mB\vf = \vd$. We say that $\vf$ is \emph{feasible}\index{feasible flow} iff $\vZero \leq \vf \leq \vc$, where $\vZero \leq \vf$ ensures that the flow respects edge directions and $\vf \leq \vc$ ensures that the flow respects edge capacities.
 
