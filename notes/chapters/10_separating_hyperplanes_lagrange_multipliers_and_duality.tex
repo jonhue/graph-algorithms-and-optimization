@@ -94,11 +94,11 @@ We can therefore write the gradient of $f$ at $\s{\vy}$ as a linear combination 
     - \grad f(\s{\vy}) = \sum_{i=1}^k \vs(i) \grad g_i(\s{\vy}) + \sum_{j=1}^m \vx(j) \mA(j,:). \label{eq:kkt_intro}
 \end{align} The variables $\vs$ and $\vx$ are called the \emph{dual variables}\index{dual variables} and are said to be \emph{dual feasible}\index{dual feasible} iff $\vs \geq \vZero$. If $\vy$ is also primal feasible, we say that $(\vy, \vx, \vs)$ are \emph{primal-dual feasible}\index{primal-dual feasible}. \Cref{eq:kkt_intro} is equivalent to \begin{align}
     \grad f(\s{\vy}) + \trans{\grad g(\s{\vy})}\vs + \trans{\mA}\vx = \vZero \label{eq:kkt_intro2}
-\end{align} along with the condition $\trans{\grad \vg(\s{\vy})}\vs = \vZero$, ensuring that $\vs(i) = 0$ when constraint $g_i$ is not tight.
+\end{align} along with the condition $\trans{\vg(\s{\vy})}\vs = \vZero$, ensuring that $\vs(i) = 0$ when constraint $g_i$ is not tight.
 
 \begin{defn}[Karush-Kuhn-Tucker (KKT) conditions and Lagrangian] Points $\vy \in \R^n, \vx \in \R^m, \vs \in \R^k$ satisfy the \emph{Karush-Kuhn-Tucker conditions}\index{Karush-Kuhn-Tucker conditions} iff, \begin{align}
     \grad_\vy L(\vy, \vx, \vs) = \vZero &&\text{\emph{gradient condition}\index{gradient condition}} \\
-    \trans{\grad \vg(\vy)}\vs = \vZero &&\text{\emph{complementary slackness}\index{complementary slackness}}\margintag{ensures that $\vs(i)$ is forced to $0$ when constraint $g_i$ is not tight} \\
+    \trans{\vg(\vy)}\vs = \vZero &&\text{\emph{complementary slackness}\index{complementary slackness}}\margintag{ensures that $\vs(i)$ is forced to $0$ when constraint $g_i$ is not tight} \\
     \vg(\vy) \leq \vZero \quad\text{and}\quad \mA\vy = \vb &&\text{primal feasibility} \\
     \vs \geq \vZero &&\text{dual feasibility},
 \end{align} where \begin{align}
@@ -119,7 +119,7 @@ We have that if $(\vy, \vx, \vs)$ are primal-dual feasible, \begin{align}
     L(\vy, \vx, \vs) = f(\vy) + \underbrace{\trans{\vs}}_{\geq \vZero}\underbrace{\vg(\vy)}_{\leq \vZero} + \trans{\vx}(\underbrace{\vb - \mA\vy}_{\vZero}) \leq f(\vy).
 \end{align} We can also write the primal problem as a two-player game in terms of the Lagrangian, \begin{align}
     \s{\alpha} = \min_{\substack{\vy \in \R^n \\ \mA\vy = \vb \\ \vg(\vy) \leq \vZero}} f(\vy) = \min_{\vy \in \R^n} \max_{\substack{\vx \in \R^m \\ \vs \in \R^k \\ \vs \geq \vZero}} L(\vy, \vx, \vs).
-\end{align} This is because for a minimizing $\vy$ all constraints has to be satisfied and the Lagrangian simplifies to $L(\vy, \vx, \vs) = f(\vy)$. If $\vb - \mA\vy = \vZero$ was violated, making $\vx$ large sends $L(\vy, \vx, \vs) \to \infty$. If $\vg(\vy) \leq \vZero$ was violated, making $\vs$ large sends $L(\vy, \vx, \vs) \to \infty$.
+\end{align} This is because for a minimizing $\vy$ all constraints have to be satisfied and the Lagrangian simplifies to $L(\vy, \vx, \vs) = f(\vy)$. If $\vb - \mA\vy = \vZero$ was violated, making $\vx$ large sends $L(\vy, \vx, \vs) \to \infty$. If $\vg(\vy) \leq \vZero$ was violated, making $\vs$ large sends $L(\vy, \vx, \vs) \to \infty$.
 
 We therefore have for any dual feasible $(\vx, \vs)$, \begin{align}
     \s{\alpha} = f(\s{\vy}) \geq L(\s{\vy}, \vx, \vs) \geq \min_{\vy \in \R^n} L(\vy, \vx, \vs) \eqdef L(\vx, \vs). \label{eq:weak_duality}
@@ -137,7 +137,7 @@ This follows immediately from \cref{eq:weak_duality}.
 \end{proof}
 \begin{rmk}
 Observe that the dual program is a convex optimization problem in disguise. We can equivalently consider the optimization problem, \begin{align}
-    \s{\beta} = \min_{\substack{\vx \in \R^m \\ \vs \in \R^k \\ \vs \geq \vZero}} - L(\vx, \vs) = \min_{\substack{\vx \in \R^m \\ \vs \in \R^k \\ \vs \geq \vZero}} \max_{\vy \in \R^n} - L(\vy, \vx, \vs).
+    -\s{\beta} = \min_{\substack{\vx \in \R^m \\ \vs \in \R^k \\ \vs \geq \vZero}} - L(\vx, \vs) = \min_{\substack{\vx \in \R^m \\ \vs \in \R^k \\ \vs \geq \vZero}} \max_{\vy \in \R^n} - L(\vy, \vx, \vs).
 \end{align} Note that $-L(\vy, \vx, \vs)$ is a linear function in the dual variables, hence convex, and $-L(\vx, \vs)$ is a maximum of these functions, so also convex.
 \end{rmk}
 

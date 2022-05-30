@@ -8,7 +8,7 @@ We want to develop a better understanding of optimization problems. The general 
 \end{align} where $f : \R^n \to \R$ is the function to be minimized, $\vg : \R^n \to \R^m$ is a vector-valued function of $m$ constraints with thresholds $\vb \in \R^m$.\footnote{It suffices to consider minimization problems. If we want to maximize a function $f$, this is equivalent to minimizing the function $-f$.}
 
 \begin{defn}[Feasible set] We call \begin{align}
-    \spa{F} \defeq \{\vx \in \R^n \mid \forall i \in [n]: g_i(\vx) \leq b_i\}
+    \spa{F} \defeq \{\vx \in \R^n \mid \vg(\vx) \leq \vb\}
 \end{align} the \emph{feasible set}\index{feasible set}. We call \begin{itemize}
     \item $\vx \in \spa{F}$ a \emph{feasible point}\index{feasible point}; and
     \item $\vx \not\in \spa{F}$ an \emph{infeasible point}\index{infeasible point}.
