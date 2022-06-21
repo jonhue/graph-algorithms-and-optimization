@@ -16,3 +16,4 @@ jobs:
           files: |
             notes/main.tex
             assignments/graded_homework_1.tex
+            assignments/graded_homework_2.tex

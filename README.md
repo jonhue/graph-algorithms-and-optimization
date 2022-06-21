@@ -14,3 +14,4 @@ Contents are convex optimization, spectral graph theory, and combinatorial graph
 ### Assignments
 
 * [Graded Homework 1](https://jonhue.github.io/graph-algorithms-and-optimization/graded_homework_1.pdf)
+* [Graded Homework 2](https://jonhue.github.io/graph-algorithms-and-optimization/graded_homework_2.pdf)
