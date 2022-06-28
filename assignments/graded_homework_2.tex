@@ -1,36 +1,36 @@
-% \documentclass{tufte-handout}
+\documentclass{tufte-handout}
 
-% \input{assignments/settings}
-% \input{commands}
+\input{assignments/settings}
+\input{commands}
 
-% \title[Graded Homework 2]{Advanced Graph Algorithms and Optimization \\ Graded Homework 2}
-% \author{Jonas Hübotter}
-% \date{June 13th, 2022}
+\title[Graded Homework 2]{Advanced Graph Algorithms and Optimization \\ Graded Homework 2}
+\author{Jonas Hübotter}
+\date{June 13th, 2022}
 
-% \newcommand{\embed}{\Pi_{H \mapsto G}}
-% \newcommand{\invembed}{\inv{\Pi}_{H \mapsto G}(D)}
-% \newcommand{\GmD}{G \setminus D}
-% \newcommand{\newembed}{\Pi_{H' \mapsto (\GmD)}}
-% \newcommand{\newembedOne}{\Pi_{H_1' \mapsto (\GmD)}}
-% \newcommand{\newembedTwo}{\Pi_{H_2' \mapsto (\GmD)}}
-% \newcommand{\flowgraph}{\overrightarrow{G}}
-% \newcommand{\altflowgraph}{\flowgraph'}
-% \newcommand{\resflowgraph}{\flowgraph_\vf}
-% \newcommand{\altresflowgraph}{\altflowgraph_{\vf'}}
-% \newcommand{\ora}[1]{\overrightarrow{#1}}
-% \newcommand{\ola}[1]{\overrightarrow{#1}}
-% \newcommand{\cut}{(S, \overline{S})}
-% \newcommand{\flowinstance}{\mathcal{I}}
-% \newcommand{\pathdecomp}{\mathcal{P}_\vf}
+\newcommand{\embed}{\Pi_{H \mapsto G}}
+\newcommand{\invembed}{\inv{\Pi}_{H \mapsto G}(D)}
+\newcommand{\GmD}{G \setminus D}
+\newcommand{\newembed}{\Pi_{H' \mapsto (\GmD)}}
+\newcommand{\newembedOne}{\Pi_{H_1' \mapsto (\GmD)}}
+\newcommand{\newembedTwo}{\Pi_{H_2' \mapsto (\GmD)}}
+\newcommand{\flowgraph}{\overrightarrow{G}}
+\newcommand{\altflowgraph}{\flowgraph'}
+\newcommand{\resflowgraph}{\flowgraph_\vf}
+\newcommand{\altresflowgraph}{\altflowgraph_{\vf'}}
+\newcommand{\ora}[1]{\overrightarrow{#1}}
+\newcommand{\ola}[1]{\overrightarrow{#1}}
+\newcommand{\cut}{(S, \overline{S})}
+\newcommand{\flowinstance}{\mathcal{I}}
+\newcommand{\pathdecomp}{\mathcal{P}_\vf}
 
-% \newcommand{\Etil}{\Tilde{E}}
-% \newcommand{\etil}{\Tilde{e}}
-% \newcommand{\barrierflowset}{\mathcal{I}}
-% \newcommand{\vftil}{\Tilde{\vf}}
-% \newcommand{\vdeltabar}{\bar{\vdelta}}
+\newcommand{\Etil}{\Tilde{E}}
+\newcommand{\etil}{\Tilde{e}}
+\newcommand{\barrierflowset}{\mathcal{I}}
+\newcommand{\vftil}{\Tilde{\vf}}
+\newcommand{\vdeltabar}{\bar{\vdelta}}
 
-% \begin{document}
-% \maketitle
+\begin{document}
+\maketitle
 
 % \section{Maintaining an Expander Decomposition}
 % \paragraph{Setting} In this section we consider (dynamic) graphs on the vertex set $V$ of size $n$.\footnote{All considered graphs will be on this vertex set, so we generally refer to the edge set of a graph $G$ simply by $G$ and vice versa.} We are given an $m$-edge, unweighted, undirected graph $G$ with maximum degree $\Delta_{\max}(G) = \LandauO{1}$. Let $H$ be a $\nicefrac{1}{2}$-expander\footnote{with respect to sparsity} on vertices $V$ such that $\Delta_{\max}(H) = \LandauO{\log^2 n}$ with an embedding $\embed$ with congestion at most $\nicefrac{1}{2\phi}$. By lemma 14.2.1 of the lecture notes, the existence of $H$ implies that $G$ is a $\phi$-expander. We define the graph, \begin{align}
@@ -737,4 +737,4 @@
 % \end{enumerate}
 % \end{proof}
 
-% \end{document}
+\end{document}
